@@ -1,0 +1,21 @@
+# Virtual environment
+venv/
+venv_gai_old/
+
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Uploads folder
+uploads/
+
+# Saved summaries folder
+saved_summaries/
+
+# VS Code settings
+.vscode/
+
+# System files
+.DS_Store
+Thumbs.db
