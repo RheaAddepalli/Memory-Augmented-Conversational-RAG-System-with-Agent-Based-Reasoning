@@ -1,42 +1,12 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# single pdf 
 import re
 from dco_mind.utils.helpers import _get_dynamic_stopwords
 from numpy import dot
 from numpy.linalg import norm
 
-# ============================================================
-# FIX 4 — Text normalization
-# Converts unicode symbols to ASCII equivalents so retrieval
-# doesn't silently fail on symbol mismatches between question
-# and document text. Applied to both chunks and question.
-# Generic — no hardcoded domain terms.
-# ============================================================
+
 
 _UNICODE_MAP = {
     '\u2265': '>=',   # ≥
@@ -312,16 +282,7 @@ def normalize_answer(answer: str) -> str:
     return answer
 
 
-# def detect_doc_type(text: str) -> str:
-#     """Detect document type from content patterns. Generic."""
-#     text_lower = text.lower()
-#     if any(w in text_lower for w in ['abstract', 'methodology', 'references', 'doi']):
-#         return "research"
-#     if any(w in text_lower for w in ['revenue', 'profit', 'fiscal', 'earnings']):
-#         return "financial"
-#     if any(w in text_lower for w in ['clause', 'agreement', 'liability', 'jurisdiction']):
-#         return "legal"
-#     return "general"
+
 
 
 
