@@ -1,0 +1,100 @@
+{
+  "questions": [
+    { "id": 1, "question": "What is the candidate's name?",
+      "expected_keywords": ["rhea", "addepalli"], "pass_threshold": 1 },
+
+    { "id": 2, "question": "What is the candidate's email?",
+      "expected_keywords": ["@"], "pass_threshold": 1 },
+
+    { "id": 3, "question": "What programming languages does the candidate know?",
+      "expected_keywords": ["python", "java", "html"], "pass_threshold": 2 },
+
+    { "id": 4, "question": "What AI-related domains or fields is the candidate experienced in?",
+      "expected_keywords": ["machine learning", "deep learning", "reinforcement learning", "computer vision", "nlp"],
+      "pass_threshold": 2 },
+
+    { "id": 5, "question": "Which tools or frameworks are mentioned in the resume?",
+      "expected_keywords": ["pytorch", "tensorflow", "scikit-learn", "opencv", "yolo"],
+      "pass_threshold": 2 },
+
+    { "id": 6, "question": "Does the candidate have experience with reinforcement learning?",
+      "expected_keywords": ["yes"], "pass_threshold": 1 },
+
+    { "id": 7, "question": "What type of systems has the candidate built?",
+      "expected_keywords": ["ai", "machine intelligence", "rag", "real-time"],
+      "pass_threshold": 1 },
+
+    { "id": 8, "question": "What is the candidate's location?",
+      "expected_keywords": ["bengaluru", "india"], "pass_threshold": 1 },
+
+    { "id": 9, "question": "What certifications are mentioned?",
+      "expected_keywords": ["oracle", "ibm", "coursera", "reinforcement learning"],
+      "pass_threshold": 1 },
+
+    { "id": 10, "question": "What is the candidate's salary?",
+      "hallucination_test": true,
+      "expected_keywords": [], "pass_threshold": 1 },
+
+    { "id": 11,
+      "conversation": [
+        "What projects are mentioned in the resume?",
+        "Which project uses conversational RAG?",
+        "What does that project do?",
+        "What technologies were used in that project?"
+      ],
+      "turn_keywords": [
+        ["rag", "xai", "deadlock", "translation"],
+        ["memory-augmented", "conversational rag", "agent-based"],
+        ["document qa", "llm", "conversational", "machine intelligence"],
+        ["faiss", "flask", "python", "langgraph", "react"]
+      ],
+      "pass_threshold": 1
+    },
+
+    { "id": 12,
+      "conversation": [
+        "Which project involves explainable AI?",
+        "What model was used in that project?",
+        "What accuracy was achieved?",
+        "How was the system deployed?"
+      ],
+      "turn_keywords": [
+        ["xai", "explainable", "bird"],
+        ["cnn", "mobilenet", "tflite"],
+        ["accuracy", "98", "%"],
+        ["render", "angular", "fastapi", "deployed"]
+      ],
+      "pass_threshold": 1
+    },
+
+    { "id": 13,
+      "conversation": [
+        "Does the candidate have experience in reinforcement learning?",
+        "What about blockchain?",
+        "Which areas of AI is the candidate strongest in?"
+      ],
+      "turn_keywords": [
+        ["yes", "reinforcement learning", "experience"],
+        ["not", "no", "nothing", "not present", "not mentioned"],
+        ["machine learning", "deep learning", "computer vision", "nlp", "xai"]
+      ],
+      "pass_threshold": 1
+    },
+
+    { "id": 14,
+      "conversation": [
+        "What is the candidate's name?",
+        "What is the name of the RAG project she built?",
+        "What problem does it solve?",
+        "How was it implemented?"
+      ],
+      "turn_keywords": [
+        ["rhea", "addepalli"],
+        ["memory-augmented", "conversational rag", "agent-based"],
+        ["document qa", "large-scale", "multi-turn"],
+        ["faiss", "flask", "llm", "conversational memory", "react"]
+      ],
+      "pass_threshold": 1
+    }
+  ]
+}

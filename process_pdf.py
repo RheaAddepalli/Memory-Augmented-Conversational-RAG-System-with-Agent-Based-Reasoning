@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# process_pdf.py
-
 import sys
 import os
 import json
@@ -8,7 +5,8 @@ import hashlib
 import concurrent.futures
 import logging
 import re
-
+import time
+from metrics import compute_metrics
 import fitz  # PyMuPDF
 import pytesseract
 from PIL import Image
@@ -137,20 +135,20 @@ def get_pdf_hash(pdf_path):
         h.update(f.read())
     return h.hexdigest()
 
-def load_cached_summary(pdf_hash):
-    path = os.path.join("saved_summaries", f"{pdf_hash}.json")
-    if os.path.exists(path):
-        with open(path, "r", encoding="utf-8") as f:
-            return json.load(f).get("summary")
-    return None
+# def load_cached_summary(pdf_hash):
+#     path = os.path.join("saved_summaries", f"{pdf_hash}.json")
+#     if os.path.exists(path):
+#         with open(path, "r", encoding="utf-8") as f:
+#             return json.load(f).get("summary")
+#     return None
 
-def save_summary(pdf_hash, summary):
-    os.makedirs("saved_summaries", exist_ok=True)
-    path = os.path.join("saved_summaries", f"{pdf_hash}.json")
-    with open(path, "w", encoding="utf-8") as f:
-        json.dump({"summary": summary}, f, ensure_ascii=False, indent=2)
+# def save_summary(pdf_hash, summary):
+#     os.makedirs("saved_summaries", exist_ok=True)
+#     path = os.path.join("saved_summaries", f"{pdf_hash}.json")
+#     with open(path, "w", encoding="utf-8") as f:
+#         json.dump({"summary": summary}, f, ensure_ascii=False, indent=2)
 
-# --------------------------------------------------
+# # --------------------------------------------------
 # MAIN
 # --------------------------------------------------
 if __name__ == "__main__":
@@ -160,6 +158,7 @@ if __name__ == "__main__":
             sys.exit(0)
 
         pdf_path = sys.argv[1]
+        start_total = time.time()
 
         if not os.path.exists(pdf_path):
             print(json.dumps({"summary": "", "error": "PDF not found"}))
@@ -167,32 +166,529 @@ if __name__ == "__main__":
 
         pdf_hash = get_pdf_hash(pdf_path)
 
-        cached = load_cached_summary(pdf_hash)
-        if cached:
-            print(json.dumps({"summary": cached, "cached": True}, ensure_ascii=False))
-            sys.exit(0)
+        # cached = load_cached_summary(pdf_hash)
+        # if cached:
+        #     print(json.dumps({"summary": cached, "cached": True}, ensure_ascii=False))
+        #     sys.exit(0)
+
+        start_extract = time.time()
 
         text = extract_text(pdf_path)
 
         if len(text) < 100:
             text = ocr_pdf(pdf_path)
 
+        extract_time = time.time() - start_extract
+
+       
+
         text = clean_text(text)
+        chunks = split_text(text)
+        num_chunks = len(chunks)
 
         if len(text) < 100:
             print(json.dumps({"summary": "", "error": "No readable text"}))
             sys.exit(0)
 
+        start_summary = time.time()
+
         summary = summarize_text(text)
 
-        save_summary(pdf_hash, summary)
-
-        print(json.dumps({"summary": summary, "cached": False}, ensure_ascii=False))
+        summary_time = time.time() - start_summary
+        total_time = time.time() - start_total
+        # save_summary(pdf_hash, summary)
+        map_time = summary_time
+        reduce_time = 0
+        metrics = compute_metrics(
+            text,
+            summary,
+            num_chunks,
+            {
+                "total": total_time,
+                "extraction": extract_time,
+                "summary": summary_time,
+                "map": map_time,
+                "reduce": reduce_time
+            }
+        )
+        print(json.dumps({
+    "summary": summary,
+    "metrics": metrics
+}, ensure_ascii=False))
         sys.stdout.flush()
 
     except Exception as e:
         print(json.dumps({"summary": "", "error": str(e)}))
         sys.stdout.flush()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# no chnages just removed chaching now gonna add metrics to it 
+# import sys
+# import os
+# import json
+# import hashlib
+# import concurrent.futures
+# import logging
+# import re
+
+# import fitz  # PyMuPDF
+# import pytesseract
+# from PIL import Image
+
+# from transformers import (
+#     BartTokenizer,
+#     BartForConditionalGeneration,
+#     pipeline
+# )
+
+# # --------------------------------------------------
+# # BASIC SAFE CONFIG (XAMPP / Apache friendly)
+# # --------------------------------------------------
+# logging.getLogger("transformers").setLevel(logging.ERROR)
+# os.environ["TOKENIZERS_PARALLELISM"] = "false"
+# sys.stdout.reconfigure(encoding="utf-8")
+
+# # --------------------------------------------------
+# # OCR CONFIG
+# # --------------------------------------------------
+# pytesseract.pytesseract.tesseract_cmd = (
+#     r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+# )
+
+# # --------------------------------------------------
+# # MODEL LOAD (ONCE)
+# # --------------------------------------------------
+# MODEL_NAME = "sshleifer/distilbart-cnn-12-6"
+
+# tokenizer = BartTokenizer.from_pretrained(MODEL_NAME)
+# model = BartForConditionalGeneration.from_pretrained(MODEL_NAME)
+
+# summarizer = pipeline(
+#     "summarization",
+#     model=model,
+#     tokenizer=tokenizer,
+#     device=-1
+# )
+
+# # --------------------------------------------------
+# # NORMAL TEXT EXTRACTION
+# # --------------------------------------------------
+# def extract_text(pdf_path):
+#     text = ""
+#     with fitz.open(pdf_path) as doc:
+#         for page in doc:
+#             text += page.get_text("text") + "\n"
+#     return text.strip()
+
+# # --------------------------------------------------
+# # OCR FALLBACK
+# # --------------------------------------------------
+# def ocr_pdf(pdf_path):
+#     text = ""
+#     try:
+#         doc = fitz.open(pdf_path)
+#         for page in doc:
+#             pix = page.get_pixmap(dpi=200)
+#             img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
+#             text += pytesseract.image_to_string(img)
+#     except Exception:
+#         pass
+#     return text.strip()
+
+# # --------------------------------------------------
+# # CLEAN OCR + NOISE
+# # --------------------------------------------------
+# def clean_text(text):
+#     text = re.sub(r'[^A-Za-z0-9.,;:()\n ]+', ' ', text)
+#     lines = text.splitlines()
+#     clean_lines = [l for l in lines if len(l.strip()) > 30]
+#     text = " ".join(clean_lines)
+#     text = re.sub(r'\s+', ' ', text)
+#     return text.strip()
+
+# # --------------------------------------------------
+# # CHUNKING
+# # --------------------------------------------------
+# def split_text(text, max_words=500):
+#     words = text.split()
+#     chunks, chunk = [], []
+
+#     for w in words:
+#         chunk.append(w)
+#         if len(chunk) >= max_words:
+#             chunks.append(" ".join(chunk))
+#             chunk = []
+
+#     if chunk:
+#         chunks.append(" ".join(chunk))
+
+#     return [c[:4000] for c in chunks]
+
+# # --------------------------------------------------
+# # ✅ FIX 2 APPLIED HERE (NO PROMPT)
+# # --------------------------------------------------
+# def summarize_chunk(chunk):
+#     try:
+#         result = summarizer(
+#             chunk,
+#             max_length=160,
+#             min_length=80,
+#             do_sample=False
+#         )
+#         return result[0]["summary_text"]
+#     except Exception:
+#         return ""
+
+# def summarize_text(text):
+#     chunks = split_text(text)
+#     summaries = []
+
+#     with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
+#         for s in executor.map(summarize_chunk, chunks):
+#             if s:
+#                 summaries.append(s)
+
+#     return " ".join(summaries).strip()
+
+# # --------------------------------------------------
+# # CACHE
+# # --------------------------------------------------
+# def get_pdf_hash(pdf_path):
+#     h = hashlib.md5()
+#     with open(pdf_path, "rb") as f:
+#         h.update(f.read())
+#     return h.hexdigest()
+
+# # def load_cached_summary(pdf_hash):
+# #     path = os.path.join("saved_summaries", f"{pdf_hash}.json")
+# #     if os.path.exists(path):
+# #         with open(path, "r", encoding="utf-8") as f:
+# #             return json.load(f).get("summary")
+# #     return None
+
+# # def save_summary(pdf_hash, summary):
+# #     os.makedirs("saved_summaries", exist_ok=True)
+# #     path = os.path.join("saved_summaries", f"{pdf_hash}.json")
+# #     with open(path, "w", encoding="utf-8") as f:
+# #         json.dump({"summary": summary}, f, ensure_ascii=False, indent=2)
+
+# # # --------------------------------------------------
+# # MAIN
+# # --------------------------------------------------
+# if __name__ == "__main__":
+#     try:
+#         if len(sys.argv) < 2:
+#             print(json.dumps({"summary": "", "error": "No PDF provided"}))
+#             sys.exit(0)
+
+#         pdf_path = sys.argv[1]
+
+#         if not os.path.exists(pdf_path):
+#             print(json.dumps({"summary": "", "error": "PDF not found"}))
+#             sys.exit(0)
+
+#         pdf_hash = get_pdf_hash(pdf_path)
+
+#         # cached = load_cached_summary(pdf_hash)
+#         # if cached:
+#         #     print(json.dumps({"summary": cached, "cached": True}, ensure_ascii=False))
+#         #     sys.exit(0)
+
+#         text = extract_text(pdf_path)
+
+#         if len(text) < 100:
+#             text = ocr_pdf(pdf_path)
+
+#         text = clean_text(text)
+
+#         if len(text) < 100:
+#             print(json.dumps({"summary": "", "error": "No readable text"}))
+#             sys.exit(0)
+
+#         summary = summarize_text(text)
+
+#         # save_summary(pdf_hash, summary)
+
+#         print(json.dumps({"summary": summary, "cached": False}, ensure_ascii=False))
+#         sys.stdout.flush()
+
+#     except Exception as e:
+#         print(json.dumps({"summary": "", "error": str(e)}))
+#         sys.stdout.flush()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# #!/usr/bin/env python - with caching  final one but now changiing project  so gonna make it without caching nd add some metrics 
+# # process_pdf.py
+
+# import sys
+# import os
+# import json
+# import hashlib
+# import concurrent.futures
+# import logging
+# import re
+
+# import fitz  # PyMuPDF
+# import pytesseract
+# from PIL import Image
+
+# from transformers import (
+#     BartTokenizer,
+#     BartForConditionalGeneration,
+#     pipeline
+# )
+
+# # --------------------------------------------------
+# # BASIC SAFE CONFIG (XAMPP / Apache friendly)
+# # --------------------------------------------------
+# logging.getLogger("transformers").setLevel(logging.ERROR)
+# os.environ["TOKENIZERS_PARALLELISM"] = "false"
+# sys.stdout.reconfigure(encoding="utf-8")
+
+# # --------------------------------------------------
+# # OCR CONFIG
+# # --------------------------------------------------
+# pytesseract.pytesseract.tesseract_cmd = (
+#     r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+# )
+
+# # --------------------------------------------------
+# # MODEL LOAD (ONCE)
+# # --------------------------------------------------
+# MODEL_NAME = "sshleifer/distilbart-cnn-12-6"
+
+# tokenizer = BartTokenizer.from_pretrained(MODEL_NAME)
+# model = BartForConditionalGeneration.from_pretrained(MODEL_NAME)
+
+# summarizer = pipeline(
+#     "summarization",
+#     model=model,
+#     tokenizer=tokenizer,
+#     device=-1
+# )
+
+# # --------------------------------------------------
+# # NORMAL TEXT EXTRACTION
+# # --------------------------------------------------
+# def extract_text(pdf_path):
+#     text = ""
+#     with fitz.open(pdf_path) as doc:
+#         for page in doc:
+#             text += page.get_text("text") + "\n"
+#     return text.strip()
+
+# # --------------------------------------------------
+# # OCR FALLBACK
+# # --------------------------------------------------
+# def ocr_pdf(pdf_path):
+#     text = ""
+#     try:
+#         doc = fitz.open(pdf_path)
+#         for page in doc:
+#             pix = page.get_pixmap(dpi=200)
+#             img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
+#             text += pytesseract.image_to_string(img)
+#     except Exception:
+#         pass
+#     return text.strip()
+
+# # --------------------------------------------------
+# # CLEAN OCR + NOISE
+# # --------------------------------------------------
+# def clean_text(text):
+#     text = re.sub(r'[^A-Za-z0-9.,;:()\n ]+', ' ', text)
+#     lines = text.splitlines()
+#     clean_lines = [l for l in lines if len(l.strip()) > 30]
+#     text = " ".join(clean_lines)
+#     text = re.sub(r'\s+', ' ', text)
+#     return text.strip()
+
+# # --------------------------------------------------
+# # CHUNKING
+# # --------------------------------------------------
+# def split_text(text, max_words=500):
+#     words = text.split()
+#     chunks, chunk = [], []
+
+#     for w in words:
+#         chunk.append(w)
+#         if len(chunk) >= max_words:
+#             chunks.append(" ".join(chunk))
+#             chunk = []
+
+#     if chunk:
+#         chunks.append(" ".join(chunk))
+
+#     return [c[:4000] for c in chunks]
+
+# # --------------------------------------------------
+# # ✅ FIX 2 APPLIED HERE (NO PROMPT)
+# # --------------------------------------------------
+# def summarize_chunk(chunk):
+#     try:
+#         result = summarizer(
+#             chunk,
+#             max_length=160,
+#             min_length=80,
+#             do_sample=False
+#         )
+#         return result[0]["summary_text"]
+#     except Exception:
+#         return ""
+
+# def summarize_text(text):
+#     chunks = split_text(text)
+#     summaries = []
+
+#     with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
+#         for s in executor.map(summarize_chunk, chunks):
+#             if s:
+#                 summaries.append(s)
+
+#     return " ".join(summaries).strip()
+
+# # --------------------------------------------------
+# # CACHE
+# # --------------------------------------------------
+# def get_pdf_hash(pdf_path):
+#     h = hashlib.md5()
+#     with open(pdf_path, "rb") as f:
+#         h.update(f.read())
+#     return h.hexdigest()
+
+# def load_cached_summary(pdf_hash):
+#     path = os.path.join("saved_summaries", f"{pdf_hash}.json")
+#     if os.path.exists(path):
+#         with open(path, "r", encoding="utf-8") as f:
+#             return json.load(f).get("summary")
+#     return None
+
+# def save_summary(pdf_hash, summary):
+#     os.makedirs("saved_summaries", exist_ok=True)
+#     path = os.path.join("saved_summaries", f"{pdf_hash}.json")
+#     with open(path, "w", encoding="utf-8") as f:
+#         json.dump({"summary": summary}, f, ensure_ascii=False, indent=2)
+
+# # --------------------------------------------------
+# # MAIN
+# # --------------------------------------------------
+# if __name__ == "__main__":
+#     try:
+#         if len(sys.argv) < 2:
+#             print(json.dumps({"summary": "", "error": "No PDF provided"}))
+#             sys.exit(0)
+
+#         pdf_path = sys.argv[1]
+
+#         if not os.path.exists(pdf_path):
+#             print(json.dumps({"summary": "", "error": "PDF not found"}))
+#             sys.exit(0)
+
+#         pdf_hash = get_pdf_hash(pdf_path)
+
+#         cached = load_cached_summary(pdf_hash)
+#         if cached:
+#             print(json.dumps({"summary": cached, "cached": True}, ensure_ascii=False))
+#             sys.exit(0)
+
+#         text = extract_text(pdf_path)
+
+#         if len(text) < 100:
+#             text = ocr_pdf(pdf_path)
+
+#         text = clean_text(text)
+
+#         if len(text) < 100:
+#             print(json.dumps({"summary": "", "error": "No readable text"}))
+#             sys.exit(0)
+
+#         summary = summarize_text(text)
+
+#         save_summary(pdf_hash, summary)
+
+#         print(json.dumps({"summary": summary, "cached": False}, ensure_ascii=False))
+#         sys.stdout.flush()
+
+#     except Exception as e:
+#         print(json.dumps({"summary": "", "error": str(e)}))
+#         sys.stdout.flush()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

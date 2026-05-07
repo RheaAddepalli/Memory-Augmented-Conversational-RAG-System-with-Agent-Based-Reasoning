@@ -1,21 +1,60 @@
-# Virtual environment
+# # Virtual environment
+# venv/
+# venv_gai_old/
+
+# # Byte-compiled / cache files
+# __pycache__/
+# *.py[cod]
+# *.pyo
+
+# # Uploads folder
+# uploads/
+
+# # Saved summaries folder
+# saved_summaries/
+
+# # VS Code settings
+# .vscode/
+
+# # System files
+# .DS_Store
+# Thumbs.db
+
+
+
+
+
+
+# Virtual environments
 venv/
-venv_gai_old/
+venv_dco/
+venv_old/
 
-# Byte-compiled / cache files
-__pycache__/
-*.py[cod]
-*.pyo
-
-# Uploads folder
+# Uploads
 uploads/
 
-# Saved summaries folder
+# Python cache
+__pycache__/
+*.pyc
+
+# Cache folders
+faiss_cache/
+
+# Generated outputs
+test output images/
 saved_summaries/
 
-# VS Code settings
-.vscode/
+# Ignore all txt files
+*.txt
 
-# System files
-.DS_Store
-Thumbs.db
+# Ignore evaluation results
+dco_mind/evaluation/results/*
+
+# Ignore specific root files
+all-working-oldcodes
+index.html
+test_python.php
+requirements.txt
+
+# Keep only dco_mind requirements
+!dco_mind/requirements.txt

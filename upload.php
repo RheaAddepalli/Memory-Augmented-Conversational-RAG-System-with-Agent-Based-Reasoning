@@ -17,10 +17,9 @@ if (!isset($_FILES["file"])) {
     exit;
 }
 
-$saveChoice = $_POST["saveChoice"] ?? "yes";
 $targetDir  = __DIR__ . "/uploads/";
-$fileName   = basename($_FILES["file"]["name"]);
-$targetFile = $targetDir . $fileName;
+$uniqueName = uniqid("pdf_", true) . ".pdf";
+$targetFile = $targetDir . $uniqueName;
 $fileType   = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
 
 /* -----------------------
@@ -61,7 +60,7 @@ if (!move_uploaded_file($_FILES["file"]["tmp_name"], $targetFile)) {
 }
 
 /* -----------------------
-   RUN PYTHON
+   RUN PYTHON (NO CACHE)
 ------------------------ */
 $pythonExe = escapeshellarg(__DIR__ . "/venv_gai_old/Scripts/python.exe");
 $script    = escapeshellarg(__DIR__ . "/process_pdf.py");
@@ -104,18 +103,10 @@ if (!isset($decoded["summary"]) || trim($decoded["summary"]) === "") {
 }
 
 /* -----------------------
-   DELETE IF USER SAID NO
+   DELETE FILE AFTER PROCESSING
 ------------------------ */
-$pdfHash   = md5_file($targetFile);
-$cacheFile = __DIR__ . "/saved_summaries/$pdfHash.json";
-
-if ($saveChoice === "no") {
-    if (file_exists($targetFile)) {
-        unlink($targetFile);
-    }
-    if (file_exists($cacheFile)) {
-        unlink($cacheFile);
-    }
+if (file_exists($targetFile)) {
+    unlink($targetFile);
 }
 
 /* -----------------------
@@ -124,6 +115,6 @@ if ($saveChoice === "no") {
 echo json_encode([
     "status"  => "success",
     "summary" => $decoded["summary"],
-    "cached"  => $decoded["cached"] ?? false,
-    "saved"   => $saveChoice
+    "cached"  => false
 ]);
+?>
