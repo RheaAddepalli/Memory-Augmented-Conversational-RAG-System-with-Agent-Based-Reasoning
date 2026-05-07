@@ -1,0 +1,2348 @@
+[10:26:48] [DEBUG] PDF NAME: rhea aiml resume updated.pdf
+[10:26:48] [DEBUG] DATASET MAP KEYS: ['rhea aiml resume updated.pdf', 'the-story-of-doctor-dolittle.pdf', 'ml.pdf']
+[10:26:48] [DEBUG] FULL DATASET PATH: C:\xampp\htdocs\GenAI-Doc-old\dco_mind\datasets\resume.json
+[10:26:48] [Evaluate] Starting evaluation run: Test 15_run_1
+[10:26:48] [Evaluate] PDF: C:\Users\Rhearitu\Downloads\rhea AIML resume updated.pdf
+[10:26:48] [Evaluate] Questions: 14
+[10:26:48] [Evaluate] Q1: What is the candidate's name?...
+[10:26:53] [Extract] Done — 1 pages, 4168 chars
+[10:26:53] [Chunk] Summary chunks: 1 | RAG chunks: 5
+[10:26:53] [Chunk] 1 summary chunks | 5 RAG chunks
+[10:26:53] [FAISS] Building fresh index (5 chunks)...
+[10:26:56] [FAISS] Index built | cache size=1
+[10:26:56] [QA] START | 5 chunks
+[10:26:56] [Hybrid] 1 queries: ["What is the candidate's name?"]
+[10:26:56] [Hybrid] 5 unique chunks after semantic
+[10:26:56] [KeywordSearch] 'What is the candidate's name?' → 0 chunks | top score=0.000
+[10:26:56] [Hybrid] 5 total unique chunks across all signals
+[10:26:56] [Hybrid] After MMR fallback: 5 chunks
+[10:26:56] [Hybrid] Final pool: 5 chunks | top weight=0.6
+[10:26:56] [Reranker] ⚠️ Very low scores → keeping top chunks instead of rejecting
+[10:26:56] [Guard] ⚠️ Weak reranker score — continuing
+[10:26:57] [Recall@5] ✅ Oracle chunk retrieved! score=100%
+[10:26:57] [Routing] Context-based → FACTUAL_QA
+[10:26:57] [QA] ⚡ Direct QA (no ReAct)
+[10:27:17] [QA] Answer: 'RHEA ADDEPALLI'
+[10:27:17] [DEBUG] react_ans before refusal check: repr='RHEA ADDEPALLI'
+[10:27:17] [QA] Done in 23.9s | model=llama_direct | grounding=100.0% | recall=100.0% | confidence=1.000 | decision=accepted
+[10:27:17] [Evaluate] Q1 actual answer: RHEA ADDEPALLI
+[10:27:17] [Evaluate] Q1 ✅ PASS | hits=2/2 | model=llama_direct | recall=100.0% | confidence=100.0%
+[10:27:17] [Evaluate] Q2: What is the candidate's email?...
+[10:27:17] [Extract] ✅ Cache hit — skipping OCR (1 pages)
+[10:27:17] [Chunk] Summary chunks: 1 | RAG chunks: 5
+[10:27:17] [Chunk] 1 summary chunks | 5 RAG chunks
+[10:27:17] [FAISS] ✅ Cache hit for 5fdebb1b...
+[10:27:17] [QA] START | 5 chunks
+[10:27:17] [Hybrid] 1 queries: ["What is the candidate's email?"]
+[10:27:17] [Hybrid] 5 unique chunks after semantic
+[10:27:17] [KeywordSearch] 'What is the candidate's email?' → 0 chunks | top score=0.000
+[10:27:17] [Hybrid] 5 total unique chunks across all signals
+[10:27:17] [Hybrid] After MMR fallback: 5 chunks
+[10:27:17] [Hybrid] Final pool: 5 chunks | top weight=0.6
+[10:27:17] [Reranker] ⚠️ Very low scores → keeping top chunks instead of rejecting
+[10:27:17] [Guard] ⚠️ Weak reranker score — continuing
+[10:27:18] [Recall@5] ✅ Oracle chunk retrieved! score=100%
+[10:27:18] [Routing] Context-based → FACTUAL_QA
+[10:27:18] [QA] ⚡ Direct QA (no ReAct)
+[10:27:21] [QA] Answer: 'rheaaddepalli315@gmail.com'
+[10:27:21] [DEBUG] react_ans before refusal check: repr='rheaaddepalli315@gmail.com'
+[10:27:21] [QA] Done in 3.8s | model=llama_direct | grounding=100.0% | recall=100.0% | confidence=1.000 | decision=accepted
+[10:27:21] [Evaluate] Q2 actual answer: rheaaddepalli315@gmail.com
+[10:27:21] [Evaluate] Q2 ✅ PASS | hits=1/1 | model=llama_direct | recall=100.0% | confidence=100.0%
+[10:27:21] [Evaluate] Q3: What programming languages does the candidate know?...
+[10:27:21] [Extract] ✅ Cache hit — skipping OCR (1 pages)
+[10:27:21] [Chunk] Summary chunks: 1 | RAG chunks: 5
+[10:27:21] [Chunk] 1 summary chunks | 5 RAG chunks
+[10:27:21] [FAISS] ✅ Cache hit for 5fdebb1b...
+[10:27:21] [QA] START | 5 chunks
+[10:27:21] [Hybrid] 1 queries: ['What programming languages does the candidate know?']
+[10:27:21] [Hybrid] 5 unique chunks after semantic
+[10:27:21] [ExactMatch] 'What programming languages does the candidate know' → 1 exact chunks | top score=1
+[10:27:21] [Hybrid] 1 exact-match chunks boosted to 0.6
+[10:27:21] [KeywordSearch] 'What programming languages does the candidate know' → 1 chunks | top score=0.065
+[10:27:21] [Hybrid] 5 total unique chunks across all signals
+[10:27:21] [Hybrid] After MMR fallback: 5 chunks
+[10:27:21] [Hybrid] Final pool: 5 chunks | top weight=0.6
+[10:27:21] [Reranker] ⚠️ Very low scores → keeping top chunks instead of rejecting
+[10:27:21] [ExactMatch] 'What programming languages does the candidate know' → 1 exact chunks | top score=1
+[10:27:21] [Protect] All exact-match chunks already in reranked set ✅
+[10:27:21] [Guard] ⚠️ Weak reranker score — continuing
+[10:27:22] [Recall@5] ✅ Oracle chunk retrieved! score=100%
+[10:27:22] [Routing] Context-based → FACTUAL_QA
+[10:27:22] [QA] ⚡ Direct QA (no ReAct)
+[10:27:34] [QA] Answer: 'Python, Java, HTML'
+[10:27:34] [DEBUG] react_ans before refusal check: repr='Python, Java, HTML'
+[10:27:34] [QA] Done in 13.0s | model=llama_direct | grounding=100.0% | recall=100.0% | confidence=1.000 | decision=accepted
+[10:27:34] [Evaluate] Q3 actual answer: Python, Java, HTML
+[10:27:34] [Evaluate] Q3 ✅ PASS | hits=3/3 | model=llama_direct | recall=100.0% | confidence=100.0%
+[10:27:34] [Evaluate] Q4: What AI-related domains or fields is the candidate experienc...
+[10:27:34] [Extract] ✅ Cache hit — skipping OCR (1 pages)
+[10:27:34] [Chunk] Summary chunks: 1 | RAG chunks: 5
+[10:27:34] [Chunk] 1 summary chunks | 5 RAG chunks
+[10:27:34] [FAISS] ✅ Cache hit for 5fdebb1b...
+[10:27:34] [QA] START | 5 chunks
+[10:27:34] [Hybrid] 1 queries: ['What AI-related domains or fields is the candidate experienced in?']
+[10:27:34] [Hybrid] 5 unique chunks after semantic
+[10:27:34] [ExactMatch] 'What AI-related domains or fields is the candidate' → 1 exact chunks | top score=1
+[10:27:34] [Hybrid] 1 exact-match chunks boosted to 0.6
+[10:27:34] [KeywordSearch] 'What AI-related domains or fields is the candidate' → 4 chunks | top score=0.218
+[10:27:34] [Hybrid] 5 total unique chunks across all signals
+[10:27:34] [Hybrid] After MMR fallback: 5 chunks
+[10:27:34] [Hybrid] Final pool: 5 chunks | top weight=0.6
+[10:27:34] [Reranker] ⚠️ Too few chunks after pruning (1) → expanding
+[10:27:34] [Reranker] 5 → 5 chunks after pruning | top=-3.402 | margin=3.0 | bottom kept=-3.402
+[10:27:34] [ExactMatch] 'What AI-related domains or fields is the candidate' → 1 exact chunks | top score=1
+[10:27:34] [Protect] All exact-match chunks already in reranked set ✅
+[10:27:35] [Recall@5] ✅ Oracle chunk retrieved! score=100%
+[10:27:35] [Routing] Context-based → FACTUAL_QA
+[10:27:35] [QA] ⚡ Direct QA (no ReAct)
+[10:27:48] [QA] Answer: 'Machine Learning, Deep Learning, Reinforcement Learning, Exp'
+[10:27:48] [DEBUG] react_ans before refusal check: repr='Machine Learning, Deep Learning, Reinforcement Learning, Explainable AI, and generative AI including LLMs.'
+[10:27:48] [QA] Done in 14.6s | model=llama_direct | grounding=100.0% | recall=100.0% | confidence=1.000 | decision=accepted
+[10:27:48] [Evaluate] Q4 actual answer: Machine Learning, Deep Learning, Reinforcement Learning, Explainable AI, and generative AI including LLMs.
+[10:27:48] [Evaluate] Q4 ✅ PASS | hits=3/5 | model=llama_direct | recall=100.0% | confidence=100.0%
+[10:27:48] [Evaluate] Q5: Which tools or frameworks are mentioned in the resume?...
+[10:27:48] [Extract] ✅ Cache hit — skipping OCR (1 pages)
+[10:27:48] [Chunk] Summary chunks: 1 | RAG chunks: 5
+[10:27:48] [Chunk] 1 summary chunks | 5 RAG chunks
+[10:27:48] [FAISS] ✅ Cache hit for 5fdebb1b...
+[10:27:48] [QA] START | 5 chunks
+[10:27:48] [Hybrid] 1 queries: ['Which tools or frameworks are mentioned in the resume?']
+[10:27:48] [Hybrid] 5 unique chunks after semantic
+[10:27:48] [ExactMatch] 'Which tools or frameworks are mentioned in the res' → 1 exact chunks | top score=1
+[10:27:48] [Hybrid] 1 exact-match chunks boosted to 0.6
+[10:27:48] [KeywordSearch] 'Which tools or frameworks are mentioned in the res' → 1 chunks | top score=0.130
+[10:27:48] [Hybrid] 5 total unique chunks across all signals
+[10:27:48] [Hybrid] After MMR fallback: 5 chunks
+[10:27:48] [Hybrid] Final pool: 5 chunks | top weight=0.6
+[10:27:49] [Reranker] ⚠️ Very low scores → keeping top chunks instead of rejecting
+[10:27:49] [ExactMatch] 'Which tools or frameworks are mentioned in the res' → 1 exact chunks | top score=1
+[10:27:49] [Protect] All exact-match chunks already in reranked set ✅
+[10:27:49] [Guard] ⚠️ Weak reranker score — continuing
+[10:27:49] [Recall@5] ✅ Oracle chunk retrieved! score=100%
+[10:27:49] [Routing] Context-based → FACTUAL_QA
+[10:27:49] [QA] ⚡ Direct QA (no ReAct)
+[10:28:06] [QA] Answer: 'PyTorch, TensorFlow, Scikit-learn, NumPy, Pandas, OpenCV, YO'
+[10:28:06] [DEBUG] react_ans before refusal check: repr='PyTorch, TensorFlow, Scikit-learn, NumPy, Pandas, OpenCV, YOLO, OCR, Hugging Face GenAI & LLM, FastAPI, Angular, Transformers, MarianMT, PyTorch.'
+[10:28:06] [QA] Done in 17.3s | model=llama_direct | grounding=100.0% | recall=100.0% | confidence=1.000 | decision=accepted
+[10:28:06] [Evaluate] Q5 actual answer: PyTorch, TensorFlow, Scikit-learn, NumPy, Pandas, OpenCV, YOLO, OCR, Hugging Face GenAI & LLM, FastAPI, Angular, Transformers, MarianMT, PyTorch.
+[10:28:06] [Evaluate] Q5 ✅ PASS | hits=5/5 | model=llama_direct | recall=100.0% | confidence=100.0%
+[10:28:06] [Evaluate] Q6: Does the candidate have experience with reinforcement learni...
+[10:28:06] [Extract] ✅ Cache hit — skipping OCR (1 pages)
+[10:28:06] [Chunk] Summary chunks: 1 | RAG chunks: 5
+[10:28:06] [Chunk] 1 summary chunks | 5 RAG chunks
+[10:28:06] [FAISS] ✅ Cache hit for 5fdebb1b...
+[10:28:06] [QA] START | 5 chunks
+[10:28:06] [Hybrid] 1 queries: ['Does the candidate have experience with reinforcement learning?']
+[10:28:06] [Hybrid] 5 unique chunks after semantic
+[10:28:06] [ExactMatch] 'Does the candidate have experience with reinforcem' → 3 exact chunks | top score=2
+[10:28:06] [Hybrid] 3 exact-match chunks boosted to 0.6
+[10:28:06] [KeywordSearch] 'Does the candidate have experience with reinforcem' → 3 chunks | top score=0.187
+[10:28:06] [Hybrid] 5 total unique chunks across all signals
+[10:28:06] [Hybrid] After MMR fallback: 5 chunks
+[10:28:06] [Hybrid] Final pool: 5 chunks | top weight=0.6
+[10:28:06] [Reranker] ⚠️ Too few chunks after pruning (2) → expanding
+[10:28:06] [Reranker] 5 → 5 chunks after pruning | top=-4.038 | margin=3.0 | bottom kept=-6.537
+[10:28:06] [ExactMatch] 'Does the candidate have experience with reinforcem' → 3 exact chunks | top score=2
+[10:28:06] [Protect] All exact-match chunks already in reranked set ✅
+[10:28:07] [Recall@5] ✅ Oracle chunk retrieved! score=100%
+[10:28:07] [Routing] Context-based → VERIFICATION_QA
+[10:28:07] [ReAct] Starting | VERIFICATION_QA | 5 chunks | retrieval=0.0%
+[10:28:07] [Reorder] Tiebreaker applied — repeated span: 'oracle | 2025 view'
+[10:28:07] [Reorder] top chunk score=2 | numbers=[] | keywords=['reinforcement', 'learning?', 'candidate', 'experience']
+[10:28:07] 
+========== DEBUG: TOP CHUNKS ==========
+[10:28:07] 
+--- Chunk 1 ---
+[10:28:07] 0 --- - RHEA ADDEPALLI rheaaddepalli315@gmail.com | +91 9392519445 | GitHub | Bengaluru, India PROFESSIONAL SUMMARY AI/ML enthusiast with expertise in machine learning, deep learning, reinforcement learning, explainable AI, and generative AI including LLMs. Experienced in data processing, experiment
+[10:28:07] 
+--- Chunk 2 ---
+[10:28:07] . Skilled in prototyping scalable AI systems from prototype to production, model optimization, performance evaluation, and building cutting-edge AI solutions for real-world, large-scale problems. TECHNICAL SKILLS Languages: Python, Java, HTML AIML Tools: PyTorch, TensorFlow, Scikit-learn, NumPy, Pan
+[10:28:07] 
+--- Chunk 3 ---
+[10:28:07] . Implemented conversational memory for context-aware multi-turn interactions and Natural Language Understanding. Built and integrated a scalable Generative AI system using open-source LLMs with prompt-based generation, from prototyping to production. Designed FAISS semantic retrieval using embeddin
+[10:28:07] 
+--- Chunk 4 ---
+[10:28:07] . Built real-time Angular + FastAPI web app implementing a scalable system from prototype to production with lightweight TFLite deployment. Implemented CI/CD pipelines and evaluated model performance through experimentation using accuracy, confusion matrix, and latency. Deployed model on Render http
+[10:28:07] 
+--- Chunk 5 ---
+[10:28:07] . Implemented model caching and efficient tokenization for fast, scalable translation responses. Tech Stack: FastAPI, Angular, Transformers, MarianMT, PyTorch Certifications Cloud Infrastructure Certified Generative AI Professional Oracle | 2025 View Certificate AI Foundations Associate Oracle | 202
+[10:28:07] ======================================
+
+[10:28:07] 
+[DEBUG] ===== CLEANED CONTEXT PREVIEW =====
+[10:28:07] RHEA ADDEPALLI rheaaddepalli315@gmail.com | +91 9392519445 | GitHub | Bengaluru, India PROFESSIONAL SUMMARY AI/ML enthusiast with expertise in machine learning, deep learning, reinforcement learning, 
+[10:28:07] =========================================
+
+[10:28:07] [DEBUG] Full context sent to LLM:
+RHEA ADDEPALLI rheaaddepalli315@gmail.com | +91 9392519445 | GitHub | Bengaluru, India PROFESSIONAL SUMMARY AI/ML enthusiast with expertise in machine learning, deep learning, reinforcement learning, explainable AI, and generative AI including LLMs. Experienced in data processing, experimentation, and modeling developing and deploying real-time machine intelligence systems using Python, PyTorch, TensorFlow, NLP, and embeddings. Skilled in prototyping scalable AI systems from prototype to production, model optimization, performance evaluation, and building cutting-edge AI solutions for real-world, large-scale problems
+
+---
+
+. Skilled in prototyping scalable AI systems from prototype to production, model optimization, performance evaluation, and building cutting-edge AI solutions for real-world, large-scale problems. TECHNICAL SKILLS Languages: Python, Java, HTML AIML Tools: PyTorch, TensorFlow, Scikit-learn, NumPy, Pandas, OpenCV, YOLO, OCR, Hugging Face GenAI & LLM: LLMs, RAG, Prompt Engineering, Agentic AI, Multimodal AI, Conversational AI Development & Collaboration Tools: SQL, RDBMS, Git, GitHub, Flask, REST API, JSON, CI/CD Pipelines AI Concepts : Machine Learning, Deep Learning, Reinforcement Learning, Natural Language Understanding, Computer Vision, Neural Networks, XAI, GenAI Research & Core: Data Processing, Experimentation, Modeling, Algorithmic Foundations, Data Structures & Algorithms, OOP PROJECTS Memory-Augmented Conversational RAG System with Agent-Based Reasoning Live Demo Developed an LLM-based machine intelligence application in Python for document QA using Conversational RAG. Implemented conversational memory for context-aware multi-turn interactions and Natural Language Understanding
+
+---
+
+. Implemented conversational memory for context-aware multi-turn interactions and Natural Language Understanding. Built and integrated a scalable Generative AI system using open-source LLMs with prompt-based generation, from prototyping to production. Designed FAISS semantic retrieval using embeddings, reranking, and RAPTOR for large-scale context understanding. Developed ReAct-based agent workflow for multi-step reasoning and AI-driven automation. Developed REST API services using Flask for scalable AI application deployment and integration. * Debugged, tested, and optimized AI pipeline through rigorous experimentation using Recall@K, precision, and latency metrics. Tech Stack: Python, FAISS, LLMs, NLP, Agents, RAPTOR, RAG, JSON, REST API XAI Bird Cla
+[10:28:32] [ReAct] Step 1: If answer found 
+Thought: The candidate has experience with reinforcement learning as mentioned in the "Reinforcement Le
+[10:28:32] [DEBUG] action_input raw: repr='Yes'
+[10:28:32] [DEBUG] answer after strip: repr='Yes'
+[10:28:32] [DEBUG] answer before grounding: repr='Yes'
+[10:28:32] [QA] Answer: 'Yes'
+[10:28:32] [DEBUG] react_ans before refusal check: repr='Yes'
+[10:28:32] [QA] Done in 26.5s | model=llama_react | grounding=0.0% | recall=100.0% | confidence=0.000 | decision=accepted
+[10:28:32] [Evaluate] Q6 actual answer: Yes
+[10:28:32] [Evaluate] Q6 ✅ PASS | hits=1/1 | model=llama_react | recall=100.0% | confidence=0.0%
+[10:28:32] [Evaluate] Q7: What type of systems has the candidate built?...
+[10:28:32] [Extract] ✅ Cache hit — skipping OCR (1 pages)
+[10:28:32] [Chunk] Summary chunks: 1 | RAG chunks: 5
+[10:28:32] [Chunk] 1 summary chunks | 5 RAG chunks
+[10:28:32] [FAISS] ✅ Cache hit for 5fdebb1b...
+[10:28:32] [QA] START | 5 chunks
+[10:28:32] [Hybrid] 1 queries: ['What type of systems has the candidate built?']
+[10:28:32] [Hybrid] 5 unique chunks after semantic
+[10:28:32] [ExactMatch] 'What type of systems has the candidate built?' → 4 exact chunks | top score=2
+[10:28:32] [Hybrid] 4 exact-match chunks boosted to 0.6
+[10:28:32] [KeywordSearch] 'What type of systems has the candidate built?' → 4 chunks | top score=0.110
+[10:28:32] [Hybrid] 5 total unique chunks across all signals
+[10:28:32] [Hybrid] After MMR fallback: 5 chunks
+[10:28:32] [Hybrid] Final pool: 5 chunks | top weight=0.6
+[10:28:33] [Reranker] ⚠️ Very low scores → keeping top chunks instead of rejecting
+[10:28:33] [ExactMatch] 'What type of systems has the candidate built?' → 4 exact chunks | top score=2
+[10:28:33] [Protect] All exact-match chunks already in reranked set ✅
+[10:28:33] [Guard] ⚠️ Weak reranker score — continuing
+[10:28:33] [Recall@5] ✅ Oracle chunk retrieved! score=100%
+[10:28:33] [Routing] Context-based → FACTUAL_QA
+[10:28:33] [QA] ⚡ Direct QA (no ReAct)
+[10:28:47] [QA] Answer: 'Scalable AI systems from prototype to production.'
+[10:28:47] [DEBUG] react_ans before refusal check: repr='Scalable AI systems from prototype to production.'
+[10:28:47] [QA] Done in 14.5s | model=llama_direct | grounding=100.0% | recall=100.0% | confidence=1.000 | decision=accepted
+[10:28:47] [Evaluate] Q7 actual answer: Scalable AI systems from prototype to production.
+[10:28:47] [Evaluate] Q7 ✅ PASS | hits=1/4 | model=llama_direct | recall=100.0% | confidence=100.0%
+[10:28:47] [Evaluate] Q8: What is the candidate's location?...
+[10:28:47] [Extract] ✅ Cache hit — skipping OCR (1 pages)
+[10:28:47] [Chunk] Summary chunks: 1 | RAG chunks: 5
+[10:28:47] [Chunk] 1 summary chunks | 5 RAG chunks
+[10:28:47] [FAISS] ✅ Cache hit for 5fdebb1b...
+[10:28:47] [QA] START | 5 chunks
+[10:28:47] [Hybrid] 1 queries: ["What is the candidate's location?"]
+[10:28:47] [Hybrid] 5 unique chunks after semantic
+[10:28:47] [KeywordSearch] 'What is the candidate's location?' → 0 chunks | top score=0.000
+[10:28:47] [Hybrid] 5 total unique chunks across all signals
+[10:28:47] [Hybrid] After MMR fallback: 5 chunks
+[10:28:47] [Hybrid] Final pool: 5 chunks | top weight=0.6
+[10:28:47] [Reranker] ⚠️ Very low scores → keeping top chunks instead of rejecting
+[10:28:47] [Guard] ⚠️ Weak reranker score — continuing
+[10:28:48] [Recall@5] ✅ Oracle chunk retrieved! score=100%
+[10:28:48] [Routing] Context-based → FACTUAL_QA
+[10:28:48] [QA] ⚡ Direct QA (no ReAct)
+[10:28:59] [QA] Answer: 'None'
+[10:28:59] [DEBUG] react_ans before refusal check: repr='None'
+[10:28:59] [Grounding] Refusal answer detected → returning sentinel 75.0
+[10:28:59] [QA] Done in 12.8s | model=llama_direct | grounding=75.0% | recall=100.0% | confidence=0.750 | decision=low_grounding
+[10:28:59] [Evaluate] Q8 actual answer: This information is not present in the document.
+[10:28:59] [Evaluate] Q8 ❌ FAIL | hits=0/2 | model=llama_direct | recall=100.0% | confidence=75.0%
+[10:28:59] [Evaluate] Q9: What certifications are mentioned?...
+[10:28:59] [Extract] ✅ Cache hit — skipping OCR (1 pages)
+[10:28:59] [Chunk] Summary chunks: 1 | RAG chunks: 5
+[10:28:59] [Chunk] 1 summary chunks | 5 RAG chunks
+[10:28:59] [FAISS] ✅ Cache hit for 5fdebb1b...
+[10:28:59] [QA] START | 5 chunks
+[10:28:59] [Hybrid] 1 queries: ['What certifications are mentioned?']
+[10:29:00] [Hybrid] 5 unique chunks after semantic
+[10:29:00] [ExactMatch] 'What certifications are mentioned?' → 1 exact chunks | top score=1
+[10:29:00] [Hybrid] 1 exact-match chunks boosted to 0.6
+[10:29:00] [KeywordSearch] 'What certifications are mentioned?' → 1 chunks | top score=0.060
+[10:29:00] [Hybrid] 5 total unique chunks across all signals
+[10:29:00] [Hybrid] After MMR fallback: 5 chunks
+[10:29:00] [Hybrid] Final pool: 5 chunks | top weight=0.6
+[10:29:00] [Reranker] ⚠️ Too few chunks after pruning (1) → expanding
+[10:29:00] [Reranker] 5 → 5 chunks after pruning | top=-2.597 | margin=3.0 | bottom kept=-2.597
+[10:29:00] [ExactMatch] 'What certifications are mentioned?' → 1 exact chunks | top score=1
+[10:29:00] [Protect] All exact-match chunks already in reranked set ✅
+[10:29:00] [Recall@5] ✅ Oracle chunk retrieved! score=100%
+[10:29:00] [Routing] Context-based → FACTUAL_QA
+[10:29:00] [QA] ⚡ Direct QA (no ReAct)
+[10:29:14] [QA] Answer: 'AI Foundations Associate Oracle | 2025 View Certificate
+Orac'
+[10:29:14] [DEBUG] react_ans before refusal check: repr='AI Foundations Associate Oracle | 2025 View Certificate\nOracle | 2025 View Certificate'
+[10:29:14] [QA] Done in 14.1s | model=llama_direct | grounding=100.0% | recall=100.0% | confidence=1.000 | decision=accepted
+[10:29:14] [Evaluate] Q9 actual answer: AI Foundations Associate Oracle | 2025 View Certificate
+Oracle | 2025 View Certificate
+[10:29:14] [Evaluate] Q9 ✅ PASS | hits=1/4 | model=llama_direct | recall=100.0% | confidence=100.0%
+[10:29:14] [Evaluate] Q10: What is the candidate's salary?...
+[10:29:14] [Extract] ✅ Cache hit — skipping OCR (1 pages)
+[10:29:14] [Chunk] Summary chunks: 1 | RAG chunks: 5
+[10:29:14] [Chunk] 1 summary chunks | 5 RAG chunks
+[10:29:14] [FAISS] ✅ Cache hit for 5fdebb1b...
+[10:29:14] [QA] START | 5 chunks
+[10:29:14] [Hybrid] 1 queries: ["What is the candidate's salary?"]
+[10:29:14] [Hybrid] 5 unique chunks after semantic
+[10:29:14] [KeywordSearch] 'What is the candidate's salary?' → 0 chunks | top score=0.000
+[10:29:14] [Hybrid] 5 total unique chunks across all signals
+[10:29:14] [Hybrid] After MMR fallback: 5 chunks
+[10:29:14] [Hybrid] Final pool: 5 chunks | top weight=0.6
+[10:29:14] [Reranker] ⚠️ Very low scores → keeping top chunks instead of rejecting
+[10:29:14] [Guard] ⚠️ Weak reranker score — continuing
+[10:29:15] [Recall@5] ✅ Oracle chunk retrieved! score=100%
+[10:29:15] [Routing] Context-based → FACTUAL_QA
+[10:29:15] [QA] ⚡ Direct QA (no ReAct)
+[10:29:26] [QA] Answer: 'Not found.'
+[10:29:26] [DEBUG] react_ans before refusal check: repr='Not found.'
+[10:29:26] [Grounding] Refusal answer detected → returning sentinel 75.0
+[10:29:26] [QA] Done in 12.6s | model=llama_direct | grounding=75.0% | recall=100.0% | confidence=0.750 | decision=low_grounding
+[10:29:26] [Evaluate] Q10 actual answer: This information is not present in the document.
+[10:29:33] [Refusal] 'This information is not present in the document.' → REFUSAL
+[10:29:33] [Evaluate] Q10 ✅ PASS | hits=1/1 | model=llama_direct | recall=100.0% | confidence=75.0%
+[10:29:33] [Evaluate] Q11_t0: What projects are mentioned in the resume?...
+[10:29:33] [Extract] ✅ Cache hit — skipping OCR (1 pages)
+[10:29:33] [Chunk] Summary chunks: 1 | RAG chunks: 5
+[10:29:33] [Chunk] 1 summary chunks | 5 RAG chunks
+[10:29:33] [FAISS] ✅ Cache hit for 5fdebb1b...
+[10:29:33] [QA] START | 5 chunks
+[10:29:33] [Hybrid] 1 queries: ['What projects are mentioned in the resume?']
+[10:29:33] [Hybrid] 5 unique chunks after semantic
+[10:29:33] [ExactMatch] 'What projects are mentioned in the resume?' → 1 exact chunks | top score=1
+[10:29:33] [Hybrid] 1 exact-match chunks boosted to 0.6
+[10:29:33] [KeywordSearch] 'What projects are mentioned in the resume?' → 1 chunks | top score=0.065
+[10:29:33] [Hybrid] 5 total unique chunks across all signals
+[10:29:33] [Hybrid] After MMR fallback: 5 chunks
+[10:29:33] [Hybrid] Final pool: 5 chunks | top weight=0.6
+[10:29:34] [Reranker] ⚠️ Very low scores → keeping top chunks instead of rejecting
+[10:29:34] [ExactMatch] 'What projects are mentioned in the resume?' → 1 exact chunks | top score=1
+[10:29:34] [Protect] All exact-match chunks already in reranked set ✅
+[10:29:34] [Guard] ⚠️ Weak reranker score — continuing
+[10:29:34] [Recall@5] ✅ Oracle chunk retrieved! score=100%
+[10:29:34] [Routing] Context-based → FACTUAL_QA
+[10:29:34] [QA] ⚡ Direct QA (no ReAct)
+[10:29:56] [QA] Answer: 'Memory-Augmented Conversational RAG System with Agent-Based '
+[10:29:56] [DEBUG] react_ans before refusal check: repr='Memory-Augmented Conversational RAG System with Agent-Based Reasoning \nLive Demo Developed an LLM-based machine intelligence application in Python for document QA using Conversational RAG. Implemented conversational memory for context-aware multi-turn interactions and Natural Language Understanding\nImplemented model caching and efficient tokenization for fast, scalable translation responses.'
+[10:29:56] [QA] Done in 22.6s | model=llama_direct | grounding=100.0% | recall=100.0% | confidence=1.000 | decision=accepted
+[10:29:56] [Evaluate] Q11_t0 actual answer: Memory-Augmented Conversational RAG System with Agent-Based Reasoning Live Demo Developed an LLM-based machine intelligence application in Python for document QA using Conversational RAG. Implemented conversational memory for context-aware multi-turn interactions and Natural Language Understanding
+I
+[10:29:56] [Evaluate] Q11_t0 ✅ PASS | hits=2/4 | model=llama_direct | recall=100.0% | confidence=100.0%
+[10:29:56] [Memory] Enriched query: 'Memory-Augmented Conversational RAG System with Agent-Based Reasoning Live Demo Developed an LLM-bas'
+[10:29:56] [Evaluate] Q11_t1: Memory-Augmented Conversational RAG System with Agent-Based ...
+[10:29:56] [Extract] ✅ Cache hit — skipping OCR (1 pages)
+[10:29:56] [Chunk] Summary chunks: 1 | RAG chunks: 5
+[10:29:56] [Chunk] 1 summary chunks | 5 RAG chunks
+[10:29:56] [FAISS] ✅ Cache hit for 5fdebb1b...
+[10:29:56] [QA] START | 5 chunks
+[10:29:56] [Hybrid] 1 queries: ['Memory-Augmented Conversational RAG System with Agent-Based Reasoning Live Demo Developed an LLM-based machine intelligence application in Python for document QA using Conversational RAG. Implemented Which project uses conversational RAG?']
+[10:29:56] [Hybrid] 5 unique chunks after semantic
+[10:29:56] [ExactMatch] 'Memory-Augmented Conversational RAG System with Ag' → 2 exact chunks | top score=21
+[10:29:56] [Hybrid] 2 exact-match chunks boosted to 0.6
+[10:29:56] [KeywordSearch] 'Memory-Augmented Conversational RAG System with Ag' → 5 chunks | top score=0.481
+[10:29:56] [Hybrid] 5 total unique chunks across all signals
+[10:29:56] [Hybrid] After MMR fallback: 5 chunks
+[10:29:56] [Hybrid] Final pool: 5 chunks | top weight=0.6
+[10:29:56] [Reranker] ⚠️ Too few chunks after pruning (2) → expanding
+[10:29:56] [Reranker] 5 → 5 chunks after pruning | top=0.687 | margin=3.0 | bottom kept=-2.256
+[10:29:56] [ExactMatch] 'Memory-Augmented Conversational RAG System with Ag' → 2 exact chunks | top score=21
+[10:29:56] [Protect] All exact-match chunks already in reranked set ✅
+[10:29:57] [Recall@5] ✅ Oracle chunk retrieved! score=100%
+[10:29:57] [Routing] Context-based → MULTIPART_QA
+[10:29:57] [Reorder] Tiebreaker applied — repeated span: 'oracle | 2025 view'
+[10:29:57] [Reorder] top chunk score=19 | numbers=[] | keywords=['conversational', 'llm-based', 'document', 'application']
+[10:30:36] [QA] Done in 40.2s | model=llama_multipart | grounding=100.0% | recall=100.0% | confidence=1.000 | decision=accepted
+[10:30:36] [Evaluate] Q11_t1 actual answer: Conversational RAG System with Agent-Based Reasoning Live Demo developed an LLM-based machine intelligence application in Python for document QA using Conversational RAG. Implemented conversational memory for context-aware multi-turn interactions and Natural Language Understanding.
+[10:30:36] [Evaluate] Q11_t1 ✅ PASS | hits=2/3 | model=llama_multipart | recall=100.0% | confidence=100.0%
+[10:30:36] [Memory] Enriched query: 'Conversational RAG System with Agent-Based Reasoning Live Demo developed an LLM-based machine intell'
+[10:30:36] [Evaluate] Q11_t2: Conversational RAG System with Agent-Based Reasoning Live De...
+[10:30:36] [Extract] ✅ Cache hit — skipping OCR (1 pages)
+[10:30:36] [Chunk] Summary chunks: 1 | RAG chunks: 5
+[10:30:36] [Chunk] 1 summary chunks | 5 RAG chunks
+[10:30:36] [FAISS] ✅ Cache hit for 5fdebb1b...
+[10:30:36] [QA] START | 5 chunks
+[10:30:36] [Hybrid] 1 queries: ['Conversational RAG System with Agent-Based Reasoning Live Demo developed an LLM-based machine intelligence application in Python for document QA using Conversational RAG. Implemented conversational me What does that project do?']
+[10:30:36] [Hybrid] 5 unique chunks after semantic
+[10:30:36] [ExactMatch] 'Conversational RAG System with Agent-Based Reasoni' → 2 exact chunks | top score=20
+[10:30:36] [Hybrid] 2 exact-match chunks boosted to 0.6
+[10:30:36] [KeywordSearch] 'Conversational RAG System with Agent-Based Reasoni' → 5 chunks | top score=0.467
+[10:30:36] [Hybrid] 5 total unique chunks across all signals
+[10:30:36] [Hybrid] After MMR fallback: 5 chunks
+[10:30:36] [Hybrid] Final pool: 5 chunks | top weight=0.6
+[10:30:37] [Reranker] ⚠️ Too few chunks after pruning (3) → expanding
+[10:30:37] [Reranker] 5 → 5 chunks after pruning | top=-0.286 | margin=3.0 | bottom kept=-2.973
+[10:30:37] [ExactMatch] 'Conversational RAG System with Agent-Based Reasoni' → 2 exact chunks | top score=20
+[10:30:37] [Protect] All exact-match chunks already in reranked set ✅
+[10:30:37] [Recall@5] ✅ Oracle chunk retrieved! score=100%
+[10:30:37] [Routing] Context-based → MULTIPART_QA
+[10:30:37] [Reorder] Tiebreaker applied — repeated span: 'oracle | 2025 view'
+[10:30:37] [Reorder] top chunk score=18 | numbers=[] | keywords=['conversational', 'llm-based', 'document', 'application']
+[10:30:54] [QA] Done in 18.0s | model=llama_multipart | grounding=100.0% | recall=100.0% | confidence=1.000 | decision=accepted
+[10:30:54] [Evaluate] Q11_t2 actual answer: Conversational RAG System with Agent-Based Reasoning Live Demo developed an LLM-based machine intelligence application in Python for document QA using Conversational RAG. Implemented conversational memory for context-aware multi-turn interactions and Natural Language Understanding.
+[10:30:54] [Evaluate] Q11_t2 ✅ PASS | hits=4/4 | model=llama_multipart | recall=100.0% | confidence=100.0%
+[10:30:54] [Memory] Enriched query: 'Conversational RAG System with Agent-Based Reasoning Live Demo developed an LLM-based machine intell'
+[10:30:54] [Evaluate] Q11_t3: Conversational RAG System with Agent-Based Reasoning Live De...
+[10:30:54] [Extract] ✅ Cache hit — skipping OCR (1 pages)
+[10:30:54] [Chunk] Summary chunks: 1 | RAG chunks: 5
+[10:30:54] [Chunk] 1 summary chunks | 5 RAG chunks
+[10:30:54] [FAISS] ✅ Cache hit for 5fdebb1b...
+[10:30:54] [QA] START | 5 chunks
+[10:30:54] [Hybrid] 1 queries: ['Conversational RAG System with Agent-Based Reasoning Live Demo developed an LLM-based machine intelligence application in Python for document QA using Conversational RAG. Implemented conversational me What technologies were used in that project?']
+[10:30:54] [Hybrid] 5 unique chunks after semantic
+[10:30:54] [ExactMatch] 'Conversational RAG System with Agent-Based Reasoni' → 2 exact chunks | top score=19
+[10:30:54] [Hybrid] 2 exact-match chunks boosted to 0.6
+[10:30:54] [KeywordSearch] 'Conversational RAG System with Agent-Based Reasoni' → 5 chunks | top score=0.467
+[10:30:54] [Hybrid] 5 total unique chunks across all signals
+[10:30:54] [Hybrid] After MMR fallback: 5 chunks
+[10:30:54] [Hybrid] Final pool: 5 chunks | top weight=0.6
+[10:30:55] [Reranker] ⚠️ Too few chunks after pruning (3) → expanding
+[10:30:55] [Reranker] 5 → 5 chunks after pruning | top=-0.358 | margin=3.0 | bottom kept=-2.569
+[10:30:55] [ExactMatch] 'Conversational RAG System with Agent-Based Reasoni' → 2 exact chunks | top score=19
+[10:30:55] [Protect] All exact-match chunks already in reranked set ✅
+[10:30:55] [Recall@5] ✅ Oracle chunk retrieved! score=100%
+[10:30:55] [Routing] Context-based → MULTIPART_QA
+[10:30:55] [Reorder] Tiebreaker applied — repeated span: 'oracle | 2025 view'
+[10:30:55] [Reorder] top chunk score=17 | numbers=[] | keywords=['conversational', 'llm-based', 'document', 'application']
+[10:31:15] [QA] Done in 20.6s | model=llama_multipart | grounding=81.0% | recall=100.0% | confidence=0.810 | decision=accepted
+[10:31:15] [Evaluate] Q11_t3 actual answer: Conversational RAG System with Agent-Based Reasoning Live Demo developed an LLM-based machine intelligence application in Python for document QA using Conversational RAG. Implemented conversational memory for context-aware multi-turn interactions and Natural Language Understanding. The technologies 
+[10:31:15] [Evaluate] Q11_t3 ✅ PASS | hits=1/5 | model=llama_multipart | recall=100.0% | confidence=81.0%
+[10:31:15] [Evaluate] Q12_t0: Which project involves explainable AI?...
+[10:31:15] [Extract] ✅ Cache hit — skipping OCR (1 pages)
+[10:31:15] [Chunk] Summary chunks: 1 | RAG chunks: 5
+[10:31:15] [Chunk] 1 summary chunks | 5 RAG chunks
+[10:31:15] [FAISS] ✅ Cache hit for 5fdebb1b...
+[10:31:15] [QA] START | 5 chunks
+[10:31:15] [Hybrid] 1 queries: ['Which project involves explainable AI?']
+[10:31:15] [Hybrid] 5 unique chunks after semantic
+[10:31:15] [ExactMatch] 'Which project involves explainable AI?' → 2 exact chunks | top score=1
+[10:31:15] [Hybrid] 2 exact-match chunks boosted to 0.6
+[10:31:15] [KeywordSearch] 'Which project involves explainable AI?' → 4 chunks | top score=0.228
+[10:31:15] [Hybrid] 5 total unique chunks across all signals
+[10:31:15] [Hybrid] After MMR fallback: 5 chunks
+[10:31:15] [Hybrid] Final pool: 5 chunks | top weight=0.6
+[10:31:15] [Reranker] ⚠️ Too few chunks after pruning (1) → expanding
+[10:31:15] [Reranker] 5 → 5 chunks after pruning | top=0.394 | margin=3.0 | bottom kept=0.394
+[10:31:15] [ExactMatch] 'Which project involves explainable AI?' → 2 exact chunks | top score=1
+[10:31:15] [Protect] All exact-match chunks already in reranked set ✅
+[10:31:16] [Recall@5] ✅ Oracle chunk retrieved! score=100%
+[10:31:16] [Routing] Context-based → FACTUAL_QA
+[10:31:16] [QA] ⚡ Direct QA (no ReAct)
+[10:31:30] [QA] Answer: 'XAI'
+[10:31:30] [DEBUG] react_ans before refusal check: repr='XAI'
+[10:31:30] [QA] Done in 15.5s | model=llama_direct | grounding=100.0% | recall=100.0% | confidence=1.000 | decision=accepted
+[10:31:30] [Evaluate] Q12_t0 actual answer: XAI
+[10:31:30] [Evaluate] Q12_t0 ✅ PASS | hits=1/3 | model=llama_direct | recall=100.0% | confidence=100.0%
+[10:31:30] [Memory] Enriched query: 'XAI What model was used in that project?'
+[10:31:30] [Evaluate] Q12_t1: XAI What model was used in that project?...
+[10:31:30] [Extract] ✅ Cache hit — skipping OCR (1 pages)
+[10:31:30] [Chunk] Summary chunks: 1 | RAG chunks: 5
+[10:31:30] [Chunk] 1 summary chunks | 5 RAG chunks
+[10:31:30] [FAISS] ✅ Cache hit for 5fdebb1b...
+[10:31:30] [QA] START | 5 chunks
+[10:31:30] [Hybrid] 1 queries: ['XAI What model was used in that project?']
+[10:31:30] [Hybrid] 5 unique chunks after semantic
+[10:31:30] [ExactMatch] 'XAI What model was used in that project?' → 5 exact chunks | top score=2
+[10:31:30] [Hybrid] 5 exact-match chunks boosted to 0.6
+[10:31:30] [KeywordSearch] 'XAI What model was used in that project?' → 5 chunks | top score=0.104
+[10:31:30] [Hybrid] 5 total unique chunks across all signals
+[10:31:30] [Hybrid] After MMR fallback: 5 chunks
+[10:31:30] [Hybrid] Final pool: 5 chunks | top weight=0.6
+[10:31:31] [Reranker] ⚠️ Too few chunks after pruning (1) → expanding
+[10:31:31] [Reranker] 5 → 5 chunks after pruning | top=1.003 | margin=3.0 | bottom kept=1.003
+[10:31:31] [ExactMatch] 'XAI What model was used in that project?' → 5 exact chunks | top score=2
+[10:31:31] [Protect] All exact-match chunks already in reranked set ✅
+[10:31:32] [Recall@5] ✅ Oracle chunk retrieved! score=100%
+[10:31:32] [Routing] Context-based → FACTUAL_QA
+[10:31:32] [QA] ⚡ Direct QA (no ReAct)
+[10:31:45] [QA] Answer: 'TFLite'
+[10:31:45] [DEBUG] react_ans before refusal check: repr='TFLite'
+[10:31:45] [QA] Done in 14.6s | model=llama_direct | grounding=100.0% | recall=100.0% | confidence=1.000 | decision=accepted
+[10:31:45] [Evaluate] Q12_t1 actual answer: TFLite
+[10:31:45] [Evaluate] Q12_t1 ✅ PASS | hits=1/3 | model=llama_direct | recall=100.0% | confidence=100.0%
+[10:31:45] [Memory] Enriched query: 'TFLite What accuracy was achieved?'
+[10:31:45] [Evaluate] Q12_t2: TFLite What accuracy was achieved?...
+[10:31:45] [Extract] ✅ Cache hit — skipping OCR (1 pages)
+[10:31:45] [Chunk] Summary chunks: 1 | RAG chunks: 5
+[10:31:45] [Chunk] 1 summary chunks | 5 RAG chunks
+[10:31:45] [FAISS] ✅ Cache hit for 5fdebb1b...
+[10:31:45] [QA] START | 5 chunks
+[10:31:45] [Hybrid] 1 queries: ['TFLite What accuracy was achieved?']
+[10:31:45] [Hybrid] 5 unique chunks after semantic
+[10:31:45] [ExactMatch] 'TFLite What accuracy was achieved?' → 2 exact chunks | top score=2
+[10:31:45] [Hybrid] 2 exact-match chunks boosted to 0.6
+[10:31:45] [KeywordSearch] 'TFLite What accuracy was achieved?' → 2 chunks | top score=0.079
+[10:31:45] [Hybrid] 5 total unique chunks across all signals
+[10:31:45] [Hybrid] After MMR fallback: 5 chunks
+[10:31:45] [Hybrid] Final pool: 5 chunks | top weight=0.6
+[10:31:45] [Reranker] ⚠️ Too few chunks after pruning (1) → expanding
+[10:31:45] [Reranker] 5 → 5 chunks after pruning | top=0.182 | margin=3.0 | bottom kept=0.182
+[10:31:45] [ExactMatch] 'TFLite What accuracy was achieved?' → 2 exact chunks | top score=2
+[10:31:45] [Protect] All exact-match chunks already in reranked set ✅
+[10:31:46] [Recall@5] ✅ Oracle chunk retrieved! score=100%
+[10:31:46] [Routing] Context-based → FACTUAL_QA
+[10:31:46] [QA] ⚡ Direct QA (no ReAct)
+[10:31:52] [QA] Answer: 'Accuracy.'
+[10:31:52] [DEBUG] react_ans before refusal check: repr='Accuracy.'
+[10:31:52] [QA] Done in 7.2s | model=llama_direct | grounding=100.0% | recall=100.0% | confidence=1.000 | decision=accepted
+[10:31:52] [Evaluate] Q12_t2 actual answer: Accuracy.
+[10:31:52] [Evaluate] Q12_t2 ✅ PASS | hits=1/3 | model=llama_direct | recall=100.0% | confidence=100.0%
+[10:31:52] [Memory] Enriched query: 'Accuracy. How was the system deployed?'
+[10:31:52] [Evaluate] Q12_t3: Accuracy. How was the system deployed?...
+[10:31:52] [Extract] ✅ Cache hit — skipping OCR (1 pages)
+[10:31:52] [Chunk] Summary chunks: 1 | RAG chunks: 5
+[10:31:52] [Chunk] 1 summary chunks | 5 RAG chunks
+[10:31:52] [FAISS] ✅ Cache hit for 5fdebb1b...
+[10:31:52] [QA] START | 5 chunks
+[10:31:52] [Hybrid] 1 queries: ['Accuracy. How was the system deployed?']
+[10:31:52] [Hybrid] 5 unique chunks after semantic
+[10:31:52] [ExactMatch] 'Accuracy. How was the system deployed?' → 4 exact chunks | top score=1
+[10:31:52] [Hybrid] 4 exact-match chunks boosted to 0.6
+[10:31:52] [KeywordSearch] 'Accuracy. How was the system deployed?' → 2 chunks | top score=0.083
+[10:31:52] [Hybrid] 5 total unique chunks across all signals
+[10:31:52] [Hybrid] After MMR fallback: 5 chunks
+[10:31:52] [Hybrid] Final pool: 5 chunks | top weight=0.6
+[10:31:53] [Reranker] ⚠️ Too few chunks after pruning (1) → expanding
+[10:31:53] [Reranker] 5 → 5 chunks after pruning | top=0.782 | margin=3.0 | bottom kept=0.782
+[10:31:53] [ExactMatch] 'Accuracy. How was the system deployed?' → 4 exact chunks | top score=1
+[10:31:53] [Protect] All exact-match chunks already in reranked set ✅
+[10:31:54] [Recall@5] ✅ Oracle chunk retrieved! score=100%
+[10:31:54] [Routing] Context-based → FACTUAL_QA
+[10:31:54] [QA] ⚡ Direct QA (no ReAct)
+[10:32:01] [QA] Answer: 'Deployed model on Render https://xai-bird-classification-usi'
+[10:32:01] [DEBUG] react_ans before refusal check: repr='Deployed model on Render https://xai-bird-classification-using-cnn.onrender.com'
+[10:32:01] [QA] Done in 8.5s | model=llama_direct | grounding=100.0% | recall=100.0% | confidence=1.000 | decision=accepted
+[10:32:01] [Evaluate] Q12_t3 actual answer: Deployed model on Render https://xai-bird-classification-using-cnn.onrender.com
+[10:32:01] [Evaluate] Q12_t3 ✅ PASS | hits=2/4 | model=llama_direct | recall=100.0% | confidence=100.0%
+[10:32:01] [Evaluate] Q13_t0: Does the candidate have experience in reinforcement learning...
+[10:32:01] [Extract] ✅ Cache hit — skipping OCR (1 pages)
+[10:32:01] [Chunk] Summary chunks: 1 | RAG chunks: 5
+[10:32:01] [Chunk] 1 summary chunks | 5 RAG chunks
+[10:32:01] [FAISS] ✅ Cache hit for 5fdebb1b...
+[10:32:01] [QA] START | 5 chunks
+[10:32:01] [Hybrid] 1 queries: ['Does the candidate have experience in reinforcement learning?']
+[10:32:01] [Hybrid] 5 unique chunks after semantic
+[10:32:01] [ExactMatch] 'Does the candidate have experience in reinforcemen' → 3 exact chunks | top score=2
+[10:32:01] [Hybrid] 3 exact-match chunks boosted to 0.6
+[10:32:01] [KeywordSearch] 'Does the candidate have experience in reinforcemen' → 3 chunks | top score=0.187
+[10:32:01] [Hybrid] 5 total unique chunks across all signals
+[10:32:01] [Hybrid] After MMR fallback: 5 chunks
+[10:32:01] [Hybrid] Final pool: 5 chunks | top weight=0.6
+[10:32:01] [Reranker] ⚠️ Too few chunks after pruning (2) → expanding
+[10:32:01] [Reranker] 5 → 5 chunks after pruning | top=-3.764 | margin=3.0 | bottom kept=-6.567
+[10:32:01] [ExactMatch] 'Does the candidate have experience in reinforcemen' → 3 exact chunks | top score=2
+[10:32:01] [Protect] All exact-match chunks already in reranked set ✅
+[10:32:02] [Recall@5] ✅ Oracle chunk retrieved! score=100%
+[10:32:02] [Routing] Context-based → VERIFICATION_QA
+[10:32:02] [ReAct] Starting | VERIFICATION_QA | 5 chunks | retrieval=0.0%
+[10:32:02] [Reorder] Tiebreaker applied — repeated span: 'oracle | 2025 view'
+[10:32:02] [Reorder] top chunk score=2 | numbers=[] | keywords=['reinforcement', 'learning?', 'candidate', 'experience']
+[10:32:02] 
+========== DEBUG: TOP CHUNKS ==========
+[10:32:02] 
+--- Chunk 1 ---
+[10:32:02] 0 --- - RHEA ADDEPALLI rheaaddepalli315@gmail.com | +91 9392519445 | GitHub | Bengaluru, India PROFESSIONAL SUMMARY AI/ML enthusiast with expertise in machine learning, deep learning, reinforcement learning, explainable AI, and generative AI including LLMs. Experienced in data processing, experiment
+[10:32:02] 
+--- Chunk 2 ---
+[10:32:02] . Skilled in prototyping scalable AI systems from prototype to production, model optimization, performance evaluation, and building cutting-edge AI solutions for real-world, large-scale problems. TECHNICAL SKILLS Languages: Python, Java, HTML AIML Tools: PyTorch, TensorFlow, Scikit-learn, NumPy, Pan
+[10:32:02] 
+--- Chunk 3 ---
+[10:32:02] . Implemented conversational memory for context-aware multi-turn interactions and Natural Language Understanding. Built and integrated a scalable Generative AI system using open-source LLMs with prompt-based generation, from prototyping to production. Designed FAISS semantic retrieval using embeddin
+[10:32:02] 
+--- Chunk 4 ---
+[10:32:02] . Built real-time Angular + FastAPI web app implementing a scalable system from prototype to production with lightweight TFLite deployment. Implemented CI/CD pipelines and evaluated model performance through experimentation using accuracy, confusion matrix, and latency. Deployed model on Render http
+[10:32:02] 
+--- Chunk 5 ---
+[10:32:02] . Implemented model caching and efficient tokenization for fast, scalable translation responses. Tech Stack: FastAPI, Angular, Transformers, MarianMT, PyTorch Certifications Cloud Infrastructure Certified Generative AI Professional Oracle | 2025 View Certificate AI Foundations Associate Oracle | 202
+[10:32:02] ======================================
+
+[10:32:02] 
+[DEBUG] ===== CLEANED CONTEXT PREVIEW =====
+[10:32:02] RHEA ADDEPALLI rheaaddepalli315@gmail.com | +91 9392519445 | GitHub | Bengaluru, India PROFESSIONAL SUMMARY AI/ML enthusiast with expertise in machine learning, deep learning, reinforcement learning, 
+[10:32:02] =========================================
+
+[10:32:02] [DEBUG] Full context sent to LLM:
+RHEA ADDEPALLI rheaaddepalli315@gmail.com | +91 9392519445 | GitHub | Bengaluru, India PROFESSIONAL SUMMARY AI/ML enthusiast with expertise in machine learning, deep learning, reinforcement learning, explainable AI, and generative AI including LLMs. Experienced in data processing, experimentation, and modeling developing and deploying real-time machine intelligence systems using Python, PyTorch, TensorFlow, NLP, and embeddings. Skilled in prototyping scalable AI systems from prototype to production, model optimization, performance evaluation, and building cutting-edge AI solutions for real-world, large-scale problems
+
+---
+
+. Skilled in prototyping scalable AI systems from prototype to production, model optimization, performance evaluation, and building cutting-edge AI solutions for real-world, large-scale problems. TECHNICAL SKILLS Languages: Python, Java, HTML AIML Tools: PyTorch, TensorFlow, Scikit-learn, NumPy, Pandas, OpenCV, YOLO, OCR, Hugging Face GenAI & LLM: LLMs, RAG, Prompt Engineering, Agentic AI, Multimodal AI, Conversational AI Development & Collaboration Tools: SQL, RDBMS, Git, GitHub, Flask, REST API, JSON, CI/CD Pipelines AI Concepts : Machine Learning, Deep Learning, Reinforcement Learning, Natural Language Understanding, Computer Vision, Neural Networks, XAI, GenAI Research & Core: Data Processing, Experimentation, Modeling, Algorithmic Foundations, Data Structures & Algorithms, OOP PROJECTS Memory-Augmented Conversational RAG System with Agent-Based Reasoning Live Demo Developed an LLM-based machine intelligence application in Python for document QA using Conversational RAG. Implemented conversational memory for context-aware multi-turn interactions and Natural Language Understanding
+
+---
+
+. Implemented conversational memory for context-aware multi-turn interactions and Natural Language Understanding. Built and integrated a scalable Generative AI system using open-source LLMs with prompt-based generation, from prototyping to production. Designed FAISS semantic retrieval using embeddings, reranking, and RAPTOR for large-scale context understanding. Developed ReAct-based agent workflow for multi-step reasoning and AI-driven automation. Developed REST API services using Flask for scalable AI application deployment and integration. * Debugged, tested, and optimized AI pipeline through rigorous experimentation using Recall@K, precision, and latency metrics. Tech Stack: Python, FAISS, LLMs, NLP, Agents, RAPTOR, RAG, JSON, REST API XAI Bird Cla
+[10:32:30] [ReAct] Step 1: If answer found:
+Thought: The candidate has experience in reinforcement learning as mentioned in the "Reinforcement Lear
+[10:32:30] [DEBUG] action_input raw: repr='Yes'
+[10:32:30] [DEBUG] answer after strip: repr='Yes'
+[10:32:30] [DEBUG] answer before grounding: repr='Yes'
+[10:32:30] [QA] Answer: 'Yes'
+[10:32:30] [DEBUG] react_ans before refusal check: repr='Yes'
+[10:32:30] [QA] Done in 29.7s | model=llama_react | grounding=0.0% | recall=100.0% | confidence=0.000 | decision=accepted
+[10:32:30] [Evaluate] Q13_t0 actual answer: Yes
+[10:32:30] [Evaluate] Q13_t0 ✅ PASS | hits=1/3 | model=llama_react | recall=100.0% | confidence=0.0%
+[10:32:30] [Memory] Enriched query: 'Yes What about blockchain?'
+[10:32:30] [Evaluate] Q13_t1: Yes What about blockchain?...
+[10:32:30] [Extract] ✅ Cache hit — skipping OCR (1 pages)
+[10:32:30] [Chunk] Summary chunks: 1 | RAG chunks: 5
+[10:32:30] [Chunk] 1 summary chunks | 5 RAG chunks
+[10:32:30] [FAISS] ✅ Cache hit for 5fdebb1b...
+[10:32:30] [QA] START | 5 chunks
+[10:32:30] [Hybrid] 1 queries: ['Yes What about blockchain?']
+[10:32:30] [Hybrid] 5 unique chunks after semantic
+[10:32:30] [KeywordSearch] 'Yes What about blockchain?' → 0 chunks | top score=0.000
+[10:32:30] [Hybrid] 5 total unique chunks across all signals
+[10:32:30] [Hybrid] After MMR fallback: 5 chunks
+[10:32:30] [Hybrid] Final pool: 5 chunks | top weight=0.6
+[10:32:31] [Reranker] ⚠️ Very low scores → keeping top chunks instead of rejecting
+[10:32:31] [Guard] ⚠️ Weak reranker score — continuing
+[10:32:32] [Recall@5] ✅ Oracle chunk retrieved! score=100%
+[10:32:32] [Routing] Context-based → FACTUAL_QA
+[10:32:32] [QA] ⚡ Direct QA (no ReAct)
+[10:32:46] [QA] Answer: 'Nothing found.'
+[10:32:46] [DEBUG] react_ans before refusal check: repr='Nothing found.'
+[10:32:46] [Grounding] Refusal answer detected → returning sentinel 75.0
+[10:32:46] [QA] Done in 16.0s | model=llama_direct | grounding=75.0% | recall=100.0% | confidence=0.750 | decision=low_grounding
+[10:32:46] [Evaluate] Q13_t1 actual answer: This information is not present in the document.
+[10:32:46] [Evaluate] Q13_t1 ✅ PASS | hits=3/5 | model=llama_direct | recall=100.0% | confidence=75.0%
+[10:32:46] [Memory] Enriched query: 'This information is not present in the document. Which areas of AI is the candidate strongest in?'
+[10:32:46] [Evaluate] Q13_t2: This information is not present in the document. Which areas...
+[10:32:46] [Extract] ✅ Cache hit — skipping OCR (1 pages)
+[10:32:46] [Chunk] Summary chunks: 1 | RAG chunks: 5
+[10:32:46] [Chunk] 1 summary chunks | 5 RAG chunks
+[10:32:46] [FAISS] ✅ Cache hit for 5fdebb1b...
+[10:32:46] [QA] START | 5 chunks
+[10:32:46] [Hybrid] 1 queries: ['This information is not present in the document. Which areas of AI is the candidate strongest in?']
+[10:32:46] [Hybrid] 5 unique chunks after semantic
+[10:32:46] [KeywordSearch] 'This information is not present in the document. W' → 4 chunks | top score=0.165
+[10:32:46] [Hybrid] 5 total unique chunks across all signals
+[10:32:46] [Hybrid] After MMR fallback: 5 chunks
+[10:32:46] [Hybrid] Final pool: 5 chunks | top weight=0.6
+[10:32:47] [Reranker] ⚠️ Very low scores → keeping top chunks instead of rejecting
+[10:32:47] [Guard] ⚠️ Weak reranker score — continuing
+[10:32:48] [Recall@5] ✅ Oracle chunk retrieved! score=100%
+[10:32:48] [Routing] Context-based → FACTUAL_QA
+[10:32:48] [ReAct] Starting | FACTUAL_QA | 5 chunks | retrieval=0.0%
+[10:32:48] [Reorder] Tiebreaker applied — repeated span: 'oracle | 2025 view'
+[10:32:48] 
+========== DEBUG: TOP CHUNKS ==========
+[10:32:48] 
+--- Chunk 1 ---
+[10:32:48] 0 --- - RHEA ADDEPALLI rheaaddepalli315@gmail.com | +91 9392519445 | GitHub | Bengaluru, India PROFESSIONAL SUMMARY AI/ML enthusiast with expertise in machine learning, deep learning, reinforcement learning, explainable AI, and generative AI including LLMs. Experienced in data processing, experiment
+[10:32:48] 
+--- Chunk 2 ---
+[10:32:48] . Skilled in prototyping scalable AI systems from prototype to production, model optimization, performance evaluation, and building cutting-edge AI solutions for real-world, large-scale problems. TECHNICAL SKILLS Languages: Python, Java, HTML AIML Tools: PyTorch, TensorFlow, Scikit-learn, NumPy, Pan
+[10:32:48] 
+--- Chunk 3 ---
+[10:32:48] . Implemented conversational memory for context-aware multi-turn interactions and Natural Language Understanding. Built and integrated a scalable Generative AI system using open-source LLMs with prompt-based generation, from prototyping to production. Designed FAISS semantic retrieval using embeddin
+[10:32:48] 
+--- Chunk 4 ---
+[10:32:48] . Built real-time Angular + FastAPI web app implementing a scalable system from prototype to production with lightweight TFLite deployment. Implemented CI/CD pipelines and evaluated model performance through experimentation using accuracy, confusion matrix, and latency. Deployed model on Render http
+[10:32:48] 
+--- Chunk 5 ---
+[10:32:48] . Implemented model caching and efficient tokenization for fast, scalable translation responses. Tech Stack: FastAPI, Angular, Transformers, MarianMT, PyTorch Certifications Cloud Infrastructure Certified Generative AI Professional Oracle | 2025 View Certificate AI Foundations Associate Oracle | 202
+[10:32:48] ======================================
+
+[10:32:48] 
+[DEBUG] ===== CLEANED CONTEXT PREVIEW =====
+[10:32:48] RHEA ADDEPALLI rheaaddepalli315@gmail.com | +91 9392519445 | GitHub | Bengaluru, India PROFESSIONAL SUMMARY AI/ML enthusiast with expertise in machine learning, deep learning, reinforcement learning, 
+[10:32:48] =========================================
+
+[10:32:48] [DEBUG] Full context sent to LLM:
+RHEA ADDEPALLI rheaaddepalli315@gmail.com | +91 9392519445 | GitHub | Bengaluru, India PROFESSIONAL SUMMARY AI/ML enthusiast with expertise in machine learning, deep learning, reinforcement learning, explainable AI, and generative AI including LLMs. Experienced in data processing, experimentation, and modeling developing and deploying real-time machine intelligence systems using Python, PyTorch, TensorFlow, NLP, and embeddings. Skilled in prototyping scalable AI systems from prototype to production, model optimization, performance evaluation, and building cutting-edge AI solutions for real-world, large-scale problems
+
+---
+
+. Skilled in prototyping scalable AI systems from prototype to production, model optimization, performance evaluation, and building cutting-edge AI solutions for real-world, large-scale problems. TECHNICAL SKILLS Languages: Python, Java, HTML AIML Tools: PyTorch, TensorFlow, Scikit-learn, NumPy, Pandas, OpenCV, YOLO, OCR, Hugging Face GenAI & LLM: LLMs, RAG, Prompt Engineering, Agentic AI, Multimodal AI, Conversational AI Development & Collaboration Tools: SQL, RDBMS, Git, GitHub, Flask, REST API, JSON, CI/CD Pipelines AI Concepts : Machine Learning, Deep Learning, Reinforcement Learning, Natural Language Understanding, Computer Vision, Neural Networks, XAI, GenAI Research & Core: Data Processing, Experimentation, Modeling, Algorithmic Foundations, Data Structures & Algorithms, OOP PROJECTS Memory-Augmented Conversational RAG System with Agent-Based Reasoning Live Demo Developed an LLM-based machine intelligence application in Python for document QA using Conversational RAG. Implemented conversational memory for context-aware multi-turn interactions and Natural Language Understanding
+
+---
+
+. Implemented conversational memory for context-aware multi-turn interactions and Natural Language Understanding. Built and integrated a scalable Generative AI system using open-source LLMs with prompt-based generation, from prototyping to production. Designed FAISS semantic retrieval using embeddings, reranking, and RAPTOR for large-scale context understanding. Developed ReAct-based agent workflow for multi-step reasoning and AI-driven automation. Developed REST API services using Flask for scalable AI application deployment and integration. * Debugged, tested, and optimized AI pipeline through rigorous experimentation using Recall@K, precision, and latency metrics. Tech Stack: Python, FAISS, LLMs, NLP, Agents, RAPTOR, RAG, JSON, REST API XAI Bird Cla
+[10:33:17] [ReAct] Step 1: If answer found OR not in document:
+Thought: The question asks about the candidate's strength in AI areas, but the provi
+[10:33:17] [DEBUG] action_input raw: repr='This information is not present in the document.'
+[10:33:17] [DEBUG] answer after strip: repr='This information is not present in the document.'
+[10:33:17] [ReasoningFilter] ❌ Answer adds only 0 new tokens → wiping
+[10:33:17] [DEBUG] answer before grounding: repr='This information is not present in the document.'
+[10:33:17] [Grounding] Refusal answer detected → returning sentinel 75.0
+[10:33:17] [QA] Answer: 'This information is not present in the document.'
+[10:33:17] [DEBUG] react_ans before refusal check: repr='This information is not present in the document.'
+[10:33:17] [QA] ⚠️ Refusal detected
+[10:33:17] [Evaluate] Q13_t2 actual answer: This information is not present in the document.
+[10:33:17] [Evaluate] Q13_t2 ❌ FAIL | hits=0/5 | model=not_found | recall=100.0% | confidence=75.0%
+[10:33:17] [Evaluate] Q14_t0: What is the candidate's name?...
+[10:33:17] [Extract] ✅ Cache hit — skipping OCR (1 pages)
+[10:33:17] [Chunk] Summary chunks: 1 | RAG chunks: 5
+[10:33:17] [Chunk] 1 summary chunks | 5 RAG chunks
+[10:33:17] [FAISS] ✅ Cache hit for 5fdebb1b...
+[10:33:17] [QA] START | 5 chunks
+[10:33:17] [Hybrid] 1 queries: ["What is the candidate's name?"]
+[10:33:17] [Hybrid] 5 unique chunks after semantic
+[10:33:17] [KeywordSearch] 'What is the candidate's name?' → 0 chunks | top score=0.000
+[10:33:17] [Hybrid] 5 total unique chunks across all signals
+[10:33:17] [Hybrid] After MMR fallback: 5 chunks
+[10:33:17] [Hybrid] Final pool: 5 chunks | top weight=0.6
+[10:33:18] [Reranker] ⚠️ Very low scores → keeping top chunks instead of rejecting
+[10:33:18] [Guard] ⚠️ Weak reranker score — continuing
+[10:33:19] [Recall@5] ✅ Oracle chunk retrieved! score=100%
+[10:33:19] [Routing] Context-based → FACTUAL_QA
+[10:33:19] [QA] ⚡ Direct QA (no ReAct)
+[10:33:33] [QA] Answer: 'RHEA ADDEPALLI'
+[10:33:33] [DEBUG] react_ans before refusal check: repr='RHEA ADDEPALLI'
+[10:33:33] [QA] Done in 15.9s | model=llama_direct | grounding=100.0% | recall=100.0% | confidence=1.000 | decision=accepted
+[10:33:33] [Evaluate] Q14_t0 actual answer: RHEA ADDEPALLI
+[10:33:33] [Evaluate] Q14_t0 ✅ PASS | hits=2/2 | model=llama_direct | recall=100.0% | confidence=100.0%
+[10:33:33] [Memory] Enriched query: 'RHEA ADDEPALLI What is the name of the RAG project she built?'
+[10:33:33] [Evaluate] Q14_t1: RHEA ADDEPALLI What is the name of the RAG project she built...
+[10:33:33] [Extract] ✅ Cache hit — skipping OCR (1 pages)
+[10:33:33] [Chunk] Summary chunks: 1 | RAG chunks: 5
+[10:33:33] [Chunk] 1 summary chunks | 5 RAG chunks
+[10:33:33] [FAISS] ✅ Cache hit for 5fdebb1b...
+[10:33:33] [QA] START | 5 chunks
+[10:33:33] [Hybrid] 1 queries: ['RHEA ADDEPALLI What is the name of the RAG project she built?']
+[10:33:33] [Hybrid] 5 unique chunks after semantic
+[10:33:33] [ExactMatch] 'RHEA ADDEPALLI What is the name of the RAG project' → 3 exact chunks | top score=2
+[10:33:33] [Hybrid] 3 exact-match chunks boosted to 0.6
+[10:33:33] [KeywordSearch] 'RHEA ADDEPALLI What is the name of the RAG project' → 4 chunks | top score=0.140
+[10:33:33] [Hybrid] 5 total unique chunks across all signals
+[10:33:33] [Hybrid] After MMR fallback: 5 chunks
+[10:33:33] [Hybrid] Final pool: 5 chunks | top weight=0.6
+[10:33:34] [Reranker] ⚠️ Too few chunks after pruning (1) → expanding
+[10:33:34] [Reranker] 5 → 5 chunks after pruning | top=-2.246 | margin=3.0 | bottom kept=-2.246
+[10:33:34] [ExactMatch] 'RHEA ADDEPALLI What is the name of the RAG project' → 3 exact chunks | top score=2
+[10:33:34] [Protect] All exact-match chunks already in reranked set ✅
+[10:33:35] [Recall@5] ✅ Oracle chunk retrieved! score=100%
+[10:33:35] [Routing] Context-based → FACTUAL_QA
+[10:33:35] [ReAct] Starting | FACTUAL_QA | 5 chunks | retrieval=0.0%
+[10:33:35] [Reorder] Tiebreaker applied — repeated span: 'oracle | 2025 view'
+[10:33:35] [Reorder] top chunk score=2 | numbers=[] | keywords=['built?', 'she', 'project', 'name']
+[10:33:35] 
+========== DEBUG: TOP CHUNKS ==========
+[10:33:35] 
+--- Chunk 1 ---
+[10:33:35] 0 --- - RHEA ADDEPALLI rheaaddepalli315@gmail.com | +91 9392519445 | GitHub | Bengaluru, India PROFESSIONAL SUMMARY AI/ML enthusiast with expertise in machine learning, deep learning, reinforcement learning, explainable AI, and generative AI including LLMs. Experienced in data processing, experiment
+[10:33:35] 
+--- Chunk 2 ---
+[10:33:35] . Skilled in prototyping scalable AI systems from prototype to production, model optimization, performance evaluation, and building cutting-edge AI solutions for real-world, large-scale problems. TECHNICAL SKILLS Languages: Python, Java, HTML AIML Tools: PyTorch, TensorFlow, Scikit-learn, NumPy, Pan
+[10:33:35] 
+--- Chunk 3 ---
+[10:33:35] . Implemented conversational memory for context-aware multi-turn interactions and Natural Language Understanding. Built and integrated a scalable Generative AI system using open-source LLMs with prompt-based generation, from prototyping to production. Designed FAISS semantic retrieval using embeddin
+[10:33:35] 
+--- Chunk 4 ---
+[10:33:35] . Built real-time Angular + FastAPI web app implementing a scalable system from prototype to production with lightweight TFLite deployment. Implemented CI/CD pipelines and evaluated model performance through experimentation using accuracy, confusion matrix, and latency. Deployed model on Render http
+[10:33:35] 
+--- Chunk 5 ---
+[10:33:35] . Implemented model caching and efficient tokenization for fast, scalable translation responses. Tech Stack: FastAPI, Angular, Transformers, MarianMT, PyTorch Certifications Cloud Infrastructure Certified Generative AI Professional Oracle | 2025 View Certificate AI Foundations Associate Oracle | 202
+[10:33:35] ======================================
+
+[10:33:35] 
+[DEBUG] ===== CLEANED CONTEXT PREVIEW =====
+[10:33:35] RHEA ADDEPALLI rheaaddepalli315@gmail.com | +91 9392519445 | GitHub | Bengaluru, India PROFESSIONAL SUMMARY AI/ML enthusiast with expertise in machine learning, deep learning, reinforcement learning, 
+[10:33:35] =========================================
+
+[10:33:35] [DEBUG] Full context sent to LLM:
+RHEA ADDEPALLI rheaaddepalli315@gmail.com | +91 9392519445 | GitHub | Bengaluru, India PROFESSIONAL SUMMARY AI/ML enthusiast with expertise in machine learning, deep learning, reinforcement learning, explainable AI, and generative AI including LLMs. Experienced in data processing, experimentation, and modeling developing and deploying real-time machine intelligence systems using Python, PyTorch, TensorFlow, NLP, and embeddings. Skilled in prototyping scalable AI systems from prototype to production, model optimization, performance evaluation, and building cutting-edge AI solutions for real-world, large-scale problems
+
+---
+
+. Skilled in prototyping scalable AI systems from prototype to production, model optimization, performance evaluation, and building cutting-edge AI solutions for real-world, large-scale problems. TECHNICAL SKILLS Languages: Python, Java, HTML AIML Tools: PyTorch, TensorFlow, Scikit-learn, NumPy, Pandas, OpenCV, YOLO, OCR, Hugging Face GenAI & LLM: LLMs, RAG, Prompt Engineering, Agentic AI, Multimodal AI, Conversational AI Development & Collaboration Tools: SQL, RDBMS, Git, GitHub, Flask, REST API, JSON, CI/CD Pipelines AI Concepts : Machine Learning, Deep Learning, Reinforcement Learning, Natural Language Understanding, Computer Vision, Neural Networks, XAI, GenAI Research & Core: Data Processing, Experimentation, Modeling, Algorithmic Foundations, Data Structures & Algorithms, OOP PROJECTS Memory-Augmented Conversational RAG System with Agent-Based Reasoning Live Demo Developed an LLM-based machine intelligence application in Python for document QA using Conversational RAG. Implemented conversational memory for context-aware multi-turn interactions and Natural Language Understanding
+
+---
+
+. Implemented conversational memory for context-aware multi-turn interactions and Natural Language Understanding. Built and integrated a scalable Generative AI system using open-source LLMs with prompt-based generation, from prototyping to production. Designed FAISS semantic retrieval using embeddings, reranking, and RAPTOR for large-scale context understanding. Developed ReAct-based agent workflow for multi-step reasoning and AI-driven automation. Developed REST API services using Flask for scalable AI application deployment and integration. * Debugged, tested, and optimized AI pipeline through rigorous experimentation using Recall@K, precision, and latency metrics. Tech Stack: Python, FAISS, LLMs, NLP, Agents, RAPTOR, RAG, JSON, REST API XAI Bird Cla
+[10:34:05] [ReAct] Step 1: If answer found 
+Thought: The question is asking for the name of the RAG project RHEA ADDEPALLI built, which can be foun
+[10:34:05] [DEBUG] action_input raw: repr='Memory-Augmented Conversational RAG System with Agent-Based Reasoning'
+[10:34:05] [DEBUG] answer after strip: repr='Memory-Augmented Conversational RAG System with Agent-Based Reasoning'
+[10:34:05] [DEBUG] answer before grounding: repr='Memory-Augmented Conversational RAG System with Agent-Based Reasoning'
+[10:34:05] [QA] Answer: 'Memory-Augmented Conversational RAG System with Agent-Based '
+[10:34:05] [DEBUG] react_ans before refusal check: repr='Memory-Augmented Conversational RAG System with Agent-Based Reasoning'
+[10:34:05] [QA] Done in 31.8s | model=llama_react | grounding=100.0% | recall=100.0% | confidence=1.000 | decision=accepted
+[10:34:05] [Evaluate] Q14_t1 actual answer: Memory-Augmented Conversational RAG System with Agent-Based Reasoning
+[10:34:05] [Evaluate] Q14_t1 ✅ PASS | hits=3/3 | model=llama_react | recall=100.0% | confidence=100.0%
+[10:34:05] [Memory] Enriched query: 'Memory-Augmented Conversational RAG System with Agent-Based Reasoning What problem does it solve?'
+[10:34:05] [Evaluate] Q14_t2: Memory-Augmented Conversational RAG System with Agent-Based ...
+[10:34:05] [Extract] ✅ Cache hit — skipping OCR (1 pages)
+[10:34:05] [Chunk] Summary chunks: 1 | RAG chunks: 5
+[10:34:05] [Chunk] 1 summary chunks | 5 RAG chunks
+[10:34:05] [FAISS] ✅ Cache hit for 5fdebb1b...
+[10:34:05] [QA] START | 5 chunks
+[10:34:05] [Hybrid] 1 queries: ['Memory-Augmented Conversational RAG System with Agent-Based Reasoning What problem does it solve?']
+[10:34:05] [Hybrid] 5 unique chunks after semantic
+[10:34:05] [ExactMatch] 'Memory-Augmented Conversational RAG System with Ag' → 2 exact chunks | top score=7
+[10:34:05] [Hybrid] 2 exact-match chunks boosted to 0.6
+[10:34:05] [KeywordSearch] 'Memory-Augmented Conversational RAG System with Ag' → 2 chunks | top score=0.325
+[10:34:05] [Hybrid] 5 total unique chunks across all signals
+[10:34:05] [Hybrid] After MMR fallback: 5 chunks
+[10:34:05] [Hybrid] Final pool: 5 chunks | top weight=0.6
+[10:34:06] [Reranker] ⚠️ Too few chunks after pruning (1) → expanding
+[10:34:06] [Reranker] 5 → 5 chunks after pruning | top=-0.122 | margin=3.0 | bottom kept=-0.122
+[10:34:06] [ExactMatch] 'Memory-Augmented Conversational RAG System with Ag' → 2 exact chunks | top score=7
+[10:34:06] [Protect] All exact-match chunks already in reranked set ✅
+[10:34:07] [Recall@5] ✅ Oracle chunk retrieved! score=100%
+[10:34:07] [Routing] Context-based → MULTIPART_QA
+[10:34:07] [Reorder] Tiebreaker applied — repeated span: 'oracle | 2025 view'
+[10:34:07] [Reorder] top chunk score=7 | numbers=[] | keywords=['memory-augmented', 'conversational', 'problem', 'solve?']
+[10:34:45] [QA] Done in 40.2s | model=llama_multipart | grounding=83.3% | recall=100.0% | confidence=0.833 | decision=accepted
+[10:34:45] [Evaluate] Q14_t2 actual answer: The Memory-Augmented Conversational RAG System with Agent-Based Reasoning solves the problem of context-aware multi-turn interactions and Natural Language Understanding.
+[10:34:45] [Evaluate] Q14_t2 ✅ PASS | hits=1/3 | model=llama_multipart | recall=100.0% | confidence=83.3%
+[10:34:45] [Memory] Enriched query: 'The Memory-Augmented Conversational RAG System with Agent-Based Reasoning solves the problem of cont'
+[10:34:45] [Evaluate] Q14_t3: The Memory-Augmented Conversational RAG System with Agent-Ba...
+[10:34:45] [Extract] ✅ Cache hit — skipping OCR (1 pages)
+[10:34:45] [Chunk] Summary chunks: 1 | RAG chunks: 5
+[10:34:45] [Chunk] 1 summary chunks | 5 RAG chunks
+[10:34:45] [FAISS] ✅ Cache hit for 5fdebb1b...
+[10:34:45] [QA] START | 5 chunks
+[10:34:45] [Hybrid] 1 queries: ['The Memory-Augmented Conversational RAG System with Agent-Based Reasoning solves the problem of context-aware multi-turn interactions and Natural Language Understanding. How was it implemented?']
+[10:34:45] [Hybrid] 5 unique chunks after semantic
+[10:34:45] [ExactMatch] 'The Memory-Augmented Conversational RAG System wit' → 2 exact chunks | top score=12
+[10:34:45] [Hybrid] 2 exact-match chunks boosted to 0.6
+[10:34:45] [KeywordSearch] 'The Memory-Augmented Conversational RAG System wit' → 4 chunks | top score=0.405
+[10:34:45] [Hybrid] 5 total unique chunks across all signals
+[10:34:45] [Hybrid] After MMR fallback: 5 chunks
+[10:34:45] [Hybrid] Final pool: 5 chunks | top weight=0.6
+[10:34:46] [Reranker] ⚠️ Too few chunks after pruning (1) → expanding
+[10:34:46] [Reranker] 5 → 5 chunks after pruning | top=5.175 | margin=3.0 | bottom kept=5.175
+[10:34:46] [ExactMatch] 'The Memory-Augmented Conversational RAG System wit' → 2 exact chunks | top score=12
+[10:34:46] [Protect] All exact-match chunks already in reranked set ✅
+[10:34:47] [Recall@5] ✅ Oracle chunk retrieved! score=100%
+[10:34:47] [Routing] Context-based → MULTIPART_QA
+[10:34:47] [Reorder] Tiebreaker applied — repeated span: 'oracle | 2025 view'
+[10:34:47] [Reorder] top chunk score=12 | numbers=[] | keywords=['memory-augmented', 'conversational', 'problem', 'natural']
+[10:35:16] [QA] Done in 31.2s | model=llama_multipart | grounding=88.1% | recall=100.0% | confidence=0.881 | decision=accepted
+[10:35:16] [Evaluate] Q14_t3 actual answer: The Memory-Augmented Conversational RAG System with Agent-Based Reasoning was implemented by fine-tuning and optimizing a Conversational AGI application in Python for document QA using LLMs. It built conversational memory for context-aware multi-turn interactions and Natural Language Understanding, 
+[10:35:16] [Evaluate] Q14_t3 ✅ PASS | hits=3/5 | model=llama_multipart | recall=100.0% | confidence=88.1%
+[10:35:16] [Evaluate] Results saved to grounding_results.json
+[10:35:16] [Evaluate] ✅ Done | Pass=23 Partial=0 Fail=2 | Pass rate=92.0%
+[10:35:16] [DEBUG] PDF NAME: the-story-of-doctor-dolittle.pdf
+[10:35:16] [DEBUG] DATASET MAP KEYS: ['rhea aiml resume updated.pdf', 'the-story-of-doctor-dolittle.pdf', 'ml.pdf']
+[10:35:16] [DEBUG] FULL DATASET PATH: C:\xampp\htdocs\GenAI-Doc-old\dco_mind\datasets\story.json
+[10:35:17] [Evaluate] Starting evaluation run: Test 15_run_1
+[10:35:17] [Evaluate] PDF: C:\Users\Rhearitu\Downloads\the-story-of-doctor-dolittle.pdf
+[10:35:17] [Evaluate] Questions: 10
+[10:35:17] [Evaluate] Q1: Why did people stop visiting the doctor?...
+[10:35:18] [Extract] Done — 83 pages, 133302 chars
+[10:35:18] [Chunk] Summary chunks: 17 | RAG chunks: 153
+[10:35:18] [Chunk] 17 summary chunks | 153 RAG chunks
+[10:35:18] [FAISS] Building fresh index (153 chunks)...
+[10:35:37] [FAISS] Index built | cache size=2
+[10:35:37] [QA] START | 153 chunks
+[10:35:37] [Hybrid] 1 queries: ['Why did people stop visiting the doctor?']
+[10:35:37] [Hybrid] 8 unique chunks after semantic
+[10:35:37] [ExactMatch] 'Why did people stop visiting the doctor?' → 8 exact chunks | top score=3
+[10:35:37] [Hybrid] 8 exact-match chunks boosted to 0.6
+[10:35:37] [KeywordSearch] 'Why did people stop visiting the doctor?' → 8 chunks | top score=0.155
+[10:35:37] [Hybrid] 18 total unique chunks across all signals
+[10:35:37] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[10:35:38] [Reranker] ⚠️ Too few chunks after pruning (1) → expanding
+[10:35:38] [Reranker] 8 → 8 chunks after pruning | top=-0.198 | margin=3.0 | bottom kept=-0.198
+[10:35:38] [ExactMatch] 'Why did people stop visiting the doctor?' → 8 exact chunks | top score=3
+[10:35:38] [Protect] Injecting 7 exact-match chunks dropped by reranker
+[10:35:38] [Protect] Context expanded: 8 → 15 chunks
+[10:35:47] [Recall@15] oracle=0.485 | best_retrieved=0.436 | score=90.0%
+[10:35:47] [Routing] Context-based → MULTIPART_QA
+[10:35:47] [Reorder] Tiebreaker applied — repeated span: 'i must go home'
+[10:35:47] [Reorder] Tiebreaker applied — repeated span: 'drop of water falling'
+[10:35:47] [Reorder] Tiebreaker applied — repeated span: 'i can make people'
+[10:35:47] [Reorder] top chunk score=3 | numbers=[] | keywords=['people', 'visiting', 'doctor?', 'stop']
+[10:36:29] [QA] Done in 70.9s | model=llama_multipart | grounding=95.7% | recall=90.0% | confidence=0.957 | decision=accepted
+[10:36:29] [Evaluate] Q1 actual answer: People stopped visiting the doctor because they were told by John Dolittle that he was going to become an animal-doctor, and as a result, old ladies began to bring him their pet pugs and poodles who had eaten too much cake; and farmers came many miles to show him sick cows and sheep.
+[10:36:29] [Evaluate] Q1 ❌ FAIL | hits=0/2 | model=llama_multipart | recall=90.0% | confidence=95.7%
+[10:36:29] [Evaluate] Q2_t0: Who is the main character in the story?...
+[10:36:29] [Extract] ✅ Cache hit — skipping OCR (83 pages)
+[10:36:29] [Chunk] Summary chunks: 17 | RAG chunks: 153
+[10:36:29] [Chunk] 17 summary chunks | 153 RAG chunks
+[10:36:29] [FAISS] ✅ Cache hit for ffe0b7f4...
+[10:36:29] [QA] START | 153 chunks
+[10:36:29] [Hybrid] 1 queries: ['Who is the main character in the story?']
+[10:36:29] [Hybrid] 8 unique chunks after semantic
+[10:36:29] [ExactMatch] 'Who is the main character in the story?' → 1 exact chunks | top score=1
+[10:36:29] [Hybrid] 1 exact-match chunks boosted to 0.6
+[10:36:29] [KeywordSearch] 'Who is the main character in the story?' → 2 chunks | top score=0.442
+[10:36:29] [Hybrid] 10 total unique chunks across all signals
+[10:36:29] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[10:36:29] [Reranker] ⚠️ Too few chunks after pruning (1) → expanding
+[10:36:29] [Reranker] 8 → 8 chunks after pruning | top=-4.755 | margin=3.0 | bottom kept=-4.755
+[10:36:29] [ExactMatch] 'Who is the main character in the story?' → 1 exact chunks | top score=1
+[10:36:29] [Protect] Injecting 1 exact-match chunks dropped by reranker
+[10:36:29] [Protect] Context expanded: 8 → 9 chunks
+[10:36:37] [Recall@9] ✅ Oracle chunk retrieved! score=100%
+[10:36:37] [Routing] Context-based → FACTUAL_QA
+[10:36:37] [QA] ⚡ Direct QA (no ReAct)
+[10:36:52] [QA] Answer: 'John Dolittle'
+[10:36:52] [DEBUG] react_ans before refusal check: repr='John Dolittle'
+[10:36:52] [QA] Done in 23.1s | model=llama_direct | grounding=100.0% | recall=100.0% | confidence=1.000 | decision=accepted
+[10:36:52] [Evaluate] Q2_t0 actual answer: John Dolittle
+[10:36:52] [Evaluate] Q2_t0 ✅ PASS | hits=2/2 | model=llama_direct | recall=100.0% | confidence=100.0%
+[10:36:52] [Memory] Enriched query: 'John Dolittle Where does he live?'
+[10:36:52] [Evaluate] Q2_t1: John Dolittle Where does he live?...
+[10:36:52] [Extract] ✅ Cache hit — skipping OCR (83 pages)
+[10:36:52] [Chunk] Summary chunks: 17 | RAG chunks: 153
+[10:36:52] [Chunk] 17 summary chunks | 153 RAG chunks
+[10:36:52] [FAISS] ✅ Cache hit for ffe0b7f4...
+[10:36:52] [QA] START | 153 chunks
+[10:36:52] [Hybrid] 1 queries: ['John Dolittle Where does he live?']
+[10:36:52] [Hybrid] 8 unique chunks after semantic
+[10:36:52] [ExactMatch] 'John Dolittle Where does he live?' → 8 exact chunks | top score=2
+[10:36:52] [Hybrid] 8 exact-match chunks boosted to 0.6
+[10:36:52] [KeywordSearch] 'John Dolittle Where does he live?' → 8 chunks | top score=0.091
+[10:36:52] [Hybrid] 14 total unique chunks across all signals
+[10:36:52] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[10:36:52] [Reranker] ⚠️ Too few chunks after pruning (1) → expanding
+[10:36:52] [Reranker] 8 → 8 chunks after pruning | top=5.345 | margin=3.0 | bottom kept=5.345
+[10:36:52] [ExactMatch] 'John Dolittle Where does he live?' → 8 exact chunks | top score=2
+[10:36:52] [Protect] Injecting 4 exact-match chunks dropped by reranker
+[10:36:52] [Protect] Context expanded: 8 → 12 chunks
+[10:37:00] [Recall@12] ✅ Oracle chunk retrieved! score=100%
+[10:37:00] [Routing] Context-based → MULTIPART_QA
+[10:37:00] [Reorder] top chunk score=2 | numbers=[] | keywords=['dolittle', 'john', 'live?']
+[10:37:41] [QA] Done in 48.8s | model=llama_multipart | grounding=100.0% | recall=100.0% | confidence=1.000 | decision=accepted
+[10:37:41] [Evaluate] Q2_t1 actual answer: Puddleby-on-the-Marsh.
+[10:37:41] [Evaluate] Q2_t1 ✅ PASS | hits=1/1 | model=llama_multipart | recall=100.0% | confidence=100.0%
+[10:37:41] [Memory] Enriched query: 'Puddleby-on-the-Marsh. Who lives with him?'
+[10:37:41] [Evaluate] Q2_t2: Puddleby-on-the-Marsh. Who lives with him?...
+[10:37:41] [Extract] ✅ Cache hit — skipping OCR (83 pages)
+[10:37:41] [Chunk] Summary chunks: 17 | RAG chunks: 153
+[10:37:41] [Chunk] 17 summary chunks | 153 RAG chunks
+[10:37:41] [FAISS] ✅ Cache hit for ffe0b7f4...
+[10:37:41] [QA] START | 153 chunks
+[10:37:41] [Hybrid] 1 queries: ['Puddleby-on-the-Marsh. Who lives with him?']
+[10:37:41] [Hybrid] 8 unique chunks after semantic
+[10:37:41] [ExactMatch] 'Puddleby-on-the-Marsh. Who lives with him?' → 6 exact chunks | top score=2
+[10:37:41] [Hybrid] 6 exact-match chunks boosted to 0.6
+[10:37:41] [KeywordSearch] 'Puddleby-on-the-Marsh. Who lives with him?' → 8 chunks | top score=0.256
+[10:37:41] [Hybrid] 12 total unique chunks across all signals
+[10:37:41] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[10:37:41] [Reranker] ⚠️ Too few chunks after pruning (2) → expanding
+[10:37:41] [Reranker] 8 → 8 chunks after pruning | top=4.336 | margin=3.0 | bottom kept=3.466
+[10:37:41] [ExactMatch] 'Puddleby-on-the-Marsh. Who lives with him?' → 6 exact chunks | top score=2
+[10:37:41] [Protect] Injecting 4 exact-match chunks dropped by reranker
+[10:37:41] [Protect] Context expanded: 8 → 12 chunks
+[10:37:49] [Recall@12] ✅ Oracle chunk retrieved! score=100%
+[10:37:49] [Routing] Context-based → FACTUAL_QA
+[10:37:49] [QA] ⚡ Direct QA (no ReAct)
+[10:38:06] [QA] Answer: 'His sister, Sarah Dolittle, is housekeeper for him; but the '
+[10:38:06] [DEBUG] react_ans before refusal check: repr='His sister, Sarah Dolittle, is housekeeper for him; but the Doctor looked after the garden himself.'
+[10:38:06] [QA] Done in 25.0s | model=llama_direct | grounding=100.0% | recall=100.0% | confidence=1.000 | decision=accepted
+[10:38:06] [Evaluate] Q2_t2 actual answer: His sister, Sarah Dolittle, is housekeeper for him; but the Doctor looked after the garden himself.
+[10:38:06] [Evaluate] Q2_t2 ✅ PASS | hits=2/2 | model=llama_direct | recall=100.0% | confidence=100.0%
+[10:38:06] [Memory] Enriched query: 'His sister, Sarah Dolittle, is housekeeper for him; but the Doctor looked after the garden himself. '
+[10:38:06] [Evaluate] Q2_t3: His sister, Sarah Dolittle, is housekeeper for him; but the ...
+[10:38:06] [Extract] ✅ Cache hit — skipping OCR (83 pages)
+[10:38:06] [Chunk] Summary chunks: 17 | RAG chunks: 153
+[10:38:06] [Chunk] 17 summary chunks | 153 RAG chunks
+[10:38:06] [FAISS] ✅ Cache hit for ffe0b7f4...
+[10:38:06] [QA] START | 153 chunks
+[10:38:06] [Hybrid] 1 queries: ['His sister, Sarah Dolittle, is housekeeper for him; but the Doctor looked after the garden himself. What problem does she complain about?']
+[10:38:06] [Hybrid] 8 unique chunks after semantic
+[10:38:06] [ExactMatch] 'His sister, Sarah Dolittle, is housekeeper for him' → 5 exact chunks | top score=11
+[10:38:06] [Hybrid] 5 exact-match chunks boosted to 0.6
+[10:38:06] [KeywordSearch] 'His sister, Sarah Dolittle, is housekeeper for him' → 8 chunks | top score=0.240
+[10:38:06] [Hybrid] 12 total unique chunks across all signals
+[10:38:06] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[10:38:06] [Reranker] ⚠️ Too few chunks after pruning (4) → expanding
+[10:38:06] [Reranker] 8 → 8 chunks after pruning | top=0.422 | margin=3.0 | bottom kept=-2.527
+[10:38:06] [ExactMatch] 'His sister, Sarah Dolittle, is housekeeper for him' → 5 exact chunks | top score=11
+[10:38:06] [Protect] Injecting 2 exact-match chunks dropped by reranker
+[10:38:06] [Protect] Context expanded: 8 → 10 chunks
+[10:38:14] [Recall@10] oracle=0.509 | best_retrieved=0.481 | score=94.5%
+[10:38:14] [Routing] Context-based → MULTIPART_QA
+[10:38:14] [Reorder] Tiebreaker applied — repeated span: 'afraid to send their'
+[10:38:14] [Reorder] Tiebreaker applied — repeated span: 'was to do the'
+[10:38:14] [Reorder] top chunk score=11 | numbers=[] | keywords=['problem', 'housekeeper', 'himself.', 'she']
+[10:38:56] [QA] Done in 50.3s | model=llama_multipart | grounding=80.0% | recall=94.5% | confidence=0.800 | decision=accepted
+[10:38:56] [Evaluate] Q2_t3 actual answer: She complains about all these animals making the house untidy.
+[10:38:56] [Evaluate] Q2_t3 ✅ PASS | hits=2/2 | model=llama_multipart | recall=94.5% | confidence=80.0%
+[10:38:56] [Evaluate] Q3: How did the doctor learn that animals can communicate?...
+[10:38:56] [Extract] ✅ Cache hit — skipping OCR (83 pages)
+[10:38:56] [Chunk] Summary chunks: 17 | RAG chunks: 153
+[10:38:56] [Chunk] 17 summary chunks | 153 RAG chunks
+[10:38:56] [FAISS] ✅ Cache hit for ffe0b7f4...
+[10:38:56] [QA] START | 153 chunks
+[10:38:56] [Hybrid] 1 queries: ['How did the doctor learn that animals can communicate?']
+[10:38:56] [Hybrid] 8 unique chunks after semantic
+[10:38:56] [ExactMatch] 'How did the doctor learn that animals can communic' → 8 exact chunks | top score=4
+[10:38:56] [Hybrid] 8 exact-match chunks boosted to 0.6
+[10:38:56] [KeywordSearch] 'How did the doctor learn that animals can communic' → 8 chunks | top score=0.101
+[10:38:56] [Hybrid] 16 total unique chunks across all signals
+[10:38:56] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[10:38:57] [Reranker] ⚠️ Too few chunks after pruning (1) → expanding
+[10:38:57] [Reranker] 8 → 8 chunks after pruning | top=5.060 | margin=3.0 | bottom kept=5.060
+[10:38:57] [ExactMatch] 'How did the doctor learn that animals can communic' → 8 exact chunks | top score=4
+[10:38:57] [Protect] Injecting 4 exact-match chunks dropped by reranker
+[10:38:57] [Protect] Context expanded: 8 → 12 chunks
+[10:39:04] [Recall@12] ✅ Oracle chunk retrieved! score=100%
+[10:39:04] [Routing] Context-based → MULTIPART_QA
+[10:39:04] [Reorder] Tiebreaker applied — repeated span: 'asked the doctor. "oh,'
+[10:39:04] [Reorder] Tiebreaker applied — repeated span: 'putting his hand in'
+[10:39:04] [Reorder] Tiebreaker applied — repeated span: 'was to do the'
+[10:39:04] [Reorder] top chunk score=4 | numbers=[] | keywords=['learn', 'communicate?', 'doctor', 'animals']
+[10:39:47] [QA] Done in 51.1s | model=llama_multipart | grounding=100.0% | recall=100.0% | confidence=1.000 | decision=accepted
+[10:39:47] [Evaluate] Q3 actual answer: Polynesia told the Doctor that animals can talk.
+[10:39:47] [Evaluate] Q3 ✅ PASS | hits=2/3 | model=llama_multipart | recall=100.0% | confidence=100.0%
+[10:39:47] [Evaluate] Q4_t0: Why did the doctor stop treating people?...
+[10:39:47] [Extract] ✅ Cache hit — skipping OCR (83 pages)
+[10:39:47] [Chunk] Summary chunks: 17 | RAG chunks: 153
+[10:39:47] [Chunk] 17 summary chunks | 153 RAG chunks
+[10:39:47] [FAISS] ✅ Cache hit for ffe0b7f4...
+[10:39:47] [QA] START | 153 chunks
+[10:39:47] [Hybrid] 1 queries: ['Why did the doctor stop treating people?']
+[10:39:47] [Hybrid] 8 unique chunks after semantic
+[10:39:47] [ExactMatch] 'Why did the doctor stop treating people?' → 8 exact chunks | top score=2
+[10:39:47] [Hybrid] 8 exact-match chunks boosted to 0.6
+[10:39:47] [KeywordSearch] 'Why did the doctor stop treating people?' → 8 chunks | top score=0.104
+[10:39:47] [Hybrid] 21 total unique chunks across all signals
+[10:39:47] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[10:39:48] [Reranker] ⚠️ Too few chunks after pruning (2) → expanding
+[10:39:48] [Reranker] 8 → 8 chunks after pruning | top=-3.486 | margin=3.0 | bottom kept=-4.292
+[10:39:48] [ExactMatch] 'Why did the doctor stop treating people?' → 8 exact chunks | top score=2
+[10:39:48] [Protect] Injecting 8 exact-match chunks dropped by reranker
+[10:39:48] [Protect] Context expanded: 8 → 16 chunks
+[10:39:57] [Recall@16] oracle=0.498 | best_retrieved=0.421 | score=84.5%
+[10:39:57] [Routing] Context-based → MULTIPART_QA
+[10:39:57] [Reorder] Tiebreaker applied — repeated span: 'i must go home'
+[10:39:57] [Reorder] Tiebreaker applied — repeated span: 'asked the doctor. "oh,'
+[10:39:57] [Reorder] Tiebreaker applied — repeated span: 'drop of water falling'
+[10:39:57] [Reorder] Tiebreaker applied — repeated span: 'what i need is'
+[10:39:57] [Reorder] top chunk score=2 | numbers=[] | keywords=['people?', 'treating', 'stop', 'doctor']
+[10:40:39] [QA] Done in 51.7s | model=llama_multipart | grounding=87.5% | recall=84.5% | confidence=0.875 | decision=accepted
+[10:40:39] [Evaluate] Q4_t0 actual answer: He stopped treating people because he learned the language of animals and could talk to them himself, making it easy for him to cure their ailments.
+[10:40:39] [Evaluate] Q4_t0 ✅ PASS | hits=3/3 | model=llama_multipart | recall=84.5% | confidence=87.5%
+[10:40:39] [Memory] Enriched query: 'He stopped treating people because he learned the language of animals and could talk to them himself'
+[10:40:39] [Evaluate] Q4_t1: He stopped treating people because he learned the language o...
+[10:40:39] [Extract] ✅ Cache hit — skipping OCR (83 pages)
+[10:40:39] [Chunk] Summary chunks: 17 | RAG chunks: 153
+[10:40:39] [Chunk] 17 summary chunks | 153 RAG chunks
+[10:40:39] [FAISS] ✅ Cache hit for ffe0b7f4...
+[10:40:39] [QA] START | 153 chunks
+[10:40:39] [Hybrid] 1 queries: ['He stopped treating people because he learned the language of animals and could talk to them himself, making it easy for him to cure their ailments. Who helped him understand animal language?']
+[10:40:39] [Hybrid] 8 unique chunks after semantic
+[10:40:39] [ExactMatch] 'He stopped treating people because he learned the ' → 8 exact chunks | top score=11
+[10:40:39] [Hybrid] 8 exact-match chunks boosted to 0.6
+[10:40:39] [KeywordSearch] 'He stopped treating people because he learned the ' → 8 chunks | top score=0.155
+[10:40:39] [Hybrid] 15 total unique chunks across all signals
+[10:40:39] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[10:40:40] [Reranker] ⚠️ Too few chunks after pruning (6) → expanding
+[10:40:40] [Reranker] 8 → 8 chunks after pruning | top=-2.539 | margin=3.0 | bottom kept=-5.372
+[10:40:40] [ExactMatch] 'He stopped treating people because he learned the ' → 8 exact chunks | top score=11
+[10:40:40] [Protect] Injecting 5 exact-match chunks dropped by reranker
+[10:40:40] [Protect] Context expanded: 8 → 13 chunks
+[10:40:47] [Recall@13] ✅ Oracle chunk retrieved! score=100%
+[10:40:47] [Routing] Context-based → MULTIPART_QA
+[10:40:47] [Reorder] Tiebreaker applied — repeated span: 'the leader of the'
+[10:40:47] [Reorder] Tiebreaker applied — repeated span: 'was to do the'
+[10:40:47] [Reorder] top chunk score=10 | numbers=[] | keywords=['understand', 'treating', 'ailments.', 'their']
+[10:41:29] [QA] Done in 50.5s | model=llama_multipart | grounding=100.0% | recall=100.0% | confidence=1.000 | decision=accepted
+[10:41:29] [Evaluate] Q4_t1 actual answer: Polynesia.
+[10:41:29] [Evaluate] Q4_t1 ✅ PASS | hits=1/1 | model=llama_multipart | recall=100.0% | confidence=100.0%
+[10:41:29] [Memory] Enriched query: 'Polynesia. What did he learn from her?'
+[10:41:29] [Evaluate] Q4_t2: Polynesia. What did he learn from her?...
+[10:41:29] [Extract] ✅ Cache hit — skipping OCR (83 pages)
+[10:41:29] [Chunk] Summary chunks: 17 | RAG chunks: 153
+[10:41:29] [Chunk] 17 summary chunks | 153 RAG chunks
+[10:41:29] [FAISS] ✅ Cache hit for ffe0b7f4...
+[10:41:29] [QA] START | 153 chunks
+[10:41:29] [Hybrid] 1 queries: ['Polynesia. What did he learn from her?']
+[10:41:29] [Hybrid] 8 unique chunks after semantic
+[10:41:29] [ExactMatch] 'Polynesia. What did he learn from her?' → 8 exact chunks | top score=2
+[10:41:29] [Hybrid] 8 exact-match chunks boosted to 0.6
+[10:41:30] [KeywordSearch] 'Polynesia. What did he learn from her?' → 8 chunks | top score=0.083
+[10:41:30] [Hybrid] 15 total unique chunks across all signals
+[10:41:30] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[10:41:30] [Reranker] ⚠️ Too few chunks after pruning (1) → expanding
+[10:41:30] [Reranker] 8 → 8 chunks after pruning | top=3.440 | margin=3.0 | bottom kept=3.440
+[10:41:30] [ExactMatch] 'Polynesia. What did he learn from her?' → 8 exact chunks | top score=2
+[10:41:30] [Protect] Injecting 5 exact-match chunks dropped by reranker
+[10:41:30] [Protect] Context expanded: 8 → 13 chunks
+[10:41:37] [Recall@13] ✅ Oracle chunk retrieved! score=100%
+[10:41:37] [Routing] Context-based → FACTUAL_QA
+[10:41:37] [QA] ⚡ Direct QA (no ReAct)
+[10:41:53] [QA] Answer: 'He learned that people think they're so wonderful.'
+[10:41:53] [DEBUG] react_ans before refusal check: repr="He learned that people think they're so wonderful."
+[10:41:53] [QA] Done in 23.1s | model=llama_direct | grounding=100.0% | recall=100.0% | confidence=1.000 | decision=accepted
+[10:41:53] [Evaluate] Q4_t2 actual answer: He learned that people think they're so wonderful.
+[10:41:53] [Evaluate] Q4_t2 ✅ PASS | hits=3/3 | model=llama_direct | recall=100.0% | confidence=100.0%
+[10:41:53] [Memory] Enriched query: 'He learned that people think they're so wonderful. How did this change his career?'
+[10:41:53] [Evaluate] Q4_t3: He learned that people think they're so wonderful. How did t...
+[10:41:53] [Extract] ✅ Cache hit — skipping OCR (83 pages)
+[10:41:53] [Chunk] Summary chunks: 17 | RAG chunks: 153
+[10:41:53] [Chunk] 17 summary chunks | 153 RAG chunks
+[10:41:53] [FAISS] ✅ Cache hit for ffe0b7f4...
+[10:41:53] [QA] START | 153 chunks
+[10:41:53] [Hybrid] 1 queries: ["He learned that people think they're so wonderful. How did this change his career?"]
+[10:41:53] [Hybrid] 8 unique chunks after semantic
+[10:41:53] [ExactMatch] 'He learned that people think they're so wonderful.' → 8 exact chunks | top score=6
+[10:41:53] [Hybrid] 8 exact-match chunks boosted to 0.6
+[10:41:53] [KeywordSearch] 'He learned that people think they're so wonderful.' → 8 chunks | top score=0.180
+[10:41:53] [Hybrid] 19 total unique chunks across all signals
+[10:41:53] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[10:41:53] [Reranker] ⚠️ Too few chunks after pruning (2) → expanding
+[10:41:53] [Reranker] 8 → 8 chunks after pruning | top=-3.482 | margin=3.0 | bottom kept=-5.533
+[10:41:53] [ExactMatch] 'He learned that people think they're so wonderful.' → 8 exact chunks | top score=6
+[10:41:53] [Protect] Injecting 7 exact-match chunks dropped by reranker
+[10:41:53] [Protect] Context expanded: 8 → 15 chunks
+[10:42:01] [Recall@15] ✅ Oracle chunk retrieved! score=100%
+[10:42:01] [Routing] Context-based → MULTIPART_QA
+[10:42:01] [Reorder] Tiebreaker applied — repeated span: 'asked the doctor. "oh,'
+[10:42:01] [Reorder] Tiebreaker applied — repeated span: '"do you dare to'
+[10:42:01] [Reorder] top chunk score=6 | numbers=[] | keywords=['career?', 'learned', 'change', 'his']
+[10:42:42] [Grounding] Refusal answer detected → returning sentinel 75.0
+[10:42:42] [QA] Done in 49.6s | model=llama_multipart | grounding=75.0% | recall=100.0% | confidence=0.750 | decision=accepted
+[10:42:42] [Evaluate] Q4_t3 actual answer: NOT PRESENT
+[10:42:42] [Evaluate] Q4_t3 ✅ PASS | hits=1/1 | model=llama_multipart | recall=100.0% | confidence=75.0%
+[10:42:42] [Evaluate] Q5: How did the doctor become rich after returning from his jour...
+[10:42:42] [Extract] ✅ Cache hit — skipping OCR (83 pages)
+[10:42:42] [Chunk] Summary chunks: 17 | RAG chunks: 153
+[10:42:42] [Chunk] 17 summary chunks | 153 RAG chunks
+[10:42:42] [FAISS] ✅ Cache hit for ffe0b7f4...
+[10:42:42] [QA] START | 153 chunks
+[10:42:42] [Hybrid] 1 queries: ['How did the doctor become rich after returning from his journey?']
+[10:42:42] [Hybrid] 8 unique chunks after semantic
+[10:42:42] [ExactMatch] 'How did the doctor become rich after returning fro' → 8 exact chunks | top score=4
+[10:42:42] [Hybrid] 8 exact-match chunks boosted to 0.6
+[10:42:42] [KeywordSearch] 'How did the doctor become rich after returning fro' → 8 chunks | top score=0.114
+[10:42:42] [Hybrid] 17 total unique chunks across all signals
+[10:42:42] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[10:42:43] [Reranker] ⚠️ Too few chunks after pruning (2) → expanding
+[10:42:43] [Reranker] 8 → 8 chunks after pruning | top=-4.353 | margin=3.0 | bottom kept=-5.792
+[10:42:43] [ExactMatch] 'How did the doctor become rich after returning fro' → 8 exact chunks | top score=4
+[10:42:43] [Protect] Injecting 5 exact-match chunks dropped by reranker
+[10:42:43] [Protect] Context expanded: 8 → 13 chunks
+[10:42:57] [Recall@13] oracle=0.493 | best_retrieved=0.479 | score=97.2%
+[10:42:57] [Routing] Context-based → MULTIPART_QA
+[10:42:57] [Reorder] Tiebreaker applied — repeated span: 'asked the doctor. "oh,'
+[10:42:57] [Reorder] top chunk score=4 | numbers=[] | keywords=['journey?', 'his', 'after', 'doctor']
+[10:43:36] [QA] Done in 53.9s | model=llama_multipart | grounding=100.0% | recall=97.2% | confidence=1.000 | decision=accepted
+[10:43:36] [Evaluate] Q5 actual answer: A rich man.
+[10:43:36] [Evaluate] Q5 ❌ FAIL | hits=0/5 | model=llama_multipart | recall=97.2% | confidence=100.0%
+[10:43:36] [Evaluate] Q6_t0: What did the doctor do before returning home?...
+[10:43:36] [Extract] ✅ Cache hit — skipping OCR (83 pages)
+[10:43:36] [Chunk] Summary chunks: 17 | RAG chunks: 153
+[10:43:36] [Chunk] 17 summary chunks | 153 RAG chunks
+[10:43:36] [FAISS] ✅ Cache hit for ffe0b7f4...
+[10:43:36] [QA] START | 153 chunks
+[10:43:36] [Hybrid] 1 queries: ['What did the doctor do before returning home?']
+[10:43:36] [Hybrid] 8 unique chunks after semantic
+[10:43:36] [ExactMatch] 'What did the doctor do before returning home?' → 8 exact chunks | top score=2
+[10:43:36] [Hybrid] 8 exact-match chunks boosted to 0.6
+[10:43:36] [KeywordSearch] 'What did the doctor do before returning home?' → 8 chunks | top score=0.114
+[10:43:36] [Hybrid] 23 total unique chunks across all signals
+[10:43:36] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[10:43:37] [Reranker] ⚠️ Too few chunks after pruning (1) → expanding
+[10:43:37] [Reranker] 8 → 8 chunks after pruning | top=1.861 | margin=3.0 | bottom kept=1.861
+[10:43:37] [ExactMatch] 'What did the doctor do before returning home?' → 8 exact chunks | top score=2
+[10:43:37] [Protect] Injecting 8 exact-match chunks dropped by reranker
+[10:43:37] [Protect] Context expanded: 8 → 16 chunks
+[10:43:49] [Recall@16] ✅ Oracle chunk retrieved! score=100%
+[10:43:49] [Routing] Context-based → MULTIPART_QA
+[10:43:49] [Reorder] Tiebreaker applied — repeated span: 'i must go home'
+[10:43:49] [Reorder] Tiebreaker applied — repeated span: 'drop of water falling'
+[10:43:49] [Reorder] Tiebreaker applied — repeated span: 'was to do the'
+[10:43:49] [Reorder] Tiebreaker applied — repeated span: 'i can make people'
+[10:43:49] [Reorder] top chunk score=2 | numbers=[] | keywords=['before', 'home?', 'returning', 'doctor']
+[10:44:30] [QA] Done in 54.3s | model=llama_multipart | grounding=100.0% | recall=100.0% | confidence=1.000 | decision=accepted
+[10:44:31] [Evaluate] Q6_t0 actual answer: The Doctor took down his hat and went out into the garden.
+[10:44:31] [Evaluate] Q6_t0 ✅ PASS | hits=2/2 | model=llama_multipart | recall=100.0% | confidence=100.0%
+[10:44:31] [Memory] Enriched query: 'The Doctor took down his hat and went out into the garden. Why did he stop that activity?'
+[10:44:31] [Evaluate] Q6_t1: The Doctor took down his hat and went out into the garden. W...
+[10:44:31] [Extract] ✅ Cache hit — skipping OCR (83 pages)
+[10:44:31] [Chunk] Summary chunks: 17 | RAG chunks: 153
+[10:44:31] [Chunk] 17 summary chunks | 153 RAG chunks
+[10:44:31] [FAISS] ✅ Cache hit for ffe0b7f4...
+[10:44:31] [QA] START | 153 chunks
+[10:44:31] [Hybrid] 1 queries: ['The Doctor took down his hat and went out into the garden. Why did he stop that activity?']
+[10:44:31] [Hybrid] 8 unique chunks after semantic
+[10:44:31] [ExactMatch] 'The Doctor took down his hat and went out into the' → 8 exact chunks | top score=9
+[10:44:31] [Hybrid] 8 exact-match chunks boosted to 0.6
+[10:44:31] [KeywordSearch] 'The Doctor took down his hat and went out into the' → 8 chunks | top score=0.160
+[10:44:31] [Hybrid] 19 total unique chunks across all signals
+[10:44:31] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[10:44:31] [Reranker] ⚠️ Too few chunks after pruning (4) → expanding
+[10:44:31] [Reranker] 8 → 8 chunks after pruning | top=-2.207 | margin=3.0 | bottom kept=-5.111
+[10:44:31] [ExactMatch] 'The Doctor took down his hat and went out into the' → 8 exact chunks | top score=9
+[10:44:31] [Protect] Injecting 8 exact-match chunks dropped by reranker
+[10:44:31] [Protect] Context expanded: 8 → 16 chunks
+[10:44:44] [Recall@16] ✅ Oracle chunk retrieved! score=100%
+[10:44:44] [Routing] Context-based → MULTIPART_QA
+[10:44:44] [Reorder] Tiebreaker applied — repeated span: 'i must go home'
+[10:44:44] [Reorder] Tiebreaker applied — repeated span: 'the land of the'
+[10:44:44] [Reorder] top chunk score=9 | numbers=[] | keywords=['activity?', 'down', 'his', 'doctor']
+[10:45:24] [QA] Done in 53.6s | model=llama_multipart | grounding=100.0% | recall=100.0% | confidence=1.000 | decision=accepted
+[10:45:24] [Evaluate] Q6_t1 actual answer: He stopped going out into the garden because he was going to get married.
+[10:45:24] [Evaluate] Q6_t1 ✅ PASS | hits=1/2 | model=llama_multipart | recall=100.0% | confidence=100.0%
+[10:45:24] [Memory] Enriched query: 'He stopped going out into the garden because he was going to get married. What did he do after comin'
+[10:45:24] [Evaluate] Q6_t2: He stopped going out into the garden because he was going to...
+[10:45:24] [Extract] ✅ Cache hit — skipping OCR (83 pages)
+[10:45:24] [Chunk] Summary chunks: 17 | RAG chunks: 153
+[10:45:24] [Chunk] 17 summary chunks | 153 RAG chunks
+[10:45:24] [FAISS] ✅ Cache hit for ffe0b7f4...
+[10:45:24] [QA] START | 153 chunks
+[10:45:24] [Hybrid] 1 queries: ['He stopped going out into the garden because he was going to get married. What did he do after coming back to Puddleby?']
+[10:45:24] [Hybrid] 8 unique chunks after semantic
+[10:45:24] [ExactMatch] 'He stopped going out into the garden because he wa' → 8 exact chunks | top score=8
+[10:45:24] [Hybrid] 8 exact-match chunks boosted to 0.6
+[10:45:24] [KeywordSearch] 'He stopped going out into the garden because he wa' → 8 chunks | top score=0.123
+[10:45:24] [Hybrid] 19 total unique chunks across all signals
+[10:45:24] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[10:45:25] [Reranker] ⚠️ Too few chunks after pruning (1) → expanding
+[10:45:25] [Reranker] 8 → 8 chunks after pruning | top=-2.156 | margin=3.0 | bottom kept=-2.156
+[10:45:25] [ExactMatch] 'He stopped going out into the garden because he wa' → 8 exact chunks | top score=8
+[10:45:25] [Protect] Injecting 8 exact-match chunks dropped by reranker
+[10:45:25] [Protect] Context expanded: 8 → 16 chunks
+[10:45:37] [Recall@16] oracle=0.532 | best_retrieved=0.423 | score=79.7%
+[10:45:37] [Routing] Context-based → MULTIPART_QA
+[10:45:37] [Reorder] Tiebreaker applied — repeated span: 'all the things they'
+[10:45:37] [Reorder] Tiebreaker applied — repeated span: 'the land of the'
+[10:45:37] [Reorder] top chunk score=8 | numbers=[] | keywords=['stopped', 'married.', 'coming', 'after']
+[10:46:11] [Grounding] Refusal answer detected → returning sentinel 75.0
+[10:46:11] [QA] Done in 46.4s | model=llama_multipart | grounding=75.0% | recall=79.7% | confidence=0.750 | decision=accepted
+[10:46:11] [Evaluate] Q6_t2 actual answer: NOT PRESENT
+[10:46:11] [Evaluate] Q6_t2 ✅ PASS | hits=1/1 | model=llama_multipart | recall=79.7% | confidence=75.0%
+[10:46:11] [Memory] Enriched query: 'NOT PRESENT How did his life change compared to before?'
+[10:46:11] [Evaluate] Q6_t3: NOT PRESENT How did his life change compared to before?...
+[10:46:11] [Extract] ✅ Cache hit — skipping OCR (83 pages)
+[10:46:11] [Chunk] Summary chunks: 17 | RAG chunks: 153
+[10:46:11] [Chunk] 17 summary chunks | 153 RAG chunks
+[10:46:11] [FAISS] ✅ Cache hit for ffe0b7f4...
+[10:46:11] [QA] START | 153 chunks
+[10:46:11] [Hybrid] 1 queries: ['NOT PRESENT How did his life change compared to before?']
+[10:46:11] [Hybrid] 8 unique chunks after semantic
+[10:46:11] [ExactMatch] 'NOT PRESENT How did his life change compared to be' → 8 exact chunks | top score=3
+[10:46:11] [Hybrid] 8 exact-match chunks boosted to 0.6
+[10:46:11] [KeywordSearch] 'NOT PRESENT How did his life change compared to be' → 8 chunks | top score=0.065
+[10:46:11] [Hybrid] 21 total unique chunks across all signals
+[10:46:11] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[10:46:12] [Reranker] ⚠️ Very low scores → keeping top chunks instead of rejecting
+[10:46:12] [ExactMatch] 'NOT PRESENT How did his life change compared to be' → 8 exact chunks | top score=3
+[10:46:12] [Protect] Injecting 8 exact-match chunks dropped by reranker
+[10:46:12] [Protect] Context expanded: 8 → 16 chunks
+[10:46:12] [Guard] ⚠️ Weak reranker score — continuing
+[10:46:21] [Recall@16] ✅ Oracle chunk retrieved! score=100%
+[10:46:21] [Routing] Context-based → FACTUAL_QA
+[10:46:21] [QA] ⚡ Direct QA (no ReAct)
+[10:46:37] [QA] Answer: 'They got used to walking such a lot and did not get so tired'
+[10:46:37] [DEBUG] react_ans before refusal check: repr='They got used to walking such a lot and did not get so tired and enjoyed the life of travel very much.'
+[10:46:37] [QA] Done in 26.7s | model=llama_direct | grounding=100.0% | recall=100.0% | confidence=1.000 | decision=accepted
+[10:46:37] [Evaluate] Q6_t3 actual answer: They got used to walking such a lot and did not get so tired and enjoyed the life of travel very much.
+[10:46:37] [Evaluate] Q6_t3 ✅ PASS | hits=2/3 | model=llama_direct | recall=100.0% | confidence=100.0%
+[10:46:37] [Evaluate] Q7: Why was the fisherman left alone on the rock?...
+[10:46:37] [Extract] ✅ Cache hit — skipping OCR (83 pages)
+[10:46:37] [Chunk] Summary chunks: 17 | RAG chunks: 153
+[10:46:37] [Chunk] 17 summary chunks | 153 RAG chunks
+[10:46:37] [FAISS] ✅ Cache hit for ffe0b7f4...
+[10:46:37] [QA] START | 153 chunks
+[10:46:37] [Hybrid] 1 queries: ['Why was the fisherman left alone on the rock?']
+[10:46:37] [Hybrid] 8 unique chunks after semantic
+[10:46:37] [ExactMatch] 'Why was the fisherman left alone on the rock?' → 8 exact chunks | top score=2
+[10:46:37] [Hybrid] 8 exact-match chunks boosted to 0.6
+[10:46:38] [KeywordSearch] 'Why was the fisherman left alone on the rock?' → 8 chunks | top score=0.148
+[10:46:38] [Hybrid] 19 total unique chunks across all signals
+[10:46:38] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[10:46:38] [Reranker] ⚠️ Very low scores → keeping top chunks instead of rejecting
+[10:46:38] [ExactMatch] 'Why was the fisherman left alone on the rock?' → 8 exact chunks | top score=2
+[10:46:38] [Protect] Injecting 7 exact-match chunks dropped by reranker
+[10:46:38] [Protect] Context expanded: 8 → 15 chunks
+[10:46:38] [Guard] ⚠️ Weak reranker score — continuing
+[10:46:50] [Recall@15] oracle=0.506 | best_retrieved=0.448 | score=88.5%
+[10:46:50] [Routing] Context-based → MULTIPART_QA
+[10:46:50] [Reorder] Tiebreaker applied — repeated span: 'looking for things to'
+[10:46:50] [Reorder] Tiebreaker applied — repeated span: '"do you dare to'
+[10:46:50] [Reorder] Tiebreaker applied — repeated span: 'was to do the'
+[10:46:50] [Reorder] top chunk score=2 | numbers=[] | keywords=['fisherman', 'alone', 'rock?', 'left']
+[10:47:30] [Grounding] Refusal answer detected → returning sentinel 75.0
+[10:47:30] [QA] Done in 52.2s | model=llama_multipart | grounding=75.0% | recall=88.5% | confidence=0.750 | decision=accepted
+[10:47:30] [Evaluate] Q7 actual answer: NOT PRESENT
+[10:47:30] [Evaluate] Q7 ✅ PASS | hits=1/1 | model=llama_multipart | recall=88.5% | confidence=75.0%
+[10:47:30] [Evaluate] Q8_t0: Why was the fisherman in trouble initially?...
+[10:47:30] [Extract] ✅ Cache hit — skipping OCR (83 pages)
+[10:47:30] [Chunk] Summary chunks: 17 | RAG chunks: 153
+[10:47:30] [Chunk] 17 summary chunks | 153 RAG chunks
+[10:47:30] [FAISS] ✅ Cache hit for ffe0b7f4...
+[10:47:30] [QA] START | 153 chunks
+[10:47:30] [Hybrid] 1 queries: ['Why was the fisherman in trouble initially?']
+[10:47:30] [Hybrid] 8 unique chunks after semantic
+[10:47:30] [ExactMatch] 'Why was the fisherman in trouble initially?' → 8 exact chunks | top score=1
+[10:47:30] [Hybrid] 8 exact-match chunks boosted to 0.6
+[10:47:30] [KeywordSearch] 'Why was the fisherman in trouble initially?' → 8 chunks | top score=0.106
+[10:47:30] [Hybrid] 20 total unique chunks across all signals
+[10:47:30] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[10:47:30] [Reranker] ⚠️ Too few chunks after pruning (1) → expanding
+[10:47:30] [Reranker] 8 → 8 chunks after pruning | top=-3.810 | margin=3.0 | bottom kept=-3.810
+[10:47:30] [ExactMatch] 'Why was the fisherman in trouble initially?' → 8 exact chunks | top score=1
+[10:47:30] [Protect] Injecting 8 exact-match chunks dropped by reranker
+[10:47:30] [Protect] Context expanded: 8 → 16 chunks
+[10:47:44] [Recall@16] oracle=0.549 | best_retrieved=0.490 | score=89.3%
+[10:47:44] [Routing] Context-based → FACTUAL_QA
+[10:47:44] [QA] ⚡ Direct QA (no ReAct)
+[10:48:00] [QA] Answer: 'He had been left on the rock by the Barbary Dragon.'
+[10:48:00] [DEBUG] react_ans before refusal check: repr='He had been left on the rock by the Barbary Dragon.'
+[10:48:00] [QA] Done in 30.1s | model=llama_direct | grounding=100.0% | recall=89.3% | confidence=1.000 | decision=accepted
+[10:48:00] [Evaluate] Q8_t0 actual answer: He had been left on the rock by the Barbary Dragon.
+[10:48:00] [Evaluate] Q8_t0 ✅ PASS | hits=3/3 | model=llama_direct | recall=89.3% | confidence=100.0%
+[10:48:00] [Memory] Enriched query: 'He had been left on the rock by the Barbary Dragon. How did the doctor help him?'
+[10:48:00] [Evaluate] Q8_t1: He had been left on the rock by the Barbary Dragon. How did ...
+[10:48:00] [Extract] ✅ Cache hit — skipping OCR (83 pages)
+[10:48:00] [Chunk] Summary chunks: 17 | RAG chunks: 153
+[10:48:00] [Chunk] 17 summary chunks | 153 RAG chunks
+[10:48:00] [FAISS] ✅ Cache hit for ffe0b7f4...
+[10:48:00] [QA] START | 153 chunks
+[10:48:00] [Hybrid] 1 queries: ['He had been left on the rock by the Barbary Dragon. How did the doctor help him?']
+[10:48:00] [Hybrid] 8 unique chunks after semantic
+[10:48:00] [ExactMatch] 'He had been left on the rock by the Barbary Dragon' → 8 exact chunks | top score=4
+[10:48:00] [Hybrid] 8 exact-match chunks boosted to 0.6
+[10:48:00] [KeywordSearch] 'He had been left on the rock by the Barbary Dragon' → 8 chunks | top score=0.192
+[10:48:00] [Hybrid] 19 total unique chunks across all signals
+[10:48:00] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[10:48:01] [Reranker] ⚠️ Too few chunks after pruning (2) → expanding
+[10:48:01] [Reranker] 8 → 8 chunks after pruning | top=1.510 | margin=3.0 | bottom kept=1.499
+[10:48:01] [ExactMatch] 'He had been left on the rock by the Barbary Dragon' → 8 exact chunks | top score=4
+[10:48:01] [Protect] Injecting 6 exact-match chunks dropped by reranker
+[10:48:01] [Protect] Context expanded: 8 → 14 chunks
+[10:48:10] [Recall@14] ✅ Oracle chunk retrieved! score=100%
+[10:48:10] [Routing] Context-based → MULTIPART_QA
+[10:48:10] [Reorder] Tiebreaker applied — repeated span: 'i must go home'
+[10:48:10] [Reorder] Tiebreaker applied — repeated span: '"do you dare to'
+[10:48:10] [Reorder] top chunk score=4 | numbers=[] | keywords=['rock', 'him?', 'left', 'doctor']
+[10:48:53] [QA] Done in 53.7s | model=llama_multipart | grounding=92.3% | recall=100.0% | confidence=0.923 | decision=accepted
+[10:48:54] [Evaluate] Q8_t1 actual answer: The Doctor helped him by striking some more matches and making their way out through the passage into the daylight, then hurried the man down to the boat to get some soup.
+[10:48:54] [Evaluate] Q8_t1 ✅ PASS | hits=3/3 | model=llama_multipart | recall=100.0% | confidence=92.3%
+[10:48:54] [Memory] Enriched query: 'The Doctor helped him by striking some more matches and making their way out through the passage int'
+[10:48:54] [Evaluate] Q8_t2: The Doctor helped him by striking some more matches and maki...
+[10:48:54] [Extract] ✅ Cache hit — skipping OCR (83 pages)
+[10:48:54] [Chunk] Summary chunks: 17 | RAG chunks: 153
+[10:48:54] [Chunk] 17 summary chunks | 153 RAG chunks
+[10:48:54] [FAISS] ✅ Cache hit for ffe0b7f4...
+[10:48:54] [QA] START | 153 chunks
+[10:48:54] [Hybrid] 1 queries: ['The Doctor helped him by striking some more matches and making their way out through the passage into the daylight, then hurried the man down to the boat to get some soup. How did the people react when he returned home?']
+[10:48:54] [Hybrid] 8 unique chunks after semantic
+[10:48:54] [ExactMatch] 'The Doctor helped him by striking some more matche' → 8 exact chunks | top score=18
+[10:48:54] [Hybrid] 8 exact-match chunks boosted to 0.6
+[10:48:54] [KeywordSearch] 'The Doctor helped him by striking some more matche' → 8 chunks | top score=0.317
+[10:48:54] [Hybrid] 19 total unique chunks across all signals
+[10:48:54] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[10:48:55] [Reranker] ⚠️ Too few chunks after pruning (1) → expanding
+[10:48:55] [Reranker] 8 → 8 chunks after pruning | top=8.500 | margin=3.0 | bottom kept=8.500
+[10:48:55] [ExactMatch] 'The Doctor helped him by striking some more matche' → 8 exact chunks | top score=18
+[10:48:55] [Protect] Injecting 6 exact-match chunks dropped by reranker
+[10:48:55] [Protect] Context expanded: 8 → 14 chunks
+[10:49:05] [Recall@14] ✅ Oracle chunk retrieved! score=100%
+[10:49:05] [Routing] Context-based → MULTIPART_QA
+[10:49:05] [Reorder] Tiebreaker applied — repeated span: 'i must go home'
+[10:49:05] [Reorder] Tiebreaker applied — repeated span: 'of the black men'
+[10:49:05] [Reorder] top chunk score=17 | numbers=[] | keywords=['react', 'boat', 'matches', 'into']
+[10:49:46] [QA] Done in 52.2s | model=llama_multipart | grounding=100.0% | recall=100.0% | confidence=1.000 | decision=accepted
+[10:49:46] [Evaluate] Q8_t2 actual answer: The sailors far out at sea thought that a terrible storm was coming.
+[10:49:46] [Evaluate] Q8_t2 ✅ PASS | hits=2/2 | model=llama_multipart | recall=100.0% | confidence=100.0%
+[10:49:46] [Memory] Enriched query: 'The sailors far out at sea thought that a terrible storm was coming. What reward was given to the do'
+[10:49:46] [Evaluate] Q8_t3: The sailors far out at sea thought that a terrible storm was...
+[10:49:46] [Extract] ✅ Cache hit — skipping OCR (83 pages)
+[10:49:46] [Chunk] Summary chunks: 17 | RAG chunks: 153
+[10:49:46] [Chunk] 17 summary chunks | 153 RAG chunks
+[10:49:46] [FAISS] ✅ Cache hit for ffe0b7f4...
+[10:49:46] [QA] START | 153 chunks
+[10:49:46] [Hybrid] 1 queries: ['The sailors far out at sea thought that a terrible storm was coming. What reward was given to the doctor and Jip?']
+[10:49:46] [Hybrid] 8 unique chunks after semantic
+[10:49:46] [ExactMatch] 'The sailors far out at sea thought that a terrible' → 3 exact chunks | top score=9
+[10:49:46] [Hybrid] 3 exact-match chunks boosted to 0.6
+[10:49:46] [KeywordSearch] 'The sailors far out at sea thought that a terrible' → 8 chunks | top score=0.354
+[10:49:46] [Hybrid] 15 total unique chunks across all signals
+[10:49:46] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[10:49:47] [Reranker] ⚠️ Too few chunks after pruning (2) → expanding
+[10:49:47] [Reranker] 8 → 8 chunks after pruning | top=0.006 | margin=3.0 | bottom kept=-2.215
+[10:49:47] [ExactMatch] 'The sailors far out at sea thought that a terrible' → 3 exact chunks | top score=9
+[10:49:47] [Protect] Injecting 2 exact-match chunks dropped by reranker
+[10:49:47] [Protect] Context expanded: 8 → 10 chunks
+[10:49:58] [Recall@10] oracle=0.630 | best_retrieved=0.587 | score=93.1%
+[10:49:58] [Routing] Context-based → MULTIPART_QA
+[10:49:58] [Reorder] Tiebreaker applied — repeated span: 'the wind changes to'
+[10:49:58] [Reorder] top chunk score=9 | numbers=[] | keywords=['coming.', 'terrible', 'thought', 'sailors']
+[10:50:31] [Grounding] Refusal answer detected → returning sentinel 75.0
+[10:50:31] [QA] Done in 44.9s | model=llama_multipart | grounding=75.0% | recall=93.1% | confidence=0.750 | decision=accepted
+[10:50:31] [Evaluate] Q8_t3 actual answer: NOT PRESENT
+[10:50:31] [Evaluate] Q8_t3 ✅ PASS | hits=1/1 | model=llama_multipart | recall=93.1% | confidence=75.0%
+[10:50:31] [Evaluate] Q9: Why did the eagles fail to find the fisherman?...
+[10:50:31] [Extract] ✅ Cache hit — skipping OCR (83 pages)
+[10:50:31] [Chunk] Summary chunks: 17 | RAG chunks: 153
+[10:50:31] [Chunk] 17 summary chunks | 153 RAG chunks
+[10:50:31] [FAISS] ✅ Cache hit for ffe0b7f4...
+[10:50:31] [QA] START | 153 chunks
+[10:50:31] [Hybrid] 1 queries: ['Why did the eagles fail to find the fisherman?']
+[10:50:31] [Hybrid] 8 unique chunks after semantic
+[10:50:31] [ExactMatch] 'Why did the eagles fail to find the fisherman?' → 8 exact chunks | top score=2
+[10:50:31] [Hybrid] 8 exact-match chunks boosted to 0.6
+[10:50:31] [KeywordSearch] 'Why did the eagles fail to find the fisherman?' → 8 chunks | top score=0.224
+[10:50:31] [Hybrid] 16 total unique chunks across all signals
+[10:50:31] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[10:50:32] [Reranker] ⚠️ Too few chunks after pruning (2) → expanding
+[10:50:32] [Reranker] 8 → 8 chunks after pruning | top=2.781 | margin=3.0 | bottom kept=1.892
+[10:50:32] [ExactMatch] 'Why did the eagles fail to find the fisherman?' → 8 exact chunks | top score=2
+[10:50:32] [Protect] Injecting 5 exact-match chunks dropped by reranker
+[10:50:32] [Protect] Context expanded: 8 → 13 chunks
+[10:50:42] [Recall@13] ✅ Oracle chunk retrieved! score=100%
+[10:50:42] [Routing] Context-based → MULTIPART_QA
+[10:50:42] [Reorder] Tiebreaker applied — repeated span: 'want to know where'
+[10:50:42] [Reorder] Tiebreaker applied — repeated span: 'afraid to send their'
+[10:50:42] [Reorder] Tiebreaker applied — repeated span: 'was to do the'
+[10:50:42] [Reorder] top chunk score=2 | numbers=[] | keywords=['eagles', 'find', 'fisherman?', 'fail']
+[10:51:24] [QA] Done in 53.5s | model=llama_multipart | grounding=92.0% | recall=100.0% | confidence=0.920 | decision=accepted
+[10:51:24] [Evaluate] Q9 actual answer: They failed to find the fisherman because they were unable to see him, and it was stated that "if WE could not see him, then he is not to be seen....
+[10:51:24] [Evaluate] Q9 ✅ PASS | hits=2/2 | model=llama_multipart | recall=100.0% | confidence=92.0%
+[10:51:24] [Evaluate] Q10_t0: What was the initial plan to find the fisherman?...
+[10:51:24] [Extract] ✅ Cache hit — skipping OCR (83 pages)
+[10:51:24] [Chunk] Summary chunks: 17 | RAG chunks: 153
+[10:51:24] [Chunk] 17 summary chunks | 153 RAG chunks
+[10:51:24] [FAISS] ✅ Cache hit for ffe0b7f4...
+[10:51:24] [QA] START | 153 chunks
+[10:51:24] [Hybrid] 1 queries: ['What was the initial plan to find the fisherman?']
+[10:51:24] [Hybrid] 8 unique chunks after semantic
+[10:51:24] [ExactMatch] 'What was the initial plan to find the fisherman?' → 8 exact chunks | top score=1
+[10:51:24] [Hybrid] 8 exact-match chunks boosted to 0.6
+[10:51:24] [KeywordSearch] 'What was the initial plan to find the fisherman?' → 8 chunks | top score=0.124
+[10:51:24] [Hybrid] 22 total unique chunks across all signals
+[10:51:24] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[10:51:25] [Reranker] ⚠️ Very low scores → keeping top chunks instead of rejecting
+[10:51:25] [ExactMatch] 'What was the initial plan to find the fisherman?' → 8 exact chunks | top score=1
+[10:51:25] [Protect] Injecting 8 exact-match chunks dropped by reranker
+[10:51:25] [Protect] Context expanded: 8 → 16 chunks
+[10:51:25] [Guard] ⚠️ Weak reranker score — continuing
+[10:51:37] [Recall@16] oracle=0.499 | best_retrieved=0.417 | score=83.7%
+[10:51:37] [Routing] Context-based → FACTUAL_QA
+[10:51:37] [QA] ⚡ Direct QA (no ReAct)
+[10:51:53] [QA] Answer: 'The match went out again.'
+[10:51:53] [DEBUG] react_ans before refusal check: repr='The match went out again.'
+[10:51:53] [QA] Done in 28.2s | model=llama_direct | grounding=100.0% | recall=83.7% | confidence=1.000 | decision=accepted
+[10:51:53] [Evaluate] Q10_t0 actual answer: The match went out again.
+[10:51:53] [Evaluate] Q10_t0 ❌ FAIL | hits=0/3 | model=llama_direct | recall=83.7% | confidence=100.0%
+[10:51:53] [Memory] Enriched query: 'The match went out again. Why did that plan fail?'
+[10:51:53] [Evaluate] Q10_t1: The match went out again. Why did that plan fail?...
+[10:51:53] [Extract] ✅ Cache hit — skipping OCR (83 pages)
+[10:51:53] [Chunk] Summary chunks: 17 | RAG chunks: 153
+[10:51:53] [Chunk] 17 summary chunks | 153 RAG chunks
+[10:51:53] [FAISS] ✅ Cache hit for ffe0b7f4...
+[10:51:53] [QA] START | 153 chunks
+[10:51:53] [Hybrid] 1 queries: ['The match went out again. Why did that plan fail?']
+[10:51:53] [Hybrid] 8 unique chunks after semantic
+[10:51:53] [ExactMatch] 'The match went out again. Why did that plan fail?' → 8 exact chunks | top score=4
+[10:51:53] [Hybrid] 8 exact-match chunks boosted to 0.6
+[10:51:53] [KeywordSearch] 'The match went out again. Why did that plan fail?' → 8 chunks | top score=0.138
+[10:51:53] [Hybrid] 17 total unique chunks across all signals
+[10:51:53] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[10:51:53] [Reranker] ⚠️ Too few chunks after pruning (1) → expanding
+[10:51:53] [Reranker] 8 → 8 chunks after pruning | top=0.514 | margin=3.0 | bottom kept=0.514
+[10:51:53] [ExactMatch] 'The match went out again. Why did that plan fail?' → 8 exact chunks | top score=4
+[10:51:53] [Protect] Injecting 6 exact-match chunks dropped by reranker
+[10:51:53] [Protect] Context expanded: 8 → 14 chunks
+[10:52:05] [Recall@14] oracle=0.322 | best_retrieved=0.314 | score=97.4%
+[10:52:05] [Routing] Context-based → MULTIPART_QA
+[10:52:05] [Reorder] Tiebreaker applied — repeated span: 'afraid to send their'
+[10:52:05] [Reorder] Tiebreaker applied — repeated span: 'the land of the'
+[10:52:05] [Reorder] top chunk score=4 | numbers=[] | keywords=['again.', 'went', 'out', 'match']
+[10:52:45] [QA] Done in 52.1s | model=llama_multipart | grounding=92.3% | recall=97.4% | confidence=0.923 | decision=accepted
+[10:52:45] [Evaluate] Q10_t1 actual answer: The match went out again because it was too dark to keep lit.
+[10:52:45] [Evaluate] Q10_t1 ✅ PASS | hits=3/3 | model=llama_multipart | recall=97.4% | confidence=92.3%
+[10:52:45] [Memory] Enriched query: 'The match went out again because it was too dark to keep lit. What alternative method was used after'
+[10:52:45] [Evaluate] Q10_t2: The match went out again because it was too dark to keep lit...
+[10:52:45] [Extract] ✅ Cache hit — skipping OCR (83 pages)
+[10:52:45] [Chunk] Summary chunks: 17 | RAG chunks: 153
+[10:52:45] [Chunk] 17 summary chunks | 153 RAG chunks
+[10:52:45] [FAISS] ✅ Cache hit for ffe0b7f4...
+[10:52:45] [QA] START | 153 chunks
+[10:52:45] [Hybrid] 1 queries: ['The match went out again because it was too dark to keep lit. What alternative method was used afterward?']
+[10:52:45] [Hybrid] 8 unique chunks after semantic
+[10:52:45] [ExactMatch] 'The match went out again because it was too dark t' → 8 exact chunks | top score=9
+[10:52:45] [Hybrid] 8 exact-match chunks boosted to 0.6
+[10:52:45] [KeywordSearch] 'The match went out again because it was too dark t' → 8 chunks | top score=0.182
+[10:52:45] [Hybrid] 19 total unique chunks across all signals
+[10:52:45] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[10:52:45] [Reranker] ⚠️ Too few chunks after pruning (1) → expanding
+[10:52:45] [Reranker] 8 → 8 chunks after pruning | top=1.084 | margin=3.0 | bottom kept=1.084
+[10:52:46] [ExactMatch] 'The match went out again because it was too dark t' → 8 exact chunks | top score=9
+[10:52:46] [Protect] Injecting 7 exact-match chunks dropped by reranker
+[10:52:46] [Protect] Context expanded: 8 → 15 chunks
+[10:52:56] [Recall@15] ✅ Oracle chunk retrieved! score=100%
+[10:52:56] [Routing] Context-based → MULTIPART_QA
+[10:52:56] [Reorder] Tiebreaker applied — repeated span: 'the wind changes to'
+[10:52:56] [Reorder] Tiebreaker applied — repeated span: 'afraid to send their'
+[10:52:56] [Reorder] Tiebreaker applied — repeated span: 'was to do the'
+[10:52:56] [Reorder] top chunk score=9 | numbers=[] | keywords=['again', 'lit.', 'method', 'went']
+[10:53:29] [QA] Done in 44.5s | model=llama_multipart | grounding=100.0% | recall=100.0% | confidence=1.000 | decision=accepted
+[10:53:29] [Evaluate] Q10_t2 actual answer: They struck some more matches.
+[10:53:29] [Evaluate] Q10_t2 ✅ PASS | hits=2/2 | model=llama_multipart | recall=100.0% | confidence=100.0%
+[10:53:29] [Memory] Enriched query: 'They struck some more matches. What clue helped in finding the fisherman?'
+[10:53:29] [Evaluate] Q10_t3: They struck some more matches. What clue helped in finding t...
+[10:53:29] [Extract] ✅ Cache hit — skipping OCR (83 pages)
+[10:53:29] [Chunk] Summary chunks: 17 | RAG chunks: 153
+[10:53:29] [Chunk] 17 summary chunks | 153 RAG chunks
+[10:53:29] [FAISS] ✅ Cache hit for ffe0b7f4...
+[10:53:29] [QA] START | 153 chunks
+[10:53:29] [Hybrid] 1 queries: ['They struck some more matches. What clue helped in finding the fisherman?']
+[10:53:29] [Hybrid] 8 unique chunks after semantic
+[10:53:29] [ExactMatch] 'They struck some more matches. What clue helped in' → 8 exact chunks | top score=4
+[10:53:29] [Hybrid] 8 exact-match chunks boosted to 0.6
+[10:53:29] [KeywordSearch] 'They struck some more matches. What clue helped in' → 8 chunks | top score=0.163
+[10:53:29] [Hybrid] 18 total unique chunks across all signals
+[10:53:29] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[10:53:30] [Reranker] ⚠️ Too few chunks after pruning (1) → expanding
+[10:53:30] [Reranker] 8 → 8 chunks after pruning | top=0.833 | margin=3.0 | bottom kept=0.833
+[10:53:30] [ExactMatch] 'They struck some more matches. What clue helped in' → 8 exact chunks | top score=4
+[10:53:30] [Protect] Injecting 6 exact-match chunks dropped by reranker
+[10:53:30] [Protect] Context expanded: 8 → 14 chunks
+[10:53:40] [Recall@14] ✅ Oracle chunk retrieved! score=100%
+[10:53:40] [Routing] Context-based → MULTIPART_QA
+[10:53:40] [Reorder] Tiebreaker applied — repeated span: 'looking for things to'
+[10:53:40] [Reorder] top chunk score=4 | numbers=[] | keywords=['struck', 'some', 'fisherman?', 'clue']
+[10:54:19] [QA] Done in 50.0s | model=llama_multipart | grounding=100.0% | recall=100.0% | confidence=1.000 | decision=accepted
+[10:54:19] [Evaluate] Q10_t3 actual answer: They struck some more matches.
+[10:54:19] [Evaluate] Q10_t3 ❌ FAIL | hits=0/3 | model=llama_multipart | recall=100.0% | confidence=100.0%
+[10:54:19] [Evaluate] Results saved to grounding_results.json
+[10:54:19] [Evaluate] ✅ Done | Pass=21 Partial=0 Fail=4 | Pass rate=84.0%
+[10:54:20] [DEBUG] PDF NAME: ml.pdf
+[10:54:20] [DEBUG] DATASET MAP KEYS: ['rhea aiml resume updated.pdf', 'the-story-of-doctor-dolittle.pdf', 'ml.pdf']
+[10:54:20] [DEBUG] FULL DATASET PATH: C:\xampp\htdocs\GenAI-Doc-old\dco_mind\datasets\ml.json
+[10:54:20] [Evaluate] Starting evaluation run: Test 15_run_1
+[10:54:20] [Evaluate] PDF: C:\Users\Rhearitu\Downloads\ml.pdf
+[10:54:20] [Evaluate] Questions: 10
+[10:54:20] [Evaluate] Q1: What is the subject of the document?...
+[10:55:02] [Extract] Done — 95 pages, 123197 chars
+[10:55:02] [Chunk] Summary chunks: 16 | RAG chunks: 152
+[10:55:02] [Chunk] 16 summary chunks | 152 RAG chunks
+[10:55:02] [FAISS] Building fresh index (152 chunks)...
+[10:55:18] [FAISS] Index built | cache size=3
+[10:55:18] [QA] START | 152 chunks
+[10:55:18] [Hybrid] 1 queries: ['What is the subject of the document?']
+[10:55:18] [Hybrid] 8 unique chunks after semantic
+[10:55:18] [ExactMatch] 'What is the subject of the document?' → 1 exact chunks | top score=1
+[10:55:18] [Hybrid] 1 exact-match chunks boosted to 0.6
+[10:55:18] [KeywordSearch] 'What is the subject of the document?' → 3 chunks | top score=0.048
+[10:55:18] [Hybrid] 11 total unique chunks across all signals
+[10:55:18] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[10:55:18] [Reranker] ⚠️ Very low scores → keeping top chunks instead of rejecting
+[10:55:18] [ExactMatch] 'What is the subject of the document?' → 1 exact chunks | top score=1
+[10:55:18] [Protect] Injecting 1 exact-match chunks dropped by reranker
+[10:55:18] [Protect] Context expanded: 8 → 9 chunks
+[10:55:18] [Guard] ⚠️ Weak reranker score — continuing
+[10:55:25] [Recall@9] ✅ Oracle chunk retrieved! score=100%
+[10:55:25] [Routing] Context-based → FACTUAL_QA
+[10:55:25] [QA] ⚡ Direct QA (no ReAct)
+[10:55:39] [QA] Answer: 'Department Of CSE'
+[10:55:39] [DEBUG] react_ans before refusal check: repr='Department Of CSE'
+[10:55:39] [QA] Done in 37.2s | model=llama_direct | grounding=100.0% | recall=100.0% | confidence=1.000 | decision=accepted
+[10:55:39] [Evaluate] Q1 actual answer: Department Of CSE
+[10:55:39] [Evaluate] Q1 ❌ FAIL | hits=0/1 | model=llama_direct | recall=100.0% | confidence=100.0%
+[10:55:39] [Evaluate] Q2: What is supervised learning in machine learning?...
+[10:55:40] [Extract] ✅ Cache hit — skipping OCR (95 pages)
+[10:55:40] [Chunk] Summary chunks: 16 | RAG chunks: 152
+[10:55:40] [Chunk] 16 summary chunks | 152 RAG chunks
+[10:55:40] [FAISS] ✅ Cache hit for 135a00a3...
+[10:55:40] [QA] START | 152 chunks
+[10:55:40] [Hybrid] 1 queries: ['What is supervised learning in machine learning?']
+[10:55:40] [Hybrid] 8 unique chunks after semantic
+[10:55:40] [ExactMatch] 'What is supervised learning in machine learning?' → 8 exact chunks | top score=3
+[10:55:40] [Hybrid] 8 exact-match chunks boosted to 0.6
+[10:55:40] [KeywordSearch] 'What is supervised learning in machine learning?' → 8 chunks | top score=0.404
+[10:55:40] [Hybrid] 16 total unique chunks across all signals
+[10:55:40] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[10:55:40] [Reranker] ⚠️ Too few chunks after pruning (2) → expanding
+[10:55:40] [Reranker] 8 → 8 chunks after pruning | top=3.226 | margin=3.0 | bottom kept=1.561
+[10:55:40] [ExactMatch] 'What is supervised learning in machine learning?' → 8 exact chunks | top score=3
+[10:55:40] [Protect] Injecting 5 exact-match chunks dropped by reranker
+[10:55:40] [Protect] Context expanded: 8 → 13 chunks
+[10:55:47] [Recall@13] ✅ Oracle chunk retrieved! score=100%
+[10:55:47] [Routing] Context-based → MULTIPART_QA
+[10:55:47] [Reorder] Tiebreaker applied — repeated span: 'features. this is an'
+[10:55:47] [Reorder] Tiebreaker applied — repeated span: 'what is the best'
+[10:55:47] [Reorder] Tiebreaker applied — repeated span: 'the number of data'
+[10:55:47] [Reorder] Tiebreaker applied — repeated span: 'tree can be explained'
+[10:55:47] [Reorder] Tiebreaker applied — repeated span: 'the values of the'
+[10:55:47] [Reorder] Tiebreaker applied — repeated span: 'stores the dataset and'
+[10:55:47] [Reorder] top chunk score=3 | numbers=[] | keywords=['supervised', 'machine', 'learning', 'learning?']
+[10:56:24] [QA] Done in 44.3s | model=llama_multipart | grounding=97.7% | recall=100.0% | confidence=0.977 | decision=accepted
+[10:56:24] [Evaluate] Q2 actual answer: Supervised learning in machine learning is analogous to training a child to walk. You give concrete known examples to the computer, saying that for given feature value x1 the output is yl, for x2 it is y2, for x3 it is y3, and so on. Based on this data, you let the computer figure out an empirical r
+[10:56:24] [Evaluate] Q2 ✅ PASS | hits=4/5 | model=llama_multipart | recall=100.0% | confidence=97.7%
+[10:56:24] [Evaluate] Q3_t0: What is supervised learning?...
+[10:56:24] [Extract] ✅ Cache hit — skipping OCR (95 pages)
+[10:56:24] [Chunk] Summary chunks: 16 | RAG chunks: 152
+[10:56:24] [Chunk] 16 summary chunks | 152 RAG chunks
+[10:56:24] [FAISS] ✅ Cache hit for 135a00a3...
+[10:56:24] [QA] START | 152 chunks
+[10:56:24] [Hybrid] 1 queries: ['What is supervised learning?']
+[10:56:24] [Hybrid] 8 unique chunks after semantic
+[10:56:24] [ExactMatch] 'What is supervised learning?' → 8 exact chunks | top score=1
+[10:56:24] [Hybrid] 8 exact-match chunks boosted to 0.6
+[10:56:24] [KeywordSearch] 'What is supervised learning?' → 8 chunks | top score=0.266
+[10:56:24] [Hybrid] 15 total unique chunks across all signals
+[10:56:24] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[10:56:25] [Reranker] ⚠️ Too few chunks after pruning (1) → expanding
+[10:56:25] [Reranker] 8 → 8 chunks after pruning | top=3.517 | margin=3.0 | bottom kept=3.517
+[10:56:25] [ExactMatch] 'What is supervised learning?' → 8 exact chunks | top score=1
+[10:56:25] [Protect] Injecting 5 exact-match chunks dropped by reranker
+[10:56:25] [Protect] Context expanded: 8 → 13 chunks
+[10:56:31] [Recall@13] ✅ Oracle chunk retrieved! score=100%
+[10:56:31] [Routing] Context-based → FACTUAL_QA
+[10:56:31] [QA] ⚡ Direct QA (no ReAct)
+[10:56:43] [QA] Answer: 'Supervised learning.'
+[10:56:43] [DEBUG] react_ans before refusal check: repr='Supervised learning.'
+[10:56:43] [QA] Done in 19.0s | model=llama_direct | grounding=100.0% | recall=100.0% | confidence=1.000 | decision=accepted
+[10:56:43] [Evaluate] Q3_t0 actual answer: Supervised learning.
+[10:56:43] [Evaluate] Q3_t0 ❌ FAIL | hits=0/5 | model=llama_direct | recall=100.0% | confidence=100.0%
+[10:56:43] [Memory] Enriched query: 'Supervised learning. What is unsupervised learning?'
+[10:56:43] [Evaluate] Q3_t1: Supervised learning. What is unsupervised learning?...
+[10:56:43] [Extract] ✅ Cache hit — skipping OCR (95 pages)
+[10:56:43] [Chunk] Summary chunks: 16 | RAG chunks: 152
+[10:56:43] [Chunk] 16 summary chunks | 152 RAG chunks
+[10:56:43] [FAISS] ✅ Cache hit for 135a00a3...
+[10:56:43] [QA] START | 152 chunks
+[10:56:43] [Hybrid] 1 queries: ['Supervised learning. What is unsupervised learning?']
+[10:56:43] [Hybrid] 8 unique chunks after semantic
+[10:56:43] [ExactMatch] 'Supervised learning. What is unsupervised learning' → 8 exact chunks | top score=3
+[10:56:43] [Hybrid] 8 exact-match chunks boosted to 0.6
+[10:56:43] [KeywordSearch] 'Supervised learning. What is unsupervised learning' → 8 chunks | top score=0.318
+[10:56:43] [Hybrid] 14 total unique chunks across all signals
+[10:56:43] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[10:56:44] [Reranker] ⚠️ Too few chunks after pruning (3) → expanding
+[10:56:44] [Reranker] 8 → 8 chunks after pruning | top=7.059 | margin=3.0 | bottom kept=5.456
+[10:56:44] [ExactMatch] 'Supervised learning. What is unsupervised learning' → 8 exact chunks | top score=3
+[10:56:44] [Protect] Injecting 3 exact-match chunks dropped by reranker
+[10:56:44] [Protect] Context expanded: 8 → 11 chunks
+[10:56:50] [Recall@11] ✅ Oracle chunk retrieved! score=100%
+[10:56:50] [Routing] Context-based → MULTIPART_QA
+[10:56:50] [Reorder] Tiebreaker applied — repeated span: 'the number of data'
+[10:56:50] [Reorder] Tiebreaker applied — repeated span: 'features. this is an'
+[10:56:50] [Reorder] Tiebreaker applied — repeated span: 'data points in the'
+[10:56:50] [Reorder] Tiebreaker applied — repeated span: 'locally linear embedding (lle)'
+[10:56:50] [Reorder] Tiebreaker applied — repeated span: 'the values of the'
+[10:56:50] [Reorder] Tiebreaker applied — repeated span: 'it can be used'
+[10:56:50] [Reorder] top chunk score=3 | numbers=[] | keywords=['supervised', 'learning.', 'learning?', 'unsupervised']
+[10:57:25] [QA] Done in 41.7s | model=llama_multipart | grounding=100.0% | recall=100.0% | confidence=1.000 | decision=accepted
+[10:57:25] [Evaluate] Q3_t1 actual answer: Unsupervised learning.
+[10:57:25] [Evaluate] Q3_t1 ❌ FAIL | hits=0/5 | model=llama_multipart | recall=100.0% | confidence=100.0%
+[10:57:25] [Memory] Enriched query: 'Unsupervised learning. What is the main difference between them?'
+[10:57:25] [Evaluate] Q3_t2: Unsupervised learning. What is the main difference between t...
+[10:57:25] [Extract] ✅ Cache hit — skipping OCR (95 pages)
+[10:57:25] [Chunk] Summary chunks: 16 | RAG chunks: 152
+[10:57:25] [Chunk] 16 summary chunks | 152 RAG chunks
+[10:57:25] [FAISS] ✅ Cache hit for 135a00a3...
+[10:57:25] [QA] START | 152 chunks
+[10:57:25] [Hybrid] 1 queries: ['Unsupervised learning. What is the main difference between them?']
+[10:57:25] [Hybrid] 8 unique chunks after semantic
+[10:57:25] [ExactMatch] 'Unsupervised learning. What is the main difference' → 8 exact chunks | top score=3
+[10:57:25] [Hybrid] 8 exact-match chunks boosted to 0.6
+[10:57:25] [KeywordSearch] 'Unsupervised learning. What is the main difference' → 8 chunks | top score=0.180
+[10:57:25] [Hybrid] 17 total unique chunks across all signals
+[10:57:25] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[10:57:26] [Reranker] ⚠️ Too few chunks after pruning (2) → expanding
+[10:57:26] [Reranker] 8 → 8 chunks after pruning | top=4.086 | margin=3.0 | bottom kept=2.525
+[10:57:26] [ExactMatch] 'Unsupervised learning. What is the main difference' → 8 exact chunks | top score=3
+[10:57:26] [Protect] Injecting 5 exact-match chunks dropped by reranker
+[10:57:26] [Protect] Context expanded: 8 → 13 chunks
+[10:57:32] [Recall@13] ✅ Oracle chunk retrieved! score=100%
+[10:57:32] [Routing] Context-based → MULTIPART_QA
+[10:57:32] [Reorder] Tiebreaker applied — repeated span: 'data points in the'
+[10:57:32] [Reorder] Tiebreaker applied — repeated span: 'features. this is an'
+[10:57:32] [Reorder] Tiebreaker applied — repeated span: 'the training experience will'
+[10:57:32] [Reorder] Tiebreaker applied — repeated span: 'locally linear embedding (lle)'
+[10:57:32] [Reorder] Tiebreaker applied — repeated span: 'the number of data'
+[10:57:32] [Reorder] Tiebreaker applied — repeated span: 'inductive bias is solely'
+[10:57:32] [Reorder] top chunk score=3 | numbers=[] | keywords=['between', 'main', 'learning.', 'difference']
+[10:58:14] [QA] Done in 49.1s | model=llama_multipart | grounding=72.1% | recall=100.0% | confidence=0.721 | decision=accepted
+[10:58:14] [Evaluate] Q3_t2 actual answer: The main difference between supervised and unsupervised learning is that supervised learning involves training a machine on labeled data, where the correct output is already known, whereas unsupervised learning does not have this luxury. In supervised learning, the machine learns to map inputs to ou
+[10:58:14] [Evaluate] Q3_t2 ✅ PASS | hits=1/5 | model=llama_multipart | recall=100.0% | confidence=72.1%
+[10:58:14] [Memory] Enriched query: 'The main difference between supervised and unsupervised learning is that supervised learning involve'
+[10:58:14] [Evaluate] Q3_t3: The main difference between supervised and unsupervised lear...
+[10:58:14] [Extract] ✅ Cache hit — skipping OCR (95 pages)
+[10:58:14] [Chunk] Summary chunks: 16 | RAG chunks: 152
+[10:58:14] [Chunk] 16 summary chunks | 152 RAG chunks
+[10:58:14] [FAISS] ✅ Cache hit for 135a00a3...
+[10:58:14] [QA] START | 152 chunks
+[10:58:14] [Hybrid] 1 queries: ['The main difference between supervised and unsupervised learning is that supervised learning involves training a machine on labeled data, where the correct output is already known, whereas unsupervise Which one requires labeled data?']
+[10:58:14] [Hybrid] 8 unique chunks after semantic
+[10:58:14] [ExactMatch] 'The main difference between supervised and unsuper' → 8 exact chunks | top score=9
+[10:58:14] [Hybrid] 8 exact-match chunks boosted to 0.6
+[10:58:14] [KeywordSearch] 'The main difference between supervised and unsuper' → 8 chunks | top score=0.231
+[10:58:14] [Hybrid] 14 total unique chunks across all signals
+[10:58:14] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[10:58:15] [Reranker] ⚠️ Too few chunks after pruning (4) → expanding
+[10:58:15] [Reranker] 8 → 8 chunks after pruning | top=4.317 | margin=3.0 | bottom kept=1.502
+[10:58:15] [ExactMatch] 'The main difference between supervised and unsuper' → 8 exact chunks | top score=9
+[10:58:15] [Protect] Injecting 4 exact-match chunks dropped by reranker
+[10:58:15] [Protect] Context expanded: 8 → 12 chunks
+[10:58:21] [Recall@12] ✅ Oracle chunk retrieved! score=100%
+[10:58:21] [Routing] Context-based → MULTIPART_QA
+[10:58:21] [Reorder] Tiebreaker applied — repeated span: 'the number of data'
+[10:58:21] [Reorder] Tiebreaker applied — repeated span: 'features. this is an'
+[10:58:21] [Reorder] Tiebreaker applied — repeated span: 'data points in the'
+[10:58:21] [Reorder] Tiebreaker applied — repeated span: 'the training experience will'
+[10:58:21] [Reorder] Tiebreaker applied — repeated span: 'stores the dataset and'
+[10:58:21] [Reorder] Tiebreaker applied — repeated span: 'input and outputs a'
+[10:58:21] [Reorder] Tiebreaker applied — repeated span: 'tree can be explained'
+[10:58:21] [Reorder] Tiebreaker applied — repeated span: 'the values of the'
+[10:58:21] [Reorder] top chunk score=7 | numbers=[] | keywords=['whereas', 'labeled', 'one', 'unsupervise']
+[10:58:56] [QA] Done in 41.6s | model=llama_multipart | grounding=80.0% | recall=100.0% | confidence=0.800 | decision=accepted
+[10:58:56] [Evaluate] Q3_t3 actual answer: Supervised learning requires labeled data.
+[10:58:56] [Evaluate] Q3_t3 ✅ PASS | hits=1/5 | model=llama_multipart | recall=100.0% | confidence=80.0%
+[10:58:56] [Evaluate] Q4_t0: What is reinforcement learning?...
+[10:58:56] [Extract] ✅ Cache hit — skipping OCR (95 pages)
+[10:58:56] [Chunk] Summary chunks: 16 | RAG chunks: 152
+[10:58:56] [Chunk] 16 summary chunks | 152 RAG chunks
+[10:58:56] [FAISS] ✅ Cache hit for 135a00a3...
+[10:58:56] [QA] START | 152 chunks
+[10:58:56] [Hybrid] 1 queries: ['What is reinforcement learning?']
+[10:58:56] [Hybrid] 8 unique chunks after semantic
+[10:58:56] [ExactMatch] 'What is reinforcement learning?' → 7 exact chunks | top score=1
+[10:58:56] [Hybrid] 7 exact-match chunks boosted to 0.6
+[10:58:56] [KeywordSearch] 'What is reinforcement learning?' → 8 chunks | top score=0.285
+[10:58:56] [Hybrid] 9 total unique chunks across all signals
+[10:58:56] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[10:58:57] [Reranker] ⚠️ Too few chunks after pruning (4) → expanding
+[10:58:57] [Reranker] 8 → 8 chunks after pruning | top=4.669 | margin=3.0 | bottom kept=1.782
+[10:58:57] [ExactMatch] 'What is reinforcement learning?' → 7 exact chunks | top score=1
+[10:58:57] [Protect] All exact-match chunks already in reranked set ✅
+[10:59:05] [Recall@8] ✅ Oracle chunk retrieved! score=100%
+[10:59:05] [Routing] Context-based → FACTUAL_QA
+[10:59:05] [QA] ⚡ Direct QA (no ReAct)
+[10:59:18] [QA] Answer: 'Reinforcement learning.'
+[10:59:18] [DEBUG] react_ans before refusal check: repr='Reinforcement learning.'
+[10:59:18] [QA] Done in 22.1s | model=llama_direct | grounding=100.0% | recall=100.0% | confidence=1.000 | decision=accepted
+[10:59:18] [Evaluate] Q4_t0 actual answer: Reinforcement learning.
+[10:59:18] [Evaluate] Q4_t0 ❌ FAIL | hits=0/5 | model=llama_direct | recall=100.0% | confidence=100.0%
+[10:59:18] [Memory] Enriched query: 'Reinforcement learning. How does the system learn in it?'
+[10:59:18] [Evaluate] Q4_t1: Reinforcement learning. How does the system learn in it?...
+[10:59:18] [Extract] ✅ Cache hit — skipping OCR (95 pages)
+[10:59:18] [Chunk] Summary chunks: 16 | RAG chunks: 152
+[10:59:18] [Chunk] 16 summary chunks | 152 RAG chunks
+[10:59:18] [FAISS] ✅ Cache hit for 135a00a3...
+[10:59:18] [QA] START | 152 chunks
+[10:59:18] [Hybrid] 1 queries: ['Reinforcement learning. How does the system learn in it?']
+[10:59:18] [Hybrid] 8 unique chunks after semantic
+[10:59:18] [ExactMatch] 'Reinforcement learning. How does the system learn ' → 8 exact chunks | top score=3
+[10:59:18] [Hybrid] 8 exact-match chunks boosted to 0.6
+[10:59:18] [KeywordSearch] 'Reinforcement learning. How does the system learn ' → 8 chunks | top score=0.310
+[10:59:18] [Hybrid] 11 total unique chunks across all signals
+[10:59:18] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[10:59:19] [Reranker] ⚠️ Too few chunks after pruning (3) → expanding
+[10:59:19] [Reranker] 8 → 8 chunks after pruning | top=4.310 | margin=3.0 | bottom kept=1.586
+[10:59:19] [ExactMatch] 'Reinforcement learning. How does the system learn ' → 8 exact chunks | top score=3
+[10:59:19] [Protect] Injecting 3 exact-match chunks dropped by reranker
+[10:59:19] [Protect] Context expanded: 8 → 11 chunks
+[10:59:27] [Recall@11] ✅ Oracle chunk retrieved! score=100%
+[10:59:27] [Routing] Context-based → MULTIPART_QA
+[10:59:27] [Reorder] Tiebreaker applied — repeated span: 'input and outputs a'
+[10:59:27] [Reorder] Tiebreaker applied — repeated span: 'what is the best'
+[10:59:27] [Reorder] Tiebreaker applied — repeated span: 'performance measure able to'
+[10:59:27] [Reorder] Tiebreaker applied — repeated span: 'the target function choosing'
+[10:59:27] [Reorder] top chunk score=3 | numbers=[] | keywords=['learn', 'it?', 'system', 'learning.']
+[11:00:03] [QA] Done in 45.3s | model=llama_multipart | grounding=61.8% | recall=100.0% | confidence=0.618 | decision=accepted
+[11:00:03] [Evaluate] Q4_t1 actual answer: The system learns through trial and error by receiving feedback in the form of rewards or penalties for its actions. This process allows it to differentiate between right and wrong moves, leading to improved performance over time.
+[11:00:03] [Evaluate] Q4_t1 ✅ PASS | hits=3/5 | model=llama_multipart | recall=100.0% | confidence=61.8%
+[11:00:03] [Memory] Enriched query: 'The system learns through trial and error by receiving feedback in the form of rewards or penalties '
+[11:00:03] [Evaluate] Q4_t2: The system learns through trial and error by receiving feedb...
+[11:00:04] [Extract] ✅ Cache hit — skipping OCR (95 pages)
+[11:00:04] [Chunk] Summary chunks: 16 | RAG chunks: 152
+[11:00:04] [Chunk] 16 summary chunks | 152 RAG chunks
+[11:00:04] [FAISS] ✅ Cache hit for 135a00a3...
+[11:00:04] [QA] START | 152 chunks
+[11:00:04] [Hybrid] 1 queries: ['The system learns through trial and error by receiving feedback in the form of rewards or penalties for its actions. This process allows it to differentiate between right and wrong moves, leading to i What happens when the action is correct or incorrect?']
+[11:00:04] [Hybrid] 8 unique chunks after semantic
+[11:00:04] [ExactMatch] 'The system learns through trial and error by recei' → 8 exact chunks | top score=5
+[11:00:04] [Hybrid] 8 exact-match chunks boosted to 0.6
+[11:00:04] [KeywordSearch] 'The system learns through trial and error by recei' → 8 chunks | top score=0.195
+[11:00:04] [Hybrid] 15 total unique chunks across all signals
+[11:00:04] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[11:00:05] [Reranker] ⚠️ Very low scores → keeping top chunks instead of rejecting
+[11:00:05] [ExactMatch] 'The system learns through trial and error by recei' → 8 exact chunks | top score=5
+[11:00:05] [Protect] Injecting 4 exact-match chunks dropped by reranker
+[11:00:05] [Protect] Context expanded: 8 → 12 chunks
+[11:00:05] [Guard] ⚠️ Weak reranker score — continuing
+[11:00:15] [Recall@12] oracle=0.450 | best_retrieved=0.416 | score=92.4%
+[11:00:15] [Routing] Context-based → MULTIPART_QA
+[11:00:15] [Reorder] Tiebreaker applied — repeated span: 'input and outputs a'
+[11:00:15] [Reorder] Tiebreaker applied — repeated span: 'choose the best move'
+[11:00:15] [Reorder] Tiebreaker applied — repeated span: 'the target function choosing'
+[11:00:15] [Reorder] Tiebreaker applied — repeated span: 'performance measure percent of'
+[11:00:15] [Reorder] Tiebreaker applied — repeated span: 'the training experience will'
+[11:00:15] [Reorder] Tiebreaker applied — repeated span: 'what is the best'
+[11:00:15] [Reorder] Tiebreaker applied — repeated span: 'performance measure able to'
+[11:00:15] [Reorder] top chunk score=5 | numbers=[] | keywords=['right', 'action', 'rewards', 'learns']
+[11:00:50] [QA] Done in 46.0s | model=llama_multipart | grounding=72.7% | recall=92.4% | confidence=0.727 | decision=accepted
+[11:00:50] [Evaluate] Q4_t2 actual answer: When the action is correct or incorrect, it receives a reward or penalty.
+[11:00:50] [Evaluate] Q4_t2 ✅ PASS | hits=2/5 | model=llama_multipart | recall=92.4% | confidence=72.7%
+[11:00:50] [Memory] Enriched query: 'When the action is correct or incorrect, it receives a reward or penalty. Why does the model improve'
+[11:00:50] [Evaluate] Q4_t3: When the action is correct or incorrect, it receives a rewar...
+[11:00:50] [Extract] ✅ Cache hit — skipping OCR (95 pages)
+[11:00:50] [Chunk] Summary chunks: 16 | RAG chunks: 152
+[11:00:50] [Chunk] 16 summary chunks | 152 RAG chunks
+[11:00:50] [FAISS] ✅ Cache hit for 135a00a3...
+[11:00:50] [QA] START | 152 chunks
+[11:00:50] [Hybrid] 1 queries: ['When the action is correct or incorrect, it receives a reward or penalty. Why does the model improve over time?']
+[11:00:50] [Hybrid] 8 unique chunks after semantic
+[11:00:50] [ExactMatch] 'When the action is correct or incorrect, it receiv' → 8 exact chunks | top score=3
+[11:00:50] [Hybrid] 8 exact-match chunks boosted to 0.6
+[11:00:50] [KeywordSearch] 'When the action is correct or incorrect, it receiv' → 8 chunks | top score=0.093
+[11:00:50] [Hybrid] 16 total unique chunks across all signals
+[11:00:50] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[11:00:51] [Reranker] ⚠️ Very low scores → keeping top chunks instead of rejecting
+[11:00:51] [ExactMatch] 'When the action is correct or incorrect, it receiv' → 8 exact chunks | top score=3
+[11:00:51] [Protect] Injecting 3 exact-match chunks dropped by reranker
+[11:00:51] [Protect] Context expanded: 8 → 11 chunks
+[11:00:51] [Guard] ⚠️ Weak reranker score — continuing
+[11:01:00] [Recall@11] ✅ Oracle chunk retrieved! score=100%
+[11:01:00] [Routing] Context-based → MULTIPART_QA
+[11:01:00] [Reorder] Tiebreaker applied — repeated span: 'input and outputs a'
+[11:01:00] [Reorder] Tiebreaker applied — repeated span: 'emails as spam or'
+[11:01:00] [Reorder] Tiebreaker applied — repeated span: 'the target function choosing'
+[11:01:00] [Reorder] Tiebreaker applied — repeated span: '?, ?, ?, ?,'
+[11:01:00] [Reorder] top chunk score=3 | numbers=[] | keywords=['penalty.', 'model', 'incorrect,', 'over']
+[11:01:36] [QA] Done in 46.7s | model=llama_multipart | grounding=66.7% | recall=100.0% | confidence=0.667 | decision=accepted
+[11:01:36] [Evaluate] Q4_t3 actual answer: The model improves over time because it receives a reward or penalty when the action is correct or incorrect. This process of receiving rewards for correct actions and penalties for incorrect ones helps the model learn from its experiences and improve its performance over time.
+[11:01:36] [Evaluate] Q4_t3 ✅ PASS | hits=3/5 | model=llama_multipart | recall=100.0% | confidence=66.7%
+[11:01:36] [Evaluate] Q5_t0: What is deep learning?...
+[11:01:37] [Extract] ✅ Cache hit — skipping OCR (95 pages)
+[11:01:37] [Chunk] Summary chunks: 16 | RAG chunks: 152
+[11:01:37] [Chunk] 16 summary chunks | 152 RAG chunks
+[11:01:37] [FAISS] ✅ Cache hit for 135a00a3...
+[11:01:37] [QA] START | 152 chunks
+[11:01:37] [Hybrid] 1 queries: ['What is deep learning?']
+[11:01:37] [Hybrid] 8 unique chunks after semantic
+[11:01:37] [ExactMatch] 'What is deep learning?' → 7 exact chunks | top score=1
+[11:01:37] [Hybrid] 7 exact-match chunks boosted to 0.6
+[11:01:37] [KeywordSearch] 'What is deep learning?' → 8 chunks | top score=0.624
+[11:01:37] [Hybrid] 14 total unique chunks across all signals
+[11:01:37] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[11:01:37] [Reranker] ⚠️ Too few chunks after pruning (2) → expanding
+[11:01:37] [Reranker] 8 → 8 chunks after pruning | top=7.735 | margin=3.0 | bottom kept=5.500
+[11:01:37] [ExactMatch] 'What is deep learning?' → 7 exact chunks | top score=1
+[11:01:37] [Protect] Injecting 3 exact-match chunks dropped by reranker
+[11:01:37] [Protect] Context expanded: 8 → 11 chunks
+[11:01:48] [Recall@11] ✅ Oracle chunk retrieved! score=100%
+[11:01:48] [Routing] Context-based → FACTUAL_QA
+[11:01:48] [QA] ⚡ Direct QA (no ReAct)
+[11:02:01] [QA] Answer: 'The deep learning is a model based on Artificial Neural Netw'
+[11:02:01] [DEBUG] react_ans before refusal check: repr='The deep learning is a model based on Artificial Neural Networks (ANN), more specifically Convolutional Neural Networks (CNN)s.'
+[11:02:01] [QA] Done in 24.7s | model=llama_direct | grounding=100.0% | recall=100.0% | confidence=1.000 | decision=accepted
+[11:02:01] [Evaluate] Q5_t0 actual answer: The deep learning is a model based on Artificial Neural Networks (ANN), more specifically Convolutional Neural Networks (CNN)s.
+[11:02:01] [Evaluate] Q5_t0 ✅ PASS | hits=3/5 | model=llama_direct | recall=100.0% | confidence=100.0%
+[11:02:01] [Memory] Enriched query: 'The deep learning is a model based on Artificial Neural Networks (ANN), more specifically Convolutio'
+[11:02:01] [Evaluate] Q5_t1: The deep learning is a model based on Artificial Neural Netw...
+[11:02:01] [Extract] ✅ Cache hit — skipping OCR (95 pages)
+[11:02:01] [Chunk] Summary chunks: 16 | RAG chunks: 152
+[11:02:01] [Chunk] 16 summary chunks | 152 RAG chunks
+[11:02:02] [FAISS] ✅ Cache hit for 135a00a3...
+[11:02:02] [QA] START | 152 chunks
+[11:02:02] [Hybrid] 1 queries: ['The deep learning is a model based on Artificial Neural Networks (ANN), more specifically Convolutional Neural Networks (CNN)s. What type of models are used in it?']
+[11:02:02] [Hybrid] 8 unique chunks after semantic
+[11:02:02] [ExactMatch] 'The deep learning is a model based on Artificial N' → 4 exact chunks | top score=15
+[11:02:02] [Hybrid] 4 exact-match chunks boosted to 0.6
+[11:02:02] [KeywordSearch] 'The deep learning is a model based on Artificial N' → 8 chunks | top score=0.519
+[11:02:02] [Hybrid] 12 total unique chunks across all signals
+[11:02:02] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[11:02:02] [Reranker] ⚠️ Too few chunks after pruning (1) → expanding
+[11:02:02] [Reranker] 8 → 8 chunks after pruning | top=9.223 | margin=3.0 | bottom kept=9.223
+[11:02:02] [ExactMatch] 'The deep learning is a model based on Artificial N' → 4 exact chunks | top score=15
+[11:02:02] [Protect] Injecting 1 exact-match chunks dropped by reranker
+[11:02:02] [Protect] Context expanded: 8 → 9 chunks
+[11:02:11] [Recall@9] ✅ Oracle chunk retrieved! score=100%
+[11:02:11] [Routing] Context-based → MULTIPART_QA
+[11:02:11] [Reorder] Tiebreaker applied — repeated span: 'the aim is to'
+[11:02:11] [Reorder] Tiebreaker applied — repeated span: 'can be discrete-valued, real-valued,'
+[11:02:11] [Reorder] top chunk score=13 | numbers=[] | keywords=['model', 'artificial', 'deep', 'neural']
+[11:02:46] [QA] Done in 44.7s | model=llama_multipart | grounding=75.0% | recall=100.0% | confidence=0.750 | decision=accepted
+[11:02:46] [Evaluate] Q5_t1 actual answer: Convolutional Neural Networks (CNNs).
+[11:02:46] [Evaluate] Q5_t1 ✅ PASS | hits=2/5 | model=llama_multipart | recall=100.0% | confidence=75.0%
+[11:02:46] [Memory] Enriched query: 'Convolutional Neural Networks (CNNs). What is deep reinforcement learning?'
+[11:02:46] [Evaluate] Q5_t2: Convolutional Neural Networks (CNNs). What is deep reinforce...
+[11:02:46] [Extract] ✅ Cache hit — skipping OCR (95 pages)
+[11:02:46] [Chunk] Summary chunks: 16 | RAG chunks: 152
+[11:02:46] [Chunk] 16 summary chunks | 152 RAG chunks
+[11:02:46] [FAISS] ✅ Cache hit for 135a00a3...
+[11:02:46] [QA] START | 152 chunks
+[11:02:46] [Hybrid] 1 queries: ['Convolutional Neural Networks (CNNs). What is deep reinforcement learning?']
+[11:02:46] [Hybrid] 8 unique chunks after semantic
+[11:02:46] [ExactMatch] 'Convolutional Neural Networks (CNNs). What is deep' → 3 exact chunks | top score=5
+[11:02:46] [Hybrid] 3 exact-match chunks boosted to 0.6
+[11:02:47] [KeywordSearch] 'Convolutional Neural Networks (CNNs). What is deep' → 8 chunks | top score=0.605
+[11:02:47] [Hybrid] 12 total unique chunks across all signals
+[11:02:47] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[11:02:47] [Reranker] ⚠️ Too few chunks after pruning (1) → expanding
+[11:02:47] [Reranker] 8 → 8 chunks after pruning | top=6.898 | margin=3.0 | bottom kept=6.898
+[11:02:47] [ExactMatch] 'Convolutional Neural Networks (CNNs). What is deep' → 3 exact chunks | top score=5
+[11:02:47] [Protect] Injecting 1 exact-match chunks dropped by reranker
+[11:02:47] [Protect] Context expanded: 8 → 9 chunks
+[11:02:58] [Recall@9] ✅ Oracle chunk retrieved! score=100%
+[11:02:58] [Routing] Context-based → MULTIPART_QA
+[11:02:58] [Reorder] Tiebreaker applied — repeated span: 'input and outputs a'
+[11:02:58] [Reorder] Tiebreaker applied — repeated span: 'the aim is to'
+[11:02:58] [Reorder] top chunk score=5 | numbers=[] | keywords=['deep', 'neural', 'reinforcement', 'learning?']
+[11:03:19] [QA] Done in 33.0s | model=llama_multipart | grounding=100.0% | recall=100.0% | confidence=1.000 | decision=accepted
+[11:03:19] [Evaluate] Q5_t2 actual answer: Deep Reinforcement Learning.
+[11:03:19] [Evaluate] Q5_t2 ✅ PASS | hits=2/5 | model=llama_multipart | recall=100.0% | confidence=100.0%
+[11:03:19] [Memory] Enriched query: 'Deep Reinforcement Learning. How is it different from normal reinforcement learning?'
+[11:03:19] [Evaluate] Q5_t3: Deep Reinforcement Learning. How is it different from normal...
+[11:03:19] [Extract] ✅ Cache hit — skipping OCR (95 pages)
+[11:03:19] [Chunk] Summary chunks: 16 | RAG chunks: 152
+[11:03:19] [Chunk] 16 summary chunks | 152 RAG chunks
+[11:03:20] [FAISS] ✅ Cache hit for 135a00a3...
+[11:03:20] [QA] START | 152 chunks
+[11:03:20] [Hybrid] 1 queries: ['Deep Reinforcement Learning. How is it different from normal reinforcement learning?']
+[11:03:20] [Hybrid] 8 unique chunks after semantic
+[11:03:20] [ExactMatch] 'Deep Reinforcement Learning. How is it different f' → 8 exact chunks | top score=4
+[11:03:20] [Hybrid] 8 exact-match chunks boosted to 0.6
+[11:03:20] [KeywordSearch] 'Deep Reinforcement Learning. How is it different f' → 8 chunks | top score=0.434
+[11:03:20] [Hybrid] 11 total unique chunks across all signals
+[11:03:20] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[11:03:20] [Reranker] ⚠️ Too few chunks after pruning (2) → expanding
+[11:03:20] [Reranker] 8 → 8 chunks after pruning | top=1.996 | margin=3.0 | bottom kept=0.396
+[11:03:20] [ExactMatch] 'Deep Reinforcement Learning. How is it different f' → 8 exact chunks | top score=4
+[11:03:20] [Protect] Injecting 2 exact-match chunks dropped by reranker
+[11:03:20] [Protect] Context expanded: 8 → 10 chunks
+[11:03:27] [Recall@10] ✅ Oracle chunk retrieved! score=100%
+[11:03:27] [Routing] Context-based → MULTIPART_QA
+[11:03:27] [Reorder] Tiebreaker applied — repeated span: 'input and outputs a'
+[11:03:27] [Reorder] Tiebreaker applied — repeated span: 'what is the best'
+[11:03:27] [Reorder] top chunk score=3 | numbers=[] | keywords=['different', 'deep', 'learning?', 'learning.']
+[11:04:03] [QA] Done in 43.3s | model=llama_multipart | grounding=85.7% | recall=100.0% | confidence=0.857 | decision=accepted
+[11:04:03] [Evaluate] Q5_t3 actual answer: Deep Reinforcement Learning differs from normal reinforcement learning in that it combines techniques of both deep and reinforcement learning.
+[11:04:03] [Evaluate] Q5_t3 ✅ PASS | hits=3/5 | model=llama_multipart | recall=100.0% | confidence=85.7%
+[11:04:03] [Evaluate] Q6_t0: What are the main assumptions of Independent Component Analy...
+[11:04:03] [Extract] ✅ Cache hit — skipping OCR (95 pages)
+[11:04:03] [Chunk] Summary chunks: 16 | RAG chunks: 152
+[11:04:03] [Chunk] 16 summary chunks | 152 RAG chunks
+[11:04:03] [FAISS] ✅ Cache hit for 135a00a3...
+[11:04:03] [QA] START | 152 chunks
+[11:04:03] [Hybrid] 1 queries: ['What are the main assumptions of Independent Component Analysis (ICA)?']
+[11:04:03] [Hybrid] 8 unique chunks after semantic
+[11:04:03] [ExactMatch] 'What are the main assumptions of Independent Compo' → 8 exact chunks | top score=3
+[11:04:03] [Hybrid] 8 exact-match chunks boosted to 0.6
+[11:04:03] [KeywordSearch] 'What are the main assumptions of Independent Compo' → 8 chunks | top score=0.306
+[11:04:03] [Hybrid] 13 total unique chunks across all signals
+[11:04:03] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[11:04:03] [Reranker] ⚠️ Too few chunks after pruning (1) → expanding
+[11:04:03] [Reranker] 8 → 8 chunks after pruning | top=1.823 | margin=3.0 | bottom kept=1.823
+[11:04:03] [ExactMatch] 'What are the main assumptions of Independent Compo' → 8 exact chunks | top score=3
+[11:04:03] [Protect] Injecting 3 exact-match chunks dropped by reranker
+[11:04:03] [Protect] Context expanded: 8 → 11 chunks
+[11:04:10] [Recall@11] ✅ Oracle chunk retrieved! score=100%
+[11:04:10] [Routing] Context-based → MULTIPART_QA
+[11:04:10] [Reorder] Tiebreaker applied — repeated span: 'independent components generated by'
+[11:04:10] [Reorder] Tiebreaker applied — repeated span: 'of dimensionality reduction it'
+[11:04:10] [Reorder] Tiebreaker applied — repeated span: 'microphone microphone microphone microphone'
+[11:04:10] [Reorder] Tiebreaker applied — repeated span: 'the fact that you'
+[11:04:10] [Reorder] Tiebreaker applied — repeated span: 'independent of each other.'
+[11:04:10] [Reorder] top chunk score=3 | numbers=[] | keywords=['independent', 'component', 'assumptions', 'main']
+[11:04:45] [Grounding] Refusal answer detected → returning sentinel 75.0
+[11:04:45] [QA] Done in 42.4s | model=llama_multipart | grounding=75.0% | recall=100.0% | confidence=0.750 | decision=accepted
+[11:04:45] [Evaluate] Q6_t0 actual answer: NOT PRESENT
+[11:04:45] [Evaluate] Q6_t0 ❌ FAIL | hits=0/5 | model=llama_multipart | recall=100.0% | confidence=75.0%
+[11:04:45] [Memory] Enriched query: 'NOT PRESENT Why must the components be non-Gaussian?'
+[11:04:45] [Evaluate] Q6_t1: NOT PRESENT Why must the components be non-Gaussian?...
+[11:04:45] [Extract] ✅ Cache hit — skipping OCR (95 pages)
+[11:04:45] [Chunk] Summary chunks: 16 | RAG chunks: 152
+[11:04:45] [Chunk] 16 summary chunks | 152 RAG chunks
+[11:04:45] [FAISS] ✅ Cache hit for 135a00a3...
+[11:04:45] [QA] START | 152 chunks
+[11:04:45] [Hybrid] 1 queries: ['NOT PRESENT Why must the components be non-Gaussian?']
+[11:04:45] [Hybrid] 8 unique chunks after semantic
+[11:04:46] [ExactMatch] 'NOT PRESENT Why must the components be non-Gaussia' → 8 exact chunks | top score=3
+[11:04:46] [Hybrid] 8 exact-match chunks boosted to 0.6
+[11:04:46] [KeywordSearch] 'NOT PRESENT Why must the components be non-Gaussia' → 8 chunks | top score=0.166
+[11:04:46] [Hybrid] 19 total unique chunks across all signals
+[11:04:46] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[11:04:46] [Reranker] ⚠️ Too few chunks after pruning (1) → expanding
+[11:04:46] [Reranker] 8 → 8 chunks after pruning | top=3.966 | margin=3.0 | bottom kept=3.966
+[11:04:46] [ExactMatch] 'NOT PRESENT Why must the components be non-Gaussia' → 8 exact chunks | top score=3
+[11:04:46] [Protect] Injecting 6 exact-match chunks dropped by reranker
+[11:04:46] [Protect] Context expanded: 8 → 14 chunks
+[11:04:53] [Recall@14] ✅ Oracle chunk retrieved! score=100%
+[11:04:53] [Routing] Context-based → MULTIPART_QA
+[11:04:53] [Reorder] Tiebreaker applied — repeated span: 'independent components generated by'
+[11:04:53] [Reorder] Tiebreaker applied — repeated span: 'of dimensionality reduction it'
+[11:04:53] [Reorder] Tiebreaker applied — repeated span: 'the values of the'
+[11:04:53] [Reorder] Tiebreaker applied — repeated span: 'independent of each other.'
+[11:04:53] [Reorder] Tiebreaker applied — repeated span: 'locally linear embedding (lle)'
+[11:04:53] [Reorder] Tiebreaker applied — repeated span: 'the target function choosing'
+[11:04:53] [Reorder] Tiebreaker applied — repeated span: 'b is a final'
+[11:04:53] [Reorder] Tiebreaker applied — repeated span: 'input and outputs a'
+[11:04:53] [Reorder] Tiebreaker applied — repeated span: 'is found, then the'
+[11:04:53] [Reorder] Tiebreaker applied — repeated span: 'approximation to the target'
+[11:04:53] [Reorder] top chunk score=2 | numbers=[] | keywords=['components', 'non-gaussian?', 'must', 'present']
+[11:05:26] [Grounding] Refusal answer detected → returning sentinel 75.0
+[11:05:26] [QA] Done in 40.6s | model=llama_multipart | grounding=75.0% | recall=100.0% | confidence=0.750 | decision=accepted
+[11:05:26] [Evaluate] Q6_t1 actual answer: NOT PRESENT
+[11:05:26] [Evaluate] Q6_t1 ❌ FAIL | hits=0/5 | model=llama_multipart | recall=100.0% | confidence=75.0%
+[11:05:26] [Memory] Enriched query: 'NOT PRESENT How many independent components are generated in ICA?'
+[11:05:26] [Evaluate] Q6_t2: NOT PRESENT How many independent components are generated in...
+[11:05:26] [Extract] ✅ Cache hit — skipping OCR (95 pages)
+[11:05:26] [Chunk] Summary chunks: 16 | RAG chunks: 152
+[11:05:26] [Chunk] 16 summary chunks | 152 RAG chunks
+[11:05:26] [FAISS] ✅ Cache hit for 135a00a3...
+[11:05:26] [QA] START | 152 chunks
+[11:05:26] [Hybrid] 1 queries: ['NOT PRESENT How many independent components are generated in ICA?']
+[11:05:26] [Hybrid] 8 unique chunks after semantic
+[11:05:26] [ExactMatch] 'NOT PRESENT How many independent components are ge' → 8 exact chunks | top score=4
+[11:05:26] [Hybrid] 8 exact-match chunks boosted to 0.6
+[11:05:26] [KeywordSearch] 'NOT PRESENT How many independent components are ge' → 8 chunks | top score=0.518
+[11:05:26] [Hybrid] 17 total unique chunks across all signals
+[11:05:26] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[11:05:27] [Reranker] ⚠️ Too few chunks after pruning (1) → expanding
+[11:05:27] [Reranker] 8 → 8 chunks after pruning | top=5.459 | margin=3.0 | bottom kept=5.459
+[11:05:27] [ExactMatch] 'NOT PRESENT How many independent components are ge' → 8 exact chunks | top score=4
+[11:05:27] [Protect] Injecting 6 exact-match chunks dropped by reranker
+[11:05:27] [Protect] Context expanded: 8 → 14 chunks
+[11:05:33] [Recall@14] ✅ Oracle chunk retrieved! score=100%
+[11:05:33] [Routing] Context-based → MULTIPART_QA
+[11:05:33] [Reorder] Tiebreaker applied — repeated span: 'independent components generated by'
+[11:05:33] [Reorder] Tiebreaker applied — repeated span: 'microphone microphone microphone microphone'
+[11:05:33] [Reorder] Tiebreaker applied — repeated span: 'of dimensionality reduction it'
+[11:05:33] [Reorder] Tiebreaker applied — repeated span: 'independent of each other.'
+[11:05:33] [Reorder] Tiebreaker applied — repeated span: 'the number of features'
+[11:05:33] [Reorder] Tiebreaker applied — repeated span: 'input and outputs a'
+[11:05:33] [Reorder] Tiebreaker applied — repeated span: 'the target function choosing'
+[11:05:33] [Reorder] Tiebreaker applied — repeated span: 'b is a final'
+[11:05:33] [Reorder] Tiebreaker applied — repeated span: 'the training data may'
+[11:05:33] [Reorder] Tiebreaker applied — repeated span: 'to decide which is'
+[11:05:33] [Reorder] top chunk score=2 | numbers=[] | keywords=['independent', 'ica?', 'present', 'many']
+[11:06:09] [QA] Done in 43.0s | model=llama_multipart | grounding=100.0% | recall=100.0% | confidence=1.000 | decision=accepted
+[11:06:09] [Evaluate] Q6_t2 actual answer: The number of independent components generated by ICA is equal to the number of observed mixtures.
+[11:06:09] [Evaluate] Q6_t2 ✅ PASS | hits=3/5 | model=llama_multipart | recall=100.0% | confidence=100.0%
+[11:06:09] [Memory] Enriched query: 'The number of independent components generated by ICA is equal to the number of observed mixtures. W'
+[11:06:09] [Evaluate] Q6_t3: The number of independent components generated by ICA is equ...
+[11:06:09] [Extract] ✅ Cache hit — skipping OCR (95 pages)
+[11:06:09] [Chunk] Summary chunks: 16 | RAG chunks: 152
+[11:06:09] [Chunk] 16 summary chunks | 152 RAG chunks
+[11:06:09] [FAISS] ✅ Cache hit for 135a00a3...
+[11:06:09] [QA] START | 152 chunks
+[11:06:09] [Hybrid] 1 queries: ['The number of independent components generated by ICA is equal to the number of observed mixtures. Why is independence important in ICA?']
+[11:06:09] [Hybrid] 8 unique chunks after semantic
+[11:06:09] [ExactMatch] 'The number of independent components generated by ' → 4 exact chunks | top score=9
+[11:06:09] [Hybrid] 4 exact-match chunks boosted to 0.6
+[11:06:09] [KeywordSearch] 'The number of independent components generated by ' → 8 chunks | top score=0.501
+[11:06:09] [Hybrid] 13 total unique chunks across all signals
+[11:06:09] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[11:06:10] [Reranker] ⚠️ Too few chunks after pruning (1) → expanding
+[11:06:10] [Reranker] 8 → 8 chunks after pruning | top=6.622 | margin=3.0 | bottom kept=6.622
+[11:06:10] [ExactMatch] 'The number of independent components generated by ' → 4 exact chunks | top score=9
+[11:06:10] [Protect] Injecting 1 exact-match chunks dropped by reranker
+[11:06:10] [Protect] Context expanded: 8 → 9 chunks
+[11:06:15] [Recall@9] ✅ Oracle chunk retrieved! score=100%
+[11:06:15] [Routing] Context-based → MULTIPART_QA
+[11:06:15] [Reorder] Tiebreaker applied — repeated span: 'independent components generated by'
+[11:06:15] [Reorder] Tiebreaker applied — repeated span: 'microphone microphone microphone microphone'
+[11:06:15] [Reorder] Tiebreaker applied — repeated span: 'independent of each other.'
+[11:06:15] [Reorder] Tiebreaker applied — repeated span: 'of dimensionality reduction it'
+[11:06:15] [Reorder] Tiebreaker applied — repeated span: 'data points in the'
+[11:06:15] [Reorder] Tiebreaker applied — repeated span: 'is found, then the'
+[11:06:15] [Reorder] Tiebreaker applied — repeated span: 'the number of features'
+[11:06:15] [Reorder] Tiebreaker applied — repeated span: 'features. this is an'
+[11:06:15] [Reorder] Tiebreaker applied — repeated span: 'independent components generated by'
+[11:06:15] [Reorder] top chunk score=5 | numbers=[] | keywords=['equal', 'ica', 'independent', 'mixtures.']
+[11:06:53] [QA] Done in 43.7s | model=llama_multipart | grounding=86.7% | recall=100.0% | confidence=0.867 | decision=accepted
+[11:06:53] [Evaluate] Q6_t3 actual answer: Independence is important in ICA because the independent components generated by ICA must have non-Gaussian distribution.
+[11:06:53] [Evaluate] Q6_t3 ✅ PASS | hits=2/5 | model=llama_multipart | recall=100.0% | confidence=86.7%
+[11:06:53] [Evaluate] Q7_t0: What is multidimensional scaling (MDS)?...
+[11:06:53] [Extract] ✅ Cache hit — skipping OCR (95 pages)
+[11:06:53] [Chunk] Summary chunks: 16 | RAG chunks: 152
+[11:06:53] [Chunk] 16 summary chunks | 152 RAG chunks
+[11:06:53] [FAISS] ✅ Cache hit for 135a00a3...
+[11:06:53] [QA] START | 152 chunks
+[11:06:53] [Hybrid] 1 queries: ['What is multidimensional scaling (MDS)?']
+[11:06:53] [Hybrid] 8 unique chunks after semantic
+[11:06:53] [ExactMatch] 'What is multidimensional scaling (MDS)?' → 4 exact chunks | top score=2
+[11:06:53] [Hybrid] 4 exact-match chunks boosted to 0.6
+[11:06:53] [KeywordSearch] 'What is multidimensional scaling (MDS)?' → 5 chunks | top score=0.235
+[11:06:53] [Hybrid] 10 total unique chunks across all signals
+[11:06:53] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[11:06:54] [Reranker] ⚠️ Too few chunks after pruning (1) → expanding
+[11:06:54] [Reranker] 8 → 8 chunks after pruning | top=6.783 | margin=3.0 | bottom kept=6.783
+[11:06:54] [ExactMatch] 'What is multidimensional scaling (MDS)?' → 4 exact chunks | top score=2
+[11:06:54] [Protect] Injecting 2 exact-match chunks dropped by reranker
+[11:06:54] [Protect] Context expanded: 8 → 10 chunks
+[11:07:00] [Recall@10] ✅ Oracle chunk retrieved! score=100%
+[11:07:00] [Routing] Context-based → MULTIPART_QA
+[11:07:00] [Reorder] Tiebreaker applied — repeated span: 'independent components generated by'
+[11:07:00] [Reorder] Tiebreaker applied — repeated span: 'the fact that you'
+[11:07:00] [Reorder] Tiebreaker applied — repeated span: 'locally linear embedding (lle)'
+[11:07:00] [Reorder] Tiebreaker applied — repeated span: 'data points in the'
+[11:07:00] [Reorder] Tiebreaker applied — repeated span: 'of the items categorized'
+[11:07:00] [Reorder] top chunk score=2 | numbers=[] | keywords=['multidimensional', 'scaling', '(mds)?']
+[11:07:36] [Grounding] Refusal answer detected → returning sentinel 75.0
+[11:07:36] [QA] Done in 43.5s | model=llama_multipart | grounding=75.0% | recall=100.0% | confidence=0.750 | decision=accepted
+[11:07:36] [Evaluate] Q7_t0 actual answer: NOT PRESENT
+[11:07:36] [Evaluate] Q7_t0 ❌ FAIL | hits=0/6 | model=llama_multipart | recall=100.0% | confidence=75.0%
+[11:07:36] [Memory] Enriched query: 'NOT PRESENT What is its main purpose?'
+[11:07:36] [Evaluate] Q7_t1: NOT PRESENT What is its main purpose?...
+[11:07:37] [Extract] ✅ Cache hit — skipping OCR (95 pages)
+[11:07:37] [Chunk] Summary chunks: 16 | RAG chunks: 152
+[11:07:37] [Chunk] 16 summary chunks | 152 RAG chunks
+[11:07:37] [FAISS] ✅ Cache hit for 135a00a3...
+[11:07:37] [QA] START | 152 chunks
+[11:07:37] [Hybrid] 1 queries: ['NOT PRESENT What is its main purpose?']
+[11:07:37] [Hybrid] 8 unique chunks after semantic
+[11:07:37] [ExactMatch] 'NOT PRESENT What is its main purpose?' → 8 exact chunks | top score=2
+[11:07:37] [Hybrid] 8 exact-match chunks boosted to 0.6
+[11:07:37] [KeywordSearch] 'NOT PRESENT What is its main purpose?' → 8 chunks | top score=0.089
+[11:07:37] [Hybrid] 20 total unique chunks across all signals
+[11:07:37] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[11:07:37] [Reranker] ⚠️ Very low scores → keeping top chunks instead of rejecting
+[11:07:37] [ExactMatch] 'NOT PRESENT What is its main purpose?' → 8 exact chunks | top score=2
+[11:07:37] [Protect] Injecting 8 exact-match chunks dropped by reranker
+[11:07:37] [Protect] Context expanded: 8 → 16 chunks
+[11:07:37] [Guard] ⚠️ Weak reranker score — continuing
+[11:07:44] [Recall@16] ✅ Oracle chunk retrieved! score=100%
+[11:07:44] [Routing] Context-based → MULTIPART_QA
+[11:07:44] [Reorder] Tiebreaker applied — repeated span: 'it can be used'
+[11:07:44] [Reorder] Tiebreaker applied — repeated span: 'here we see that'
+[11:07:44] [Reorder] Tiebreaker applied — repeated span: 'tree can be explained'
+[11:07:44] [Reorder] Tiebreaker applied — repeated span: 'the training data may'
+[11:07:44] [Reorder] Tiebreaker applied — repeated span: 'approximation to the target'
+[11:07:44] [Reorder] Tiebreaker applied — repeated span: 'in decision tree learning,'
+[11:07:44] [Reorder] top chunk score=2 | numbers=[] | keywords=['main', 'purpose?', 'present']
+[11:08:17] [Grounding] Refusal answer detected → returning sentinel 75.0
+[11:08:17] [QA] Done in 40.6s | model=llama_multipart | grounding=75.0% | recall=100.0% | confidence=0.750 | decision=accepted
+[11:08:17] [Evaluate] Q7_t1 actual answer: NOT PRESENT
+[11:08:17] [Evaluate] Q7_t1 ❌ FAIL | hits=0/6 | model=llama_multipart | recall=100.0% | confidence=75.0%
+[11:08:17] [Memory] Enriched query: 'NOT PRESENT How does it help in dimensionality reduction?'
+[11:08:17] [Evaluate] Q7_t2: NOT PRESENT How does it help in dimensionality reduction?...
+[11:08:17] [Extract] ✅ Cache hit — skipping OCR (95 pages)
+[11:08:17] [Chunk] Summary chunks: 16 | RAG chunks: 152
+[11:08:17] [Chunk] 16 summary chunks | 152 RAG chunks
+[11:08:17] [FAISS] ✅ Cache hit for 135a00a3...
+[11:08:17] [QA] START | 152 chunks
+[11:08:17] [Hybrid] 1 queries: ['NOT PRESENT How does it help in dimensionality reduction?']
+[11:08:17] [Hybrid] 8 unique chunks after semantic
+[11:08:17] [ExactMatch] 'NOT PRESENT How does it help in dimensionality red' → 8 exact chunks | top score=2
+[11:08:17] [Hybrid] 8 exact-match chunks boosted to 0.6
+[11:08:17] [KeywordSearch] 'NOT PRESENT How does it help in dimensionality red' → 8 chunks | top score=0.408
+[11:08:17] [Hybrid] 15 total unique chunks across all signals
+[11:08:17] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[11:08:18] [Reranker] ⚠️ Too few chunks after pruning (2) → expanding
+[11:08:18] [Reranker] 8 → 8 chunks after pruning | top=1.793 | margin=3.0 | bottom kept=-0.617
+[11:08:18] [ExactMatch] 'NOT PRESENT How does it help in dimensionality red' → 8 exact chunks | top score=2
+[11:08:18] [Protect] Injecting 5 exact-match chunks dropped by reranker
+[11:08:18] [Protect] Context expanded: 8 → 13 chunks
+[11:08:24] [Recall@13] ✅ Oracle chunk retrieved! score=100%
+[11:08:24] [Routing] Context-based → MULTIPART_QA
+[11:08:24] [Reorder] Tiebreaker applied — repeated span: 'the number of features'
+[11:08:24] [Reorder] Tiebreaker applied — repeated span: 'of dimensionality reduction it'
+[11:08:24] [Reorder] Tiebreaker applied — repeated span: 'locally linear embedding (lle)'
+[11:08:24] [Reorder] Tiebreaker applied — repeated span: 'independent components generated by'
+[11:08:24] [Reorder] Tiebreaker applied — repeated span: 'data points in the'
+[11:08:24] [Reorder] Tiebreaker applied — repeated span: 'what is the best'
+[11:08:24] [Reorder] Tiebreaker applied — repeated span: 'in decision tree learning,'
+[11:08:24] [Reorder] top chunk score=2 | numbers=[] | keywords=['dimensionality', 'help', 'reduction?', 'present']
+[11:08:58] [Grounding] Refusal answer detected → returning sentinel 75.0
+[11:08:58] [QA] Done in 41.0s | model=llama_multipart | grounding=75.0% | recall=100.0% | confidence=0.750 | decision=accepted
+[11:08:58] [Evaluate] Q7_t2 actual answer: NOT PRESENT
+[11:08:58] [Evaluate] Q7_t2 ❌ FAIL | hits=0/6 | model=llama_multipart | recall=100.0% | confidence=75.0%
+[11:08:58] [Memory] Enriched query: 'NOT PRESENT What is the manifold hypothesis in this context?'
+[11:08:58] [Evaluate] Q7_t3: NOT PRESENT What is the manifold hypothesis in this context?...
+[11:08:58] [Extract] ✅ Cache hit — skipping OCR (95 pages)
+[11:08:58] [Chunk] Summary chunks: 16 | RAG chunks: 152
+[11:08:58] [Chunk] 16 summary chunks | 152 RAG chunks
+[11:08:58] [FAISS] ✅ Cache hit for 135a00a3...
+[11:08:58] [QA] START | 152 chunks
+[11:08:58] [Hybrid] 1 queries: ['NOT PRESENT What is the manifold hypothesis in this context?']
+[11:08:58] [Hybrid] 8 unique chunks after semantic
+[11:08:58] [ExactMatch] 'NOT PRESENT What is the manifold hypothesis in thi' → 8 exact chunks | top score=3
+[11:08:58] [Hybrid] 8 exact-match chunks boosted to 0.6
+[11:08:58] [KeywordSearch] 'NOT PRESENT What is the manifold hypothesis in thi' → 8 chunks | top score=0.227
+[11:08:58] [Hybrid] 18 total unique chunks across all signals
+[11:08:58] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[11:08:59] [Reranker] ⚠️ Too few chunks after pruning (1) → expanding
+[11:08:59] [Reranker] 8 → 8 chunks after pruning | top=5.624 | margin=3.0 | bottom kept=5.624
+[11:08:59] [ExactMatch] 'NOT PRESENT What is the manifold hypothesis in thi' → 8 exact chunks | top score=3
+[11:08:59] [Protect] Injecting 7 exact-match chunks dropped by reranker
+[11:08:59] [Protect] Context expanded: 8 → 15 chunks
+[11:09:06] [Recall@15] ✅ Oracle chunk retrieved! score=100%
+[11:09:06] [Routing] Context-based → MULTIPART_QA
+[11:09:06] [Reorder] Tiebreaker applied — repeated span: 'locally linear embedding (lle)'
+[11:09:06] [Reorder] Tiebreaker applied — repeated span: 'all the training examples'
+[11:09:06] [Reorder] Tiebreaker applied — repeated span: 'to decide which is'
+[11:09:06] [Reorder] Tiebreaker applied — repeated span: 'after processing these four'
+[11:09:06] [Reorder] Tiebreaker applied — repeated span: 'in decision tree learning,'
+[11:09:06] [Reorder] Tiebreaker applied — repeated span: 'input and outputs a'
+[11:09:06] [Reorder] Tiebreaker applied — repeated span: 'what is the best'
+[11:09:06] [Reorder] Tiebreaker applied — repeated span: 'the most specific hypothesis'
+[11:09:06] [Reorder] Tiebreaker applied — repeated span: 'for the attribute. .'
+[11:09:06] [Reorder] Tiebreaker applied — repeated span: 'locally linear embedding (lle)'
+[11:09:06] [Reorder] top chunk score=2 | numbers=[] | keywords=['hypothesis', 'context?', 'manifold', 'present']
+[11:09:41] [Grounding] Refusal answer detected → returning sentinel 75.0
+[11:09:41] [QA] Done in 42.6s | model=llama_multipart | grounding=75.0% | recall=100.0% | confidence=0.750 | decision=accepted
+[11:09:41] [Evaluate] Q7_t3 actual answer: NOT PRESENT
+[11:09:41] [Evaluate] Q7_t3 ❌ FAIL | hits=0/6 | model=llama_multipart | recall=100.0% | confidence=75.0%
+[11:09:41] [Evaluate] Q8: What is the manifold hypothesis in machine learning?...
+[11:09:41] [Extract] ✅ Cache hit — skipping OCR (95 pages)
+[11:09:41] [Chunk] Summary chunks: 16 | RAG chunks: 152
+[11:09:41] [Chunk] 16 summary chunks | 152 RAG chunks
+[11:09:41] [FAISS] ✅ Cache hit for 135a00a3...
+[11:09:41] [QA] START | 152 chunks
+[11:09:41] [Hybrid] 1 queries: ['What is the manifold hypothesis in machine learning?']
+[11:09:41] [Hybrid] 8 unique chunks after semantic
+[11:09:41] [ExactMatch] 'What is the manifold hypothesis in machine learnin' → 8 exact chunks | top score=2
+[11:09:41] [Hybrid] 8 exact-match chunks boosted to 0.6
+[11:09:41] [KeywordSearch] 'What is the manifold hypothesis in machine learnin' → 8 chunks | top score=0.278
+[11:09:41] [Hybrid] 16 total unique chunks across all signals
+[11:09:41] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[11:09:42] [Reranker] ⚠️ Too few chunks after pruning (1) → expanding
+[11:09:42] [Reranker] 8 → 8 chunks after pruning | top=8.432 | margin=3.0 | bottom kept=8.432
+[11:09:42] [ExactMatch] 'What is the manifold hypothesis in machine learnin' → 8 exact chunks | top score=2
+[11:09:42] [Protect] Injecting 6 exact-match chunks dropped by reranker
+[11:09:42] [Protect] Context expanded: 8 → 14 chunks
+[11:09:48] [Recall@14] ✅ Oracle chunk retrieved! score=100%
+[11:09:48] [Routing] Context-based → MULTIPART_QA
+[11:09:48] [Reorder] Tiebreaker applied — repeated span: 'locally linear embedding (lle)'
+[11:09:48] [Reorder] Tiebreaker applied — repeated span: 'features. this is an'
+[11:09:48] [Reorder] Tiebreaker applied — repeated span: 'in decision tree learning,'
+[11:09:48] [Reorder] Tiebreaker applied — repeated span: 'input and outputs a'
+[11:09:48] [Reorder] Tiebreaker applied — repeated span: 'what is the best'
+[11:09:48] [Reorder] top chunk score=2 | numbers=[] | keywords=['hypothesis', 'machine', 'learning?', 'manifold']
+[11:10:26] [QA] Done in 44.7s | model=llama_multipart | grounding=94.7% | recall=100.0% | confidence=0.947 | decision=accepted
+[11:10:26] [Evaluate] Q8 actual answer: Manifold Hypothesis in machine learning refers to the idea that high-dimensional data often lies on a lower-dimensional manifold embedded within the high-dimensional space.
+[11:10:26] [Evaluate] Q8 ✅ PASS | hits=4/5 | model=llama_multipart | recall=100.0% | confidence=94.7%
+[11:10:26] [Evaluate] Q9: What is pattern recognition in machine learning?...
+[11:10:26] [Extract] ✅ Cache hit — skipping OCR (95 pages)
+[11:10:26] [Chunk] Summary chunks: 16 | RAG chunks: 152
+[11:10:26] [Chunk] 16 summary chunks | 152 RAG chunks
+[11:10:26] [FAISS] ✅ Cache hit for 135a00a3...
+[11:10:26] [QA] START | 152 chunks
+[11:10:26] [Hybrid] 1 queries: ['What is pattern recognition in machine learning?']
+[11:10:26] [Hybrid] 8 unique chunks after semantic
+[11:10:26] [ExactMatch] 'What is pattern recognition in machine learning?' → 8 exact chunks | top score=3
+[11:10:26] [Hybrid] 8 exact-match chunks boosted to 0.6
+[11:10:26] [KeywordSearch] 'What is pattern recognition in machine learning?' → 8 chunks | top score=0.221
+[11:10:26] [Hybrid] 17 total unique chunks across all signals
+[11:10:26] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[11:10:27] [Reranker] ⚠️ Too few chunks after pruning (1) → expanding
+[11:10:27] [Reranker] 8 → 8 chunks after pruning | top=8.894 | margin=3.0 | bottom kept=8.894
+[11:10:27] [ExactMatch] 'What is pattern recognition in machine learning?' → 8 exact chunks | top score=3
+[11:10:27] [Protect] Injecting 6 exact-match chunks dropped by reranker
+[11:10:27] [Protect] Context expanded: 8 → 14 chunks
+[11:10:38] [Recall@14] ✅ Oracle chunk retrieved! score=100%
+[11:10:38] [Routing] Context-based → MULTIPART_QA
+[11:10:38] [Reorder] Tiebreaker applied — repeated span: 'features. this is an'
+[11:10:38] [Reorder] Tiebreaker applied — repeated span: 'in decision tree learning,'
+[11:10:38] [Reorder] Tiebreaker applied — repeated span: 'the number of data'
+[11:10:38] [Reorder] Tiebreaker applied — repeated span: 'performance measure able to'
+[11:10:38] [Reorder] Tiebreaker applied — repeated span: 'types of back propagation'
+[11:10:38] [Reorder] top chunk score=3 | numbers=[] | keywords=['pattern', 'machine', 'learning?', 'recognition']
+[11:11:15] [QA] Done in 48.9s | model=llama_multipart | grounding=90.0% | recall=100.0% | confidence=0.900 | decision=accepted
+[11:11:15] [Evaluate] Q9 actual answer: Pattern recognition in machine learning refers to the process of finding regularities and similarities in data using statistical analysis, historical data, or already gained knowledge by the machine itself. It involves identifying patterns in data that can be used to make predictions or classify obj
+[11:11:15] [Evaluate] Q9 ✅ PASS | hits=4/4 | model=llama_multipart | recall=100.0% | confidence=90.0%
+[11:11:15] [Evaluate] Q10_t0: What features are used to describe a football in pattern rec...
+[11:11:15] [Extract] ✅ Cache hit — skipping OCR (95 pages)
+[11:11:15] [Chunk] Summary chunks: 16 | RAG chunks: 152
+[11:11:15] [Chunk] 16 summary chunks | 152 RAG chunks
+[11:11:15] [FAISS] ✅ Cache hit for 135a00a3...
+[11:11:15] [QA] START | 152 chunks
+[11:11:15] [Hybrid] 1 queries: ['What features are used to describe a football in pattern recognition?']
+[11:11:15] [Hybrid] 8 unique chunks after semantic
+[11:11:15] [ExactMatch] 'What features are used to describe a football in p' → 8 exact chunks | top score=3
+[11:11:15] [Hybrid] 8 exact-match chunks boosted to 0.6
+[11:11:15] [KeywordSearch] 'What features are used to describe a football in p' → 8 chunks | top score=0.250
+[11:11:15] [Hybrid] 18 total unique chunks across all signals
+[11:11:15] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[11:11:16] [Reranker] ⚠️ Too few chunks after pruning (2) → expanding
+[11:11:16] [Reranker] 8 → 8 chunks after pruning | top=-0.167 | margin=3.0 | bottom kept=-1.887
+[11:11:16] [ExactMatch] 'What features are used to describe a football in p' → 8 exact chunks | top score=3
+[11:11:16] [Protect] Injecting 6 exact-match chunks dropped by reranker
+[11:11:16] [Protect] Context expanded: 8 → 14 chunks
+[11:11:24] [Recall@14] ✅ Oracle chunk retrieved! score=100%
+[11:11:24] [Routing] Context-based → MULTIPART_QA
+[11:11:24] [Reorder] Tiebreaker applied — repeated span: 'to represent using a'
+[11:11:25] [Reorder] Tiebreaker applied — repeated span: 'performance measure percent of'
+[11:11:25] [Reorder] Tiebreaker applied — repeated span: 'features. this is an'
+[11:11:25] [Reorder] Tiebreaker applied — repeated span: '+ w2 - x2(b)'
+[11:11:25] [Reorder] Tiebreaker applied — repeated span: 'as the number of'
+[11:11:25] [Reorder] Tiebreaker applied — repeated span: 'the number of data'
+[11:11:25] [Reorder] Tiebreaker applied — repeated span: 'the aim is to'
+[11:11:25] [Reorder] Tiebreaker applied — repeated span: 'to step 2. if'
+[11:11:25] [Reorder] Tiebreaker applied — repeated span: 'the accuracy of the'
+[11:11:25] [Reorder] top chunk score=3 | numbers=[] | keywords=['football', 'pattern', 'recognition?', 'features']
+[11:11:58] [QA] Done in 43.1s | model=llama_multipart | grounding=100.0% | recall=100.0% | confidence=1.000 | decision=accepted
+[11:11:58] [Evaluate] Q10_t0 actual answer: The features used to describe a football in pattern recognition are shape, size, and color.
+[11:11:58] [Evaluate] Q10_t0 ✅ PASS | hits=3/6 | model=llama_multipart | recall=100.0% | confidence=100.0%
+[11:11:58] [Memory] Enriched query: 'The features used to describe a football in pattern recognition are shape, size, and color. What do '
+[11:11:58] [Evaluate] Q10_t1: The features used to describe a football in pattern recognit...
+[11:11:58] [Extract] ✅ Cache hit — skipping OCR (95 pages)
+[11:11:58] [Chunk] Summary chunks: 16 | RAG chunks: 152
+[11:11:58] [Chunk] 16 summary chunks | 152 RAG chunks
+[11:11:58] [FAISS] ✅ Cache hit for 135a00a3...
+[11:11:58] [QA] START | 152 chunks
+[11:11:58] [Hybrid] 1 queries: ['The features used to describe a football in pattern recognition are shape, size, and color. What do we call the combination of those features?']
+[11:11:58] [Hybrid] 8 unique chunks after semantic
+[11:11:58] [ExactMatch] 'The features used to describe a football in patter' → 8 exact chunks | top score=6
+[11:11:58] [Hybrid] 8 exact-match chunks boosted to 0.6
+[11:11:58] [KeywordSearch] 'The features used to describe a football in patter' → 8 chunks | top score=0.307
+[11:11:58] [Hybrid] 17 total unique chunks across all signals
+[11:11:58] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[11:11:59] [Reranker] ⚠️ Too few chunks after pruning (1) → expanding
+[11:11:59] [Reranker] 8 → 8 chunks after pruning | top=2.945 | margin=3.0 | bottom kept=2.945
+[11:11:59] [ExactMatch] 'The features used to describe a football in patter' → 8 exact chunks | top score=6
+[11:11:59] [Protect] Injecting 5 exact-match chunks dropped by reranker
+[11:11:59] [Protect] Context expanded: 8 → 13 chunks
+[11:12:08] [Recall@13] ✅ Oracle chunk retrieved! score=100%
+[11:12:08] [Routing] Context-based → MULTIPART_QA
+[11:12:08] [Reorder] Tiebreaker applied — repeated span: 'to represent using a'
+[11:12:08] [Reorder] Tiebreaker applied — repeated span: 'features. this is an'
+[11:12:08] [Reorder] Tiebreaker applied — repeated span: 'the number of features'
+[11:12:08] [Reorder] Tiebreaker applied — repeated span: 'the number of data'
+[11:12:08] [Reorder] Tiebreaker applied — repeated span: 'microphone microphone microphone microphone'
+[11:12:08] [Reorder] top chunk score=5 | numbers=[] | keywords=['football', 'pattern', 'call', 'shape,']
+[11:12:36] [QA] Done in 37.7s | model=llama_multipart | grounding=100.0% | recall=100.0% | confidence=1.000 | decision=accepted
+[11:12:36] [Evaluate] Q10_t1 actual answer: Feature vector.
+[11:12:36] [Evaluate] Q10_t1 ✅ PASS | hits=1/6 | model=llama_multipart | recall=100.0% | confidence=100.0%
+[11:12:36] [Memory] Enriched query: 'Feature vector. How would a system use that combination to classify objects?'
+[11:12:36] [Evaluate] Q10_t2: Feature vector. How would a system use that combination to c...
+[11:12:36] [Extract] ✅ Cache hit — skipping OCR (95 pages)
+[11:12:36] [Chunk] Summary chunks: 16 | RAG chunks: 152
+[11:12:36] [Chunk] 16 summary chunks | 152 RAG chunks
+[11:12:36] [FAISS] ✅ Cache hit for 135a00a3...
+[11:12:36] [QA] START | 152 chunks
+[11:12:36] [Hybrid] 1 queries: ['Feature vector. How would a system use that combination to classify objects?']
+[11:12:36] [Hybrid] 8 unique chunks after semantic
+[11:12:36] [ExactMatch] 'Feature vector. How would a system use that combin' → 8 exact chunks | top score=4
+[11:12:36] [Hybrid] 8 exact-match chunks boosted to 0.6
+[11:12:36] [KeywordSearch] 'Feature vector. How would a system use that combin' → 8 chunks | top score=0.242
+[11:12:36] [Hybrid] 17 total unique chunks across all signals
+[11:12:36] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[11:12:37] [Reranker] ⚠️ Too few chunks after pruning (1) → expanding
+[11:12:37] [Reranker] 8 → 8 chunks after pruning | top=2.237 | margin=3.0 | bottom kept=2.237
+[11:12:37] [ExactMatch] 'Feature vector. How would a system use that combin' → 8 exact chunks | top score=4
+[11:12:37] [Protect] Injecting 7 exact-match chunks dropped by reranker
+[11:12:37] [Protect] Context expanded: 8 → 15 chunks
+[11:12:47] [Recall@15] ✅ Oracle chunk retrieved! score=100%
+[11:12:47] [Routing] Context-based → MULTIPART_QA
+[11:12:47] [Reorder] Tiebreaker applied — repeated span: 'features. this is an'
+[11:12:47] [Reorder] Tiebreaker applied — repeated span: 'the number of features'
+[11:12:47] [Reorder] Tiebreaker applied — repeated span: 'is the number of'
+[11:12:47] [Reorder] Tiebreaker applied — repeated span: 'as the number of'
+[11:12:47] [Reorder] Tiebreaker applied — repeated span: 'to do the predictions'
+[11:12:47] [Reorder] Tiebreaker applied — repeated span: 'the number of data'
+[11:12:47] [Reorder] Tiebreaker applied — repeated span: 'performance measure able to'
+[11:12:47] [Reorder] top chunk score=3 | numbers=[] | keywords=['use', 'system', 'objects?', 'classify']
+[11:13:35] [QA] Done in 58.5s | model=llama_multipart | grounding=93.2% | recall=100.0% | confidence=0.932 | decision=accepted
+[11:13:35] [Evaluate] Q10_t2 actual answer: What is a feature vector and how would a system use that combination to classify objects? A feature vector is a set of features that are taken together. Example: In the above example of football, if all the features (shape, size, color etc.) taken together then the sequence is feature vector ([shape
+[11:13:35] [Evaluate] Q10_t2 ✅ PASS | hits=5/6 | model=llama_multipart | recall=100.0% | confidence=93.2%
+[11:13:35] [Memory] Enriched query: 'What is a feature vector and how would a system use that combination to classify objects? A feature '
+[11:13:35] [Evaluate] Q10_t3: What is a feature vector and how would a system use that com...
+[11:13:35] [Extract] ✅ Cache hit — skipping OCR (95 pages)
+[11:13:35] [Chunk] Summary chunks: 16 | RAG chunks: 152
+[11:13:35] [Chunk] 16 summary chunks | 152 RAG chunks
+[11:13:35] [FAISS] ✅ Cache hit for 135a00a3...
+[11:13:35] [QA] START | 152 chunks
+[11:13:35] [Hybrid] 1 queries: ['What is a feature vector and how would a system use that combination to classify objects? A feature vector is a set of features that are taken together. Example: In the above example of football, if a Why is this representation important for recognizing patterns?']
+[11:13:35] [Hybrid] 8 unique chunks after semantic
+[11:13:35] [ExactMatch] 'What is a feature vector and how would a system us' → 8 exact chunks | top score=12
+[11:13:35] [Hybrid] 8 exact-match chunks boosted to 0.6
+[11:13:35] [KeywordSearch] 'What is a feature vector and how would a system us' → 8 chunks | top score=0.428
+[11:13:35] [Hybrid] 17 total unique chunks across all signals
+[11:13:35] [Hybrid] Final pool: 8 chunks | top weight=0.6
+[11:13:36] [Reranker] ⚠️ Too few chunks after pruning (1) → expanding
+[11:13:36] [Reranker] 8 → 8 chunks after pruning | top=6.250 | margin=3.0 | bottom kept=6.250
+[11:13:36] [ExactMatch] 'What is a feature vector and how would a system us' → 8 exact chunks | top score=12
+[11:13:36] [Protect] Injecting 6 exact-match chunks dropped by reranker
+[11:13:36] [Protect] Context expanded: 8 → 14 chunks
+[11:13:47] [Recall@14] ✅ Oracle chunk retrieved! score=100%
+[11:13:47] [Routing] Context-based → MULTIPART_QA
+[11:13:47] [Reorder] Tiebreaker applied — repeated span: 'features. this is an'
+[11:13:47] [Reorder] Tiebreaker applied — repeated span: 'the number of features'
+[11:13:47] [Reorder] Tiebreaker applied — repeated span: 'the aim is to'
+[11:13:47] [Reorder] Tiebreaker applied — repeated span: 'is the number of'
+[11:13:47] [Reorder] Tiebreaker applied — repeated span: 'of dimensionality reduction it'
+[11:13:47] [Reorder] top chunk score=10 | numbers=[] | keywords=['use', 'example', 'features', 'objects?']
+[11:14:30] [QA] Done in 54.9s | model=llama_multipart | grounding=66.0% | recall=100.0% | confidence=0.660 | decision=accepted
+[11:14:30] [Evaluate] Q10_t3 actual answer: A feature vector is a set of features that are taken together. This representation is important for recognizing patterns because it allows a system to combine multiple characteristics or attributes into a single, condensed representation. This can help improve the accuracy and efficiency of pattern 
+[11:14:30] [Evaluate] Q10_t3 ✅ PASS | hits=2/6 | model=llama_multipart | recall=100.0% | confidence=66.0%
+[11:14:30] [Evaluate] Results saved to grounding_results.json
+[11:14:30] [Evaluate] ✅ Done | Pass=18 Partial=0 Fail=10 | Pass rate=64.3%
