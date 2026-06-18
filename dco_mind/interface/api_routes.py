@@ -12,6 +12,15 @@ from flask import request, jsonify
 from dco_mind.cognition.memory import save_to_memory, get_retrieval_query, get_memory_context, clear_session
 
 from dco_mind.models.llm import call_llama, _ttft_tracker
+from dco_mind.evaluation.metrics import (
+    evaluate_answer_correctness,
+    evaluate_hallucination,
+    compute_gold_chunk_recall,
+    compute_gold_chunk_precision,
+    evaluate_rewrite_effectiveness,
+    evaluate_followup_success,
+    aggregate_query_type_metrics
+)
 from dco_mind.core.state import DocState
 
 from dco_mind.knowledge.ingestion import _extraction_cache, _summary_cache
@@ -156,24 +165,6 @@ def register_routes(app, workflow):
                 "metrics_v1": {},
                 "metrics_v2": {}
             })
-
-    def is_refusal_answer(answer: str) -> bool:
-        if not answer or len(answer.strip()) < 3:
-            return True
-        prompt = (
-            f"Does this answer say that the requested information "
-            f"was not found, not present, or not available?\n\n"
-            f"Answer: {answer}\n\n"
-            f"Reply with YES or NO only."
-        )
-        try:
-            result = call_llama(prompt, num_ctx=256, temperature=0.0).strip().upper()
-            is_refusal = "YES" in result
-            print(f"[Refusal] '{answer[:60]}' → {'REFUSAL' if is_refusal else 'FACTUAL'}")
-            return is_refusal
-        except Exception:
-            return False
-
     @app.route("/evaluate", methods=["POST"])
     def evaluate():
         try:
@@ -192,7 +183,11 @@ def register_routes(app, workflow):
                 builtins.print = _tee
 
             pdf_path    = data.get("pdf_path", "").strip()
-            run_desc    = data.get("run_description", f"run_{int(time.time())}")
+            run_desc = (
+            session_name
+            if session_name
+            else data.get("run_description", f"run_{int(time.time())}")
+        )
 
             if not pdf_path or not os.path.exists(pdf_path):
                 return jsonify({"error": f"PDF not found: {pdf_path}"}), 404
@@ -201,11 +196,10 @@ def register_routes(app, workflow):
             print(f"[DEBUG] PDF NAME: {pdf_name}")
 
             dataset_map = {
-                "rhea aiml resume updated.pdf": "datasets/resume.json",
-                "the-story-of-doctor-dolittle.pdf": "datasets/story.json",
-                "ml.pdf": "datasets/ml.json"
+                "rhea resume-ziroh labs.pdf.pdf": "datasets/resume2.json",
+                "the-story-of-doctor-dolittle.pdf": "datasets/story2.json",
+                "ml.pdf": "datasets/ml2.json"
             }
-
             print(f"[DEBUG] DATASET MAP KEYS: {list(dataset_map.keys())}")
 
             dataset_file = dataset_map.get(pdf_name)
@@ -224,7 +218,11 @@ def register_routes(app, workflow):
             with open(dataset_file, "r") as f:
                 dataset = json.load(f)
 
-            questions = dataset.get("questions", [])
+                questions = (
+                dataset
+                if isinstance(dataset, list)
+                else dataset.get("questions", [])
+            )
             if not questions:
                 return jsonify({"error": "No questions found in grounding_dataset.json"}), 400
 
@@ -239,155 +237,28 @@ def register_routes(app, workflow):
 
             for item in questions:
 
-                # ============================================================
-                # CASE 1 — CONVERSATION
-                # ============================================================
-                if "conversation" in item:
-
-                    session_id = f"conv_{item['id']}"
-                    clear_session(session_id)
-
-                    turn_keywords = item.get("turn_keywords", [])
-
-                    for turn_idx, q_text in enumerate(item["conversation"]):
-
-                        if turn_keywords and turn_idx < len(turn_keywords):
-                            kw_list = [kw.lower() for kw in turn_keywords[turn_idx]]
-                        else:
-                            kw_list = [kw.lower() for kw in item.get("expected_keywords", [])]
-
-                        q = {
-                            "id":                 f"{item['id']}_t{turn_idx}",
-                            "question":           q_text,
-                            "query_type":         item.get("query_type", "FACTUAL_QA"),
-                            "expected_keywords":  kw_list,
-                            "pass_threshold":     item.get("pass_threshold", 1),
-                            "max_score":          max(1, len(kw_list)),
-                            "hallucination_test": item.get("hallucination_test", False),
-                            "roberta_test":       item.get("roberta_test", False),
-                            "skip":               item.get("skip", False),
-                            "tests":              item.get("tests", ""),
-                        }
-
-                        try:
-                            q_id       = q["id"]
-                            question   = get_retrieval_query(session_id, q_text)
-                            query_type = q["query_type"]
-                            keywords   = q["expected_keywords"]
-                            threshold  = q["pass_threshold"]
-                            max_score  = q["max_score"]
-                            is_halluc  = q["hallucination_test"]
-                            is_roberta = q["roberta_test"]
-
-                            if q["skip"]:
-                                print(f"[Evaluate] Q{q_id}: ⏭️ SKIPPED")
-                                continue
-
-                            print(f"[Evaluate] Q{q_id}: {question[:60]}...")
-
-                            initial_state: DocState = {
-                                "pdf_path":       pdf_path,
-                                "question":       question,
-                                "extracted_text": "",
-                                "chunks":         [],
-                                "summary_chunks": [],
-                                "faiss_index":    None,
-                                "answer":         "",
-                                "metrics":        {},
-                                "doc_type":       "general",
-                                "query_type":     "",
-                                "retry_count":    0,
-                                "start_time":     time.time(),
-                                "page_count":     0,
-                                "char_count":     0,
-                                "request_id":     ""
-                            }
-
-                            try:
-                                result     = workflow.invoke(initial_state)
-                                answer     = result.get("answer", "")
-                                save_to_memory(session_id, question, answer)
-                                metrics    = result.get("metrics", {})
-                                model_used = metrics.get("model_used", "unknown")
-                                recall_k   = metrics.get("recall_at_k", 0)
-                                grounding  = metrics.get("answer_grounding", 0)
-                                confidence = metrics.get("confidence_score", 0)
-                                print(f"[Evaluate] Q{q_id} actual answer: {answer[:300]}")
-                            except Exception as invoke_err:
-                                print(f"[Evaluate] Q{q_id} workflow error: {invoke_err}")
-                                answer     = f"ERROR: {str(invoke_err)}"
-                                model_used, recall_k, grounding, confidence = "error", 0, 0, 0
-
-                            answer_lower = answer.lower()
-                            short_answer = len(answer.split()) <= 3
-                            hallucination_detected = not is_halluc and grounding < 60 and not short_answer
-
-                            if hallucination_detected:
-                                print(f"[Eval] ❌ Low grounding ({grounding:.1f}%) → hallucination detected")
-
-                            if is_halluc:
-                                found_safe = is_refusal_answer(answer)
-                                if found_safe:
-                                    verdict, keyword_hits, hallucination_detected = "PASS", max_score, False
-                                else:
-                                    verdict, keyword_hits, hallucination_detected = "FAIL", 0, True
-                                    print(f"[Halluc] ❌ Answer is not a refusal — hallucination detected")
-
-                            elif hallucination_detected:
-                                verdict, keyword_hits = "FAIL", 0
-                                print(f"[Eval] ❌ Forced FAIL due to low grounding")
-
-                            else:
-                                keyword_hits = sum(1 for kw in keywords if kw in answer_lower)
-                                if keyword_hits >= threshold:
-                                    verdict = "PASS"
-                                elif keyword_hits >= max(1, threshold // 2):
-                                    verdict = "PARTIAL"
-                                else:
-                                    verdict = "FAIL"
-
-                            if verdict == "PASS":       pass_count += 1
-                            elif verdict == "PARTIAL":  partial_count += 1
-                            else:                       fail_count += 1
-
-                            verdict_icon = "✅" if verdict == "PASS" else "⚠️" if verdict == "PARTIAL" else "❌"
-                            print(f"[Evaluate] Q{q_id} {verdict_icon} {verdict} | "
-                                  f"hits={keyword_hits}/{max_score} | model={model_used} | "
-                                  f"recall={recall_k:.1f}% | confidence={confidence:.1f}%")
-
-                            results.append({
-                                "id":               q_id,
-                                "question":         question,
-                                "query_type":       query_type,
-                                "verdict":          verdict,
-                                "keyword_hits":     keyword_hits,
-                                "max_score":        max_score,
-                                "pass_threshold":   threshold,
-                                "model_used":       model_used,
-                                "recall_at_k":      round(recall_k, 1),
-                                "answer_grounding": round(grounding, 1),
-                                "confidence":       round(confidence, 1),
-                                "hallucination":    hallucination_detected,
-                                "roberta_test":     is_roberta,
-                                "actual_answer":    answer[:300],
-                                "tests":            q.get("tests", ""),
-                                "conversation_id":  item["id"],
-                                "turn":             turn_idx,
-                            })
-
-                        except Exception as q_err:
-                            print(f"[Evaluate] Q{q_id} unexpected error: {q_err}")
+               
 
                 # ============================================================
-                # CASE 2 — PLAIN QUESTION
+                # UNIFIED QUESTION EVALUATION
                 # ============================================================
-                else:
+               
                     q_id       = item.get("id", "?")
+                    depends_on = item.get("depends_on")
+                    is_followup = item.get("followup_question", False)
+
+                    # if depends_on:
+                    #     session_id = f"conv_{depends_on}"
+                    #     clear_session(session_id)
+                    # else:
+                    #     session_id = f"conv_{q_id}"
+                    #     clear_session(session_id)
+                    if depends_on:
+                        session_id = f"conv_{depends_on}"
+                    else:
+                        session_id = f"conv_{q_id}"
+                        clear_session(session_id)
                     query_type = item.get("query_type", "FACTUAL_QA")
-                    keywords   = [kw.lower() for kw in item.get("expected_keywords", [])]
-                    threshold  = item.get("pass_threshold", 1)
-                    max_score  = item.get("max_score", max(1, len(keywords)))
-                    is_halluc  = item.get("hallucination_test", False)
                     is_roberta = item.get("roberta_test", False)
 
                     if item.get("skip", False):
@@ -400,6 +271,8 @@ def register_routes(app, workflow):
                     initial_state: DocState = {
                         "pdf_path":       pdf_path,
                         "question":       question,
+                         "original_question": question,
+                          "session_id": session_id,
                         "extracted_text": "",
                         "chunks":         [],
                         "summary_chunks": [],
@@ -428,32 +301,147 @@ def register_routes(app, workflow):
                         print(f"[Evaluate] Q{q_id} workflow error: {invoke_err}")
                         answer     = f"ERROR: {str(invoke_err)}"
                         model_used, recall_k, grounding, confidence = "error", 0, 0, 0
+                        metrics = {}
+                    gold_answer = item.get("gold_answer", "")
+                    gold_chunks = item.get("gold_chunks", [])
 
-                    answer_lower = answer.lower()
-                    short_answer = len(answer.split()) <= 3
-                    hallucination_detected = not is_halluc and grounding < 60 and not short_answer
+                    retrieved_docs = metrics.get("retrieved_docs", [])
+                    print(f"[DEBUG] retrieved_docs count = {len(retrieved_docs)}")
+                    print(f"[DEBUG] gold_chunks count = {len(gold_chunks)}")
 
-                    if hallucination_detected:
-                        print(f"[Eval] ❌ Low grounding ({grounding:.1f}%) → hallucination detected")
+                    retrieved_texts = [
+                        d["content"] if isinstance(d, dict)
+                        else str(d)
+                        for d in retrieved_docs
+                    ]
 
-                    if is_halluc:
-                        found_safe = is_refusal_answer(answer)
-                        if found_safe:
-                            verdict, keyword_hits, hallucination_detected = "PASS", max_score, False
-                        else:
-                            verdict, keyword_hits, hallucination_detected = "FAIL", 0, True
-                            print(f"[Halluc] ❌ Answer is not a refusal — hallucination detected")
+                    # ============================================================
+                    # ANSWER CORRECTNESS
+                    # ============================================================
+                    if not _faiss_cache:
+                        raise RuntimeError("FAISS cache is empty during evaluation")
 
-                    elif hallucination_detected:
-                        verdict, keyword_hits = "FAIL", 0
-                        print(f"[Eval] ❌ Forced FAIL due to low grounding")
+                    embedder = _faiss_cache[
+                        next(iter(_faiss_cache))
+                    ].embedding_function
+
+                    answer_eval = evaluate_answer_correctness(
+                        generated_answer=answer,
+                        gold_answer=gold_answer,
+                        embedder=embedder
+                    )
+
+                    answer_score = answer_eval["final_score"]
+                    gold_norm = gold_answer.strip().lower()
+                    ans_norm = answer.strip().lower()
+
+                    if gold_norm and gold_norm in ans_norm:
+                        answer_score = max(answer_score, 0.90)
+
+                    # ============================================================
+                    # HALLUCINATION
+                    # ============================================================
+
+                    hall_eval = evaluate_hallucination(
+                        generated_answer=answer,
+                        gold_answer=gold_answer
+                    )
+
+                    hallucination_detected = hall_eval["hallucinated"]
+
+                    # ============================================================
+                    # RETRIEVAL
+                    # ============================================================
+
+                    retrieval_recall = compute_gold_chunk_recall(
+                        retrieved_chunks=retrieved_texts,
+                        gold_chunks=gold_chunks,
+                        embedder=embedder,
+                        threshold=0.30
+                    )
+
+                    retrieval_precision = compute_gold_chunk_precision(
+                        retrieved_chunks=retrieved_texts,
+                        gold_chunks=gold_chunks,
+                        embedder=embedder,
+                        threshold=0.30
+                    )
+
+                    # ============================================================
+                    # FOLLOWUP EVALUATION
+                    # ============================================================
+
+                    rewrite_gain = 0.0
+                    followup_score = None
+
+                    if is_followup:
+
+                        pre_docs = metrics.get("pre_rewrite_docs", [])
+                        post_docs = metrics.get("post_rewrite_docs", [])
+
+                        pre_texts = [
+                            d["content"] if isinstance(d, dict)
+                            else str(d)
+                            for d in pre_docs
+                        ]
+
+                        post_texts = [
+                            d["content"] if isinstance(d, dict)
+                            else str(d)
+                            for d in post_docs
+                        ]
+
+                        pre_recall = compute_gold_chunk_recall(
+                            pre_texts,
+                            gold_chunks,
+                            embedder,
+                            threshold=0.30
+                        )
+
+                        post_recall = compute_gold_chunk_recall(
+                            post_texts,
+                            gold_chunks,
+                            embedder,
+                            threshold=0.30
+                        )
+
+                        rewrite_gain = evaluate_rewrite_effectiveness(
+                            pre_recall,
+                            post_recall
+                        )
+
+                        grounding_score = grounding / 100
+
+                        followup_score = evaluate_followup_success(
+                            answer_correctness=answer_score,
+                            retrieval_recall=retrieval_recall,
+                            grounding_score=grounding_score
+                        )
+
+                    # ============================================================
+                    # VERDICT
+                    # ============================================================
+
+                    if gold_answer == "NOT_PRESENT":
+
+                        verdict = (
+                            "PASS"
+                            if not hallucination_detected
+                            else "FAIL"
+                        )
 
                     else:
-                        keyword_hits = sum(1 for kw in keywords if kw in answer_lower)
-                        if keyword_hits >= threshold:
+
+                        if answer_score >= 0.55:
                             verdict = "PASS"
-                        elif keyword_hits >= max(1, threshold // 2):
+
+                        elif answer_score >= 0.30:
                             verdict = "PARTIAL"
+
+                        # ============================================================
+                        # FAIL
+                        # ============================================================
+
                         else:
                             verdict = "FAIL"
 
@@ -462,25 +450,43 @@ def register_routes(app, workflow):
                     else:                       fail_count += 1
 
                     verdict_icon = "✅" if verdict == "PASS" else "⚠️" if verdict == "PARTIAL" else "❌"
-                    print(f"[Evaluate] Q{q_id} {verdict_icon} {verdict} | "
-                          f"hits={keyword_hits}/{max_score} | model={model_used} | "
-                          f"recall={recall_k:.1f}% | confidence={confidence:.1f}%")
+                    print(
+                        f"[Evaluate] Q{q_id} {verdict_icon} {verdict} | "
+                        f"answer_score={answer_score:.4f} | "
+                        f"recall={retrieval_recall:.4f} | "
+                        f"precision={retrieval_precision:.4f} | "
+                        f"confidence={confidence:.1f}%"
+                )
 
                     results.append({
                         "id":               q_id,
                         "question":         question,
                         "query_type":       query_type,
                         "verdict":          verdict,
-                        "keyword_hits":     keyword_hits,
-                        "max_score":        max_score,
-                        "pass_threshold":   threshold,
-                        "model_used":       model_used,
+                        "gold_answer": gold_answer,
+                        "answer_score": round(answer_score, 4),
+                        "retrieval_recall": round(retrieval_recall, 4),
+                        "retrieval_precision": round(retrieval_precision, 4),
+                        "followup_score": round(followup_score, 4) if followup_score is not None else None,
+                        "followup_question": is_followup,
+                        "rewrite_triggered": metrics.get("rewrite_triggered", False),
+                        "depends_on": depends_on,
+                        "hallucination_detected": hallucination_detected,
+                        "rewrite_gain": round(rewrite_gain, 4),
+                        "rewritten_query": metrics.get("rewritten_query", ""),
+                        "query_rewrite": item.get("query_rewrite", ""),
+                        "pass_numeric": (
+                            1 if verdict == "PASS"
+                            else 0.5 if verdict == "PARTIAL"
+                            else 0
+                        ),
+                        "model_used": model_used,
                         "recall_at_k":      round(recall_k, 1),
                         "answer_grounding": round(grounding, 1),
                         "confidence":       round(confidence, 1),
-                        "hallucination":    hallucination_detected,
                         "roberta_test":     is_roberta,
-                        "actual_answer":    answer[:300],
+                        "actual_answer": answer,
+                        "retrieved_docs": retrieved_texts,
                         "tests":            item.get("tests", ""),
                         "conversation_id":  None,
                         "turn":             None,
@@ -491,29 +497,69 @@ def register_routes(app, workflow):
                 return jsonify({"error": "All questions were skipped or failed"}), 400
 
             pass_rate = round(pass_count / total * 100, 1)
+            query_type_summary = aggregate_query_type_metrics(results)
             run_summary = {
                 "run_id":          run_desc,
                 "date":            time.strftime("%Y-%m-%d %H:%M:%S"),
                 "pdf":             os.path.basename(pdf_path),
                 "total_questions": total,
                 "pass":            pass_count,
+                "query_type_summary": query_type_summary,
                 "partial":         partial_count,
                 "fail":            fail_count,
                 "pass_rate":       pass_rate,
                 "results":         results
             }
 
-            results_path = os.path.join(os.path.dirname(__file__), "..", "grounding_results.json")
+            results_path = os.path.join(
+    os.path.dirname(__file__),
+    "..",
+    "evaluation",
+    "results",
+    "final_grounding_results.json"
+)
             try:
                 if os.path.exists(results_path):
+
                     with open(results_path, "r") as f:
                         existing = json.load(f)
+
                 else:
-                    existing = {"runs": []}
-                existing["runs"].append(run_summary)
+
+                    existing = {"sessions": []}
+
+                session_found = False
+
+                for session in existing["sessions"]:
+
+                    if session["name"] == run_desc:
+
+                        run_number = len(session["runs"]) + 1
+
+                        run_summary["run_number"] = run_number
+
+                        session["runs"].append(run_summary)
+                        session["num_runs"] = len(session["runs"])
+
+                        session_found = True
+                        break
+
+                if not session_found:
+
+                    run_summary["run_number"] = 1
+
+                    existing["sessions"].append({
+                        "name": run_desc,
+                        "date": time.strftime("%Y-%m-%d %H:%M:%S"),
+                        "pdf": os.path.basename(pdf_path),
+                        "num_runs": 1,
+                        "runs": [run_summary]
+                    })
+
                 with open(results_path, "w") as f:
                     json.dump(existing, f, indent=2)
-                print(f"[Evaluate] Results saved to grounding_results.json")
+
+                print(f"[Evaluate] Results saved to final_grounding_results.json")
             except Exception as save_err:
                 print(f"[Evaluate] Warning: could not save results: {save_err}")
 
@@ -566,25 +612,27 @@ def register_routes(app, workflow):
             return jsonify({"error": f"File not found: {filename}"}), 404
 
         original_question = question
-        question = get_retrieval_query(session_id, question)
+    
         emit_event(request_id, "extract_start", "📄 Extracting PDF text...")
 
         initial_state: DocState = {
-            "pdf_path":       pdf_path,
-            "question":       question,
-            "extracted_text": "",
-            "chunks":         [],
-            "summary_chunks": [],
-            "faiss_index":    None,
-            "answer":         "",
-            "metrics":        {},
-            "doc_type":       "general",
-            "query_type":     "",
-            "retry_count":    0,
-            "start_time":     time.time(),
-            "page_count":     0,
-            "char_count":     0,
-            "request_id":     request_id
+            "pdf_path":          pdf_path,
+            "question":          question,
+            "original_question": original_question,
+            "extracted_text":    "",
+            "chunks":            [],
+            "summary_chunks":    [],
+            "faiss_index":       None,
+            "answer":            "",
+            "metrics":           {},
+            "doc_type":          "general",
+            "query_type":        "",
+            "retry_count":       0,
+            "start_time":        time.time(),
+            "page_count":        0,
+            "char_count":        0,
+            "request_id":        request_id,
+            "session_id":        session_id,
         }
         try:
             request_start = time.time()
@@ -597,11 +645,11 @@ def register_routes(app, workflow):
             m["ttft_sec"] = real_ttft if real_ttft is not None else total_e2e
             emit_event(request_id, "done", "✅ Complete!")
             cleanup_queue(request_id)
-            save_to_memory(session_id, original_question, result["answer"])
+
             return jsonify({
                 "answer":          result["answer"],
                 "metrics":         m,
-                "rewritten_query": question if question != original_question else None
+                "rewritten_query": None
             })
         except Exception as e:
             return jsonify({"answer": f"Error: {str(e)}", "metrics": {}})
@@ -638,19 +686,6 @@ def register_routes(app, workflow):
 
         return Response(event_generator(), mimetype="text/event-stream",
                         headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"})
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
