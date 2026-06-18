@@ -2,6 +2,7 @@
 import re
 import numpy as np
 from difflib import SequenceMatcher
+# from sklearn.metrics.pairwise import cosine_similarity
 
 from dco_mind.config.settings import (
     embedding_model,
@@ -11,7 +12,22 @@ from dco_mind.config.settings import (
 )
 
 from dco_mind.reasoning.context_builder import _normalize_text
+# ============================================================
+# NUMERICALLY STABLE COSINE
+# ============================================================
 
+def embedding_cosine(a, b):
+    """
+    Numerically stable cosine similarity.
+    """
+
+    a = np.array(a)
+    b = np.array(b)
+
+    a = a / (np.linalg.norm(a) + 1e-8)
+    b = b / (np.linalg.norm(b) + 1e-8)
+
+    return float(np.dot(a, b))
 
 # ============================================================
 # REFUSAL DETECTION — phrase matching, no LLM, no embeddings
@@ -28,6 +44,15 @@ _REFUSAL_PHRASES = [
     "information is not",
     "cannot find",
     "no information",
+    "don't see any information",   # ADD
+    "don't see any mention",       # ADD
+    "does not mention",            # ADD
+    "no mention of",               # ADD
+    "context does not mention",    # ADD
+    "i don't see", 
+    "does not explicitly mention",
+    "does not specifically",
+    "not explicitly mentioned",
 ]
 
 
@@ -40,15 +65,528 @@ def _is_refusal_answer(answer: str) -> bool:
     if not answer:
         return True
 
-    words = answer.strip().split()
+    # words = answer.strip().split()
 
-    # Short answers are never refusals — they are legitimate facts
-    if len(words) <= 3:
-        return False
+    # # Short answers are never refusals — they are legitimate facts
+    # if len(words) <= 3:
+    #     return False
 
     t = answer.lower().strip()
     return any(p in t for p in _REFUSAL_PHRASES)
 
+
+
+# ============================================================
+# TOKEN F1 SCORE
+# ============================================================
+
+def compute_token_f1(prediction, ground_truth):
+    """
+    Computes token-level F1 score.
+    Useful for factual overlap evaluation.
+    """
+    pred_tokens = re.findall(
+        r'\w+',
+        prediction.lower()
+    )
+
+    gt_tokens = re.findall(
+        r'\w+',
+        ground_truth.lower()
+    )
+
+    common = set(pred_tokens) & set(gt_tokens)
+
+    if len(common) == 0:
+        return 0.0
+
+    precision = len(common) / len(pred_tokens)
+    recall = len(common) / len(gt_tokens)
+
+    if precision + recall == 0:
+        return 0.0
+
+    f1 = (
+        2 * precision * recall
+    ) / (precision + recall)
+
+    return round(float(f1), 4)
+
+
+# ============================================================
+# ANSWER CORRECTNESS
+# ============================================================
+
+def evaluate_answer_correctness(
+    generated_answer,
+    gold_answer,
+    embedder
+):
+    """
+    Hybrid answer correctness score.
+
+    Combines:
+    - semantic similarity
+    - token F1 overlap
+
+    Final Score:
+        0.7 * semantic similarity
+      + 0.3 * token F1
+    """
+
+    if not generated_answer:
+
+        return {
+            "semantic_similarity": 0.0,
+            "token_f1": 0.0,
+            "final_score": 0.0
+        }
+
+    # ============================================================
+    # NULL / EMPTY GOLD ANSWER HANDLING
+    # ============================================================
+
+    if not gold_answer:
+
+        normalized = generated_answer.lower()
+
+        refusal_patterns = [
+    "not present",
+    "not mentioned",
+    "not available",
+    "insufficient information",
+    "cannot be determined",
+    "document does not mention",
+    "no information",
+    "not stated",
+    "not provided",
+    "i cannot find",
+    "there is no mention",
+    "don't see any information",
+    "don't see any mention",
+    "does not mention",
+    "no mention of",
+    "context does not mention",
+    "i don't see",
+    "there is no",
+    "i don't have",
+    "unfortunately, the provided context does not mention",
+    "does not explicitly mention",
+    "does not specifically",
+    "not explicitly mentioned",
+
+        ]
+
+        abstained = any(
+            p in normalized
+            for p in refusal_patterns
+        )
+
+        return {
+            "semantic_similarity": 1.0 if abstained else 0.5,
+            "token_f1": 1.0 if abstained else 0.5,
+            "final_score": 1.0 if abstained else 0.5
+        }
+    if gold_answer == "NOT_PRESENT":
+
+        hall_eval = evaluate_hallucination(
+                        generated_answer,
+                        gold_answer
+                    )
+
+        score = hall_eval["score"]
+
+        return {
+                "semantic_similarity": score,
+                "token_f1": score,
+                "final_score": score
+            }
+    
+    gen_emb = embedder.embed_query(generated_answer)
+    gold_emb = embedder.embed_query(gold_answer)
+
+    semantic_similarity = embedding_cosine(
+    gen_emb,
+    gold_emb
+)
+
+    token_f1 = compute_token_f1(
+        generated_answer,
+        gold_answer
+    )
+
+    final_score = (
+        0.7 * semantic_similarity +
+        0.3 * token_f1
+    )
+
+    return {
+        "semantic_similarity": round(float(semantic_similarity), 4),
+        "token_f1": round(float(token_f1), 4),
+        "final_score": round(float(final_score), 4)
+    }
+
+
+# ============================================================
+# HALLUCINATION EVALUATION
+# ============================================================
+
+REFUSAL_PATTERNS = [
+    "not present",
+    "not mentioned",
+    "not available",
+    "insufficient information",
+    "cannot be determined",
+    "document does not mention",
+    "no information",
+    "not stated",
+    "not provided",
+    "i cannot find",
+    "there is no mention",
+    "don't see any information",
+    "don't see any mention",
+    "does not mention",
+    "no mention of",
+    "context does not mention",
+    "i don't see",
+    "there is no",
+    "i don't have",
+    "unfortunately, the provided context does not mention",
+    "does not explicitly mention",
+    "does not specifically",
+    "not explicitly mentioned",
+]
+
+
+def evaluate_hallucination(
+    generated_answer,
+    gold_answer
+):
+    """
+    Evaluates hallucination for NOT_PRESENT questions.
+
+    Correct behavior:
+    - abstain
+    - refuse
+    - indicate insufficient information
+    """
+
+    if gold_answer != "NOT_PRESENT":
+        return {
+            "hallucinated": False,
+            "abstention_detected": False,
+            "score": 1.0
+        }
+
+    answer_lower = generated_answer.lower()
+
+    abstained = any(
+        pattern in answer_lower
+        for pattern in REFUSAL_PATTERNS
+    )
+
+    return {
+        "hallucinated": not abstained,
+        "abstention_detected": abstained,
+        "score": 1.0 if abstained else 0.0
+    }
+
+
+# ============================================================
+# GOLD CHUNK RECALL@K
+# ============================================================
+
+def compute_gold_chunk_recall(
+    retrieved_chunks,
+    gold_chunks,
+    embedder,
+    threshold=0.30
+):
+    """
+    Computes Recall@K using gold chunks.
+
+    Formula:
+        matched_gold_chunks / total_gold_chunks
+    """
+
+    if not gold_chunks:
+        return 1.0
+
+    if not retrieved_chunks:
+        return 0.0
+    def normalize_text(x):
+        return " ".join(str(x).lower().split())
+
+    gold_chunks = [
+        normalize_text(g)
+        for g in gold_chunks
+    ]
+
+    retrieved_chunks = [
+        normalize_text(r)
+        for r in retrieved_chunks
+    ]
+
+    gold_embeddings = [
+        embedder.embed_query(g)
+        for g in gold_chunks
+    ]
+
+    retrieved_embeddings = [
+        embedder.embed_query(r)
+        for r in retrieved_chunks
+    ]
+
+    matched = 0
+
+    for gold_idx, gold_emb in enumerate(gold_embeddings):
+
+        gold_text = gold_chunks[gold_idx]
+
+        found = False
+
+        for ret_idx, ret_emb in enumerate(retrieved_embeddings):
+
+            retrieved_text = retrieved_chunks[ret_idx]
+
+            # ====================================================
+            # containment shortcut
+            # ====================================================
+
+            if (
+                gold_text in retrieved_text
+                or retrieved_text in gold_text
+            ):
+                found = True
+                break
+
+            # ====================================================
+            # semantic fallback
+            # ====================================================
+
+            sim = embedding_cosine(
+                gold_emb,
+                ret_emb
+            )
+
+            if sim >= threshold:
+                found = True
+                break
+
+        if found:
+            matched += 1
+
+    recall = matched / len(gold_chunks)
+
+    return round(float(recall), 4)
+
+
+# ============================================================
+# GOLD CHUNK PRECISION@K
+# ============================================================
+
+def compute_gold_chunk_precision(
+    retrieved_chunks,
+    gold_chunks,
+    embedder,
+    threshold=0.30
+):
+    """
+    Computes Precision@K using gold chunks.
+
+    Formula:
+        relevant_retrieved / total_retrieved
+    """
+
+    if not retrieved_chunks:
+        return 0.0
+    def normalize_text(x):
+        return " ".join(str(x).lower().split())
+
+    gold_chunks = [
+        normalize_text(g)
+        for g in gold_chunks
+    ]
+
+    retrieved_chunks = [
+        normalize_text(r)
+        for r in retrieved_chunks
+    ]
+
+    gold_embeddings = [
+        embedder.embed_query(g)
+        for g in gold_chunks
+    ]
+
+    retrieved_embeddings = [
+        embedder.embed_query(r)
+        for r in retrieved_chunks
+    ]
+
+    relevant = 0
+
+    for ret_idx, ret_emb in enumerate(retrieved_embeddings):
+
+        retrieved_text = retrieved_chunks[ret_idx]
+
+        matched = False
+
+        for gold_idx, gold_emb in enumerate(gold_embeddings):
+
+            gold_text = gold_chunks[gold_idx]
+
+            # ====================================================
+            # containment shortcut
+            # ====================================================
+
+            if (
+                gold_text in retrieved_text
+                or retrieved_text in gold_text
+            ):
+                matched = True
+                break
+
+            # ====================================================
+            # semantic fallback
+            # ====================================================
+
+            sim = embedding_cosine(
+                ret_emb,
+                gold_emb
+            )
+
+            if sim >= threshold:
+                matched = True
+                break
+
+        if matched:
+            relevant += 1
+
+    precision = relevant / len(retrieved_chunks)
+
+    precision = max(
+        0.0,
+        min(1.0, precision)
+    )
+
+    return round(float(precision), 4)
+
+
+# ============================================================
+# REWRITE EFFECTIVENESS
+# ============================================================
+
+def evaluate_rewrite_effectiveness(
+    pre_rewrite_recall,
+    post_rewrite_recall
+):
+    """
+    Measures how much rewrite improved retrieval.
+
+    Formula:
+        post_rewrite_recall - pre_rewrite_recall
+    """
+
+    improvement = (
+        post_rewrite_recall -
+        pre_rewrite_recall
+    )
+
+    return round(float(improvement), 4)
+
+
+# ============================================================
+# FOLLOWUP SUCCESS SCORE
+# ============================================================
+
+def evaluate_followup_success(
+    answer_correctness,
+    retrieval_recall,
+    grounding_score
+):
+    """
+    Combined conversational followup success score.
+
+    Formula:
+        0.5 * answer correctness
+      + 0.3 * retrieval recall
+      + 0.2 * grounding score
+    """
+
+    final_score = (
+        0.5 * answer_correctness +
+        0.3 * retrieval_recall +
+        0.2 * grounding_score
+    )
+
+    final_score = max(
+    0.0,
+    min(1.0, final_score)
+)
+
+    return round(float(final_score), 4)
+
+
+# ============================================================
+# QUERY TYPE AGGREGATION
+# ============================================================
+
+def aggregate_query_type_metrics(results):
+    """
+    Aggregates metrics per query type.
+
+    Example query types:
+    - FACTUAL_QA
+    - MULTIPART_QA
+    - VERIFICATION_QA
+    """
+
+    grouped = {}
+
+    for result in results:
+
+        qtype = result.get(
+            "query_type",
+            "UNKNOWN"
+        )
+
+        grouped.setdefault(qtype, []).append(result)
+
+    summary = {}
+
+    for qtype, items in grouped.items():
+
+        count = len(items)
+
+        avg_answer_score = (
+            sum(
+                i.get("answer_correctness", 0.0)
+                for i in items
+            ) / count
+        )
+
+        avg_recall = (
+            sum(
+                i.get("retrieval_recall", 0.0)
+                for i in items
+            ) / count
+        )
+
+        avg_precision = (
+            sum(
+                i.get("retrieval_precision", 0.0)
+                for i in items
+            ) / count
+        )
+
+        summary[qtype] = {
+            "count": count,
+            "avg_answer_correctness": round(avg_answer_score, 4),
+            "avg_retrieval_recall": round(avg_recall, 4),
+            "avg_retrieval_precision": round(avg_precision, 4)
+        }
+
+    return summary
 
 # ============================================================
 # NORMALIZATION
@@ -97,6 +635,18 @@ def keyword_overlap(answer: str, context_chunks: list) -> float:
 # ============================================================
 
 def semantic_similarity(answer: str, context_chunks: list) -> float:
+    #this to
+    print("\n[DEBUG SEMANTIC]")
+    print(f"answer type={type(answer)} value={repr(answer)}")
+
+    if context_chunks is not None:
+        print(f"context_chunks len={len(context_chunks)}")
+        if len(context_chunks) > 0:
+            print(f"first chunk type={type(context_chunks[0])}")
+            print(f"first chunk preview={repr(str(context_chunks[0])[:100])}")
+    else:
+        print("context_chunks is NONE")
+    #end
     if not answer or not context_chunks:
         return 0.0
     try:
@@ -108,7 +658,7 @@ def semantic_similarity(answer: str, context_chunks: list) -> float:
         norm     = np.linalg.norm(a) * np.linalg.norm(b)
         if norm < 1e-8:
             return 0.0
-        return float(np.dot(a, b) / norm)
+        return embedding_cosine(a, b)
     except Exception as e:
         print(f"[SemanticSim] error: {e}")
         return 0.0
@@ -146,11 +696,11 @@ def compute_grounding_score(answer: str, context_chunks: list) -> float:
     semantic_score = semantic_similarity(answer, context_chunks)
 
     grounding_score = (
-        0.3 * local_match    +
-        0.2 * global_match   +
-        0.3 * semantic_score +
-        0.2 * keyword_score
-    )
+    0.3 * local_match +
+    0.2 * global_match +
+    0.3 * semantic_score +
+    0.2 * keyword_score
+)
     print(f"[Grounding] local={local_match:.2f} global={global_match:.2f} "
           f"semantic={semantic_score:.3f} keyword={keyword_score:.3f} "
           f"-> grounding={grounding_score:.3f}")
@@ -177,24 +727,60 @@ def score_answer(answer: str, context_chunks: list) -> float:
 # ============================================================
 # CONFIDENCE
 # ============================================================
+def compute_confidence(
+    reranker_top: float,
+    recall_score: float,
+    answer: str,
+    context_chunks: list,
+    question: str,
+    all_reranker_scores: list = None
+) -> float:
+    print("\n[DEBUG CONFIDENCE INPUTS]")
+    print(f"answer type={type(answer)} value={repr(answer)}")
+    print(f"question type={type(question)} value={repr(question)}")
+    print(f"context_chunks type={type(context_chunks)}")
+    print(f"reranker_top={reranker_top}")
+    print(f"recall_score={recall_score}")
 
-def compute_confidence(reranker_top: float, recall_score: float,
-                       answer: str, context_chunks: list,
-                       all_reranker_scores: list = None) -> float:
     if all_reranker_scores:
-        normalized = minmax_normalize(reranker_top, all_reranker_scores)
+        normalized = minmax_normalize(
+            reranker_top,
+            all_reranker_scores
+        )
     else:
-        normalized = minmax_normalize(reranker_top, [reranker_top])
+        normalized = minmax_normalize(
+            reranker_top,
+            [reranker_top]
+        )
 
     rec = min(recall_score / 100.0, 1.0)
-    kw  = keyword_overlap(answer, context_chunks)
-    confidence = (
-        CONF_WEIGHT_RERANKER * normalized +
-        CONF_WEIGHT_RECALL   * rec +
-        CONF_WEIGHT_KEYWORD  * kw
+
+    kw = keyword_overlap(
+        answer,
+        context_chunks
     )
-    print(f"[Confidence] normalized={normalized:.3f} rec={rec:.3f} "
-          f"kw={kw:.3f} → {confidence:.3f}")
+
+    qa_relevance = semantic_similarity(
+    answer,
+    context_chunks
+)
+
+    confidence = (
+    0.25 * normalized +
+    0.20 * rec +
+    0.15 * kw +
+    0.40 * qa_relevance
+)
+
+    print(
+        f"[Confidence] "
+        f"normalized={normalized:.3f} "
+        f"rec={rec:.3f} "
+        f"kw={kw:.3f} "
+        f"qa_rel={qa_relevance:.3f} "
+        f"→ {confidence:.3f}"
+    )
+
     return round(confidence, 4)
 
 
@@ -213,19 +799,34 @@ def compute_answer_grounding(answer: str, context_chunks: list,
     # Refusal sentinel — avoids polluting grounding metric with
     # function words that happen to appear in any document
     refusal_phrases = [
-        "not present",
-        "not mentioned",
-        "not available",
-        "no information",
-        "cannot find",
-        "not in the document"
-    ]
+    "not present",
+    "not mentioned",
+    "not available",
+    "no information",
+    "cannot find",
+    "not in the document",
+    "don't see any information",
+    "don't see any mention",
+    "does not mention",
+    "no mention of",
+    "context does not mention",
+    "i don't see",
+    "there is no",
+    "i don't have",
+    "unfortunately, the provided context does not mention",
+    "does not explicitly mention",
+    "does not specifically",
+    "not explicitly mentioned",
+]
 
     if any(p in answer.lower() for p in refusal_phrases):
         print(f"[Grounding] Refusal answer detected → returning sentinel 75.0")
-        return 75.0
+        return 0.0
     if not context_chunks:
         return 0.0
+        # Exact span match — handles numbers, dates, names, short answers
+    if exact_span_match(answer, context_chunks):
+        return 100.0
 
     try:
         context_text  = " ".join(context_chunks).lower()
@@ -356,6 +957,13 @@ def llm_verify_answer(question: str, answer: str,
         return "YES" in resp.upper()
     except Exception:
         return True
+
+
+
+
+
+
+
 
 
 
