@@ -6,7 +6,7 @@ Runs /evaluate N times and reports:
   - Overall accuracy
   - Hallucination rate
   - Instability rate (questions that change verdict across runs)
-  - All results saved to stability_results.json (append, never overwrite)
+  - All results saved to stability_results_final.json (append, never overwrite)
   - Each session named by user (auto-increments if no name given)
 """
 
@@ -42,7 +42,13 @@ class Tee:
 
 _LOG_DIR = r"C:\xampp\htdocs\GenAI-Doc-old\dco_mind\evaluation\results"
 os.makedirs(_LOG_DIR, exist_ok=True)
-_log_file = open(os.path.join(_LOG_DIR, "run_logs_runner.txt"), "a", encoding="utf-8")
+
+# CHANGE 1: updated log filename
+_log_file = open(
+    os.path.join(_LOG_DIR, "run_logs_runner_final.txt"),
+    "a",
+    encoding="utf-8"
+)
 _log_file.write(f"""
 ################################################################################
 ##                                                                            ##
@@ -63,19 +69,26 @@ FLASK_URL = "http://127.0.0.1:5000/evaluate"
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 PDF_PATHS = [
-    r"C:\Users\Rhearitu\Downloads\rhea AIML resume updated.pdf",
+    r"C:\Users\Rhearitu\Downloads\rhea resume-ziroh labs.pdf.pdf",
     r"C:\Users\Rhearitu\Downloads\the-story-of-doctor-dolittle.pdf",
     r"C:\Users\Rhearitu\Downloads\ml.pdf"
 ]
 
+# CHANGE 3: updated dataset filenames
 PDF_DATASET_MAP = {
-    "rhea AIML resume updated.pdf": os.path.join(BASE_DIR, "datasets", "resume.json"),
-    "the-story-of-doctor-dolittle.pdf": os.path.join(BASE_DIR, "datasets", "story.json"),
-    "ml.pdf": os.path.join(BASE_DIR, "datasets", "ml.json")
+    "rhea resume-ziroh labs.pdf.pdf": os.path.join(BASE_DIR, "datasets", "resume2.json"),
+    "the-story-of-doctor-dolittle.pdf": os.path.join(BASE_DIR, "datasets", "story2.json"),
+    "ml.pdf": os.path.join(BASE_DIR, "datasets", "ml2.json")
 }
-
 NUM_RUNS = 1
-RESULTS_FILE = os.path.join(BASE_DIR, "evaluation", "results", "stability_results.json")
+
+# CHANGE 2: updated results filename
+RESULTS_FILE = os.path.join(
+    BASE_DIR,
+    "evaluation",
+    "results",
+    "stability_results_final.json"
+)
 # ────────────────────────────────────────────────────────────
 
 
@@ -107,7 +120,7 @@ def get_session_name(next_num: int) -> str:
     except (EOFError, KeyboardInterrupt):
         session_name = auto_name
 
-    os.environ["DCO_RUN_NAME"] = session_name  # ← ADD THIS ONLY
+    os.environ["DCO_RUN_NAME"] = session_name
     return session_name
 
 
@@ -133,7 +146,13 @@ def load_dataset_meta(pdf_path: str) -> dict:
         with open(dataset_file, "r") as f:
             dataset = json.load(f)
 
-        for q in dataset.get("questions", []):
+        questions = (
+            dataset
+            if isinstance(dataset, list)
+            else dataset.get("questions", [])
+        )
+
+        for q in questions:
             meta[q["id"]] = {
                 "hallucination_test": q.get("hallucination_test", False),
                 "skip":               q.get("skip", False),
@@ -147,10 +166,10 @@ def load_dataset_meta(pdf_path: str) -> dict:
 
 def run_evaluate(pdf_path: str, run_num: int, session_name: str) -> dict:
     payload = {
-        "pdf_path": pdf_path,
+        "pdf_path":        pdf_path,
         "run_description": f"{session_name}_run_{run_num}",
-        "request_id": f"{os.path.basename(pdf_path)}_run_{run_num}",
-        "session_name": session_name  # ← ADD THIS
+        "request_id":      f"{os.path.basename(pdf_path)}_run_{run_num}",
+        "session_name":    session_name
     }
 
     print(f"\n{'='*60}")
@@ -188,14 +207,25 @@ def build_run_record(run_num: int, result: dict, elapsed: float) -> dict:
             "conversation_id":  r.get("conversation_id", None),
             "turn":             r.get("turn", None),
             "verdict":          r.get("verdict", "FAIL"),
-            "keyword_hits":     r.get("keyword_hits", 0),
-            "max_score":        r.get("max_score", 0),
-            "pass_threshold":   r.get("pass_threshold", 1),
+            # REMOVED: keyword_hits, max_score, pass_threshold
+            # NEW semantic metrics
+            "answer_score":           r.get("answer_score", 0.0),
+            "retrieval_recall":       r.get("retrieval_recall", 0.0),
+            "retrieval_precision":    r.get("retrieval_precision", 0.0),
+            "followup_question":      r.get("followup_question", False),
+            "followup_score":         r.get("followup_score", None),
+            "rewrite_triggered":      r.get("rewrite_triggered", False),
+            "rewrite_gain":           r.get("rewrite_gain", 0.0),
+            "hallucination_detected": r.get("hallucination_detected", False),
+            "rewritten_query":        r.get("rewritten_query", ""),
+            "query_rewrite":          r.get("query_rewrite", ""),
+            "retrieved_docs":         r.get("retrieved_docs", []),
+            "pass_numeric":           r.get("pass_numeric", 0),
+            # KEPT existing useful fields
             "model_used":       r.get("model_used", "unknown"),
             "recall_at_k":      r.get("recall_at_k", 0.0),
             "answer_grounding": r.get("answer_grounding", 0.0),
             "confidence":       r.get("confidence", 0.0),
-            "hallucination":    r.get("hallucination", False),
             "actual_answer":    r.get("actual_answer", ""),
             "tests":            r.get("tests", ""),
         })
@@ -219,9 +249,21 @@ def compute_stability_report(all_run_records: list,
     q_questions = {}
     q_halluc    = {}
 
+    # NEW: per-question score trackers
+    q_answer_scores    = defaultdict(list)
+    q_retrieval_scores = defaultdict(list)
+    q_followup_scores  = defaultdict(list)
+    q_numeric_scores = defaultdict(list)
+    q_rewrite_triggered = defaultdict(list)
+    q_halluc_detected = defaultdict(list)
+
     for run_record in all_run_records:
         for q in run_record["questions"]:
-            qid = f"{q.get('conversation_id', q['id'])}_{q.get('turn', 0)}"
+            if q.get("conversation_id") is not None:
+                qid = f"{q['conversation_id']}_{q['turn']}"
+            else:
+                qid = str(q["id"])
+
             q_verdicts[qid].append(q["verdict"])
             q_questions[qid] = q["question"]
 
@@ -229,7 +271,23 @@ def compute_stability_report(all_run_records: list,
             if base_id in dataset_meta:
                 q_halluc[qid] = dataset_meta[base_id]["hallucination_test"]
             else:
-                q_halluc[qid] = q.get("hallucination", False)
+                # CHANGE: use hallucination_detected instead of hallucination
+                q_halluc[qid] = q.get("hallucination_detected", False)
+
+            # NEW: collect score arrays
+            q_answer_scores[qid].append(q.get("answer_score", 0.0))
+            q_retrieval_scores[qid].append(q.get("retrieval_recall", 0.0))
+            if q.get("followup_score") is not None:
+                q_followup_scores[qid].append(q.get("followup_score", 0.0))
+            q_numeric_scores[qid].append(
+                q.get("pass_numeric", 0)
+            )
+            q_rewrite_triggered[qid].append(
+                q.get("rewrite_triggered", False)
+            )
+            q_halluc_detected[qid].append(
+                q.get("hallucination_detected", False)
+            )
 
     total_questions = len(q_verdicts)
     total_answers   = total_questions * total_runs
@@ -237,19 +295,44 @@ def compute_stability_report(all_run_records: list,
     total_partial   = sum(v.count("PARTIAL") for v in q_verdicts.values())
     total_fail      = sum(v.count("FAIL")    for v in q_verdicts.values())
 
-    overall_accuracy = round(total_pass    / total_answers * 100, 1)
-    partial_rate     = round(total_partial / total_answers * 100, 1)
-    fail_rate        = round(total_fail    / total_answers * 100, 1)
+    overall_accuracy = round(
+        total_pass / max(total_answers, 1) * 100,
+        1
+    )
+
+    partial_rate = round(
+        total_partial / max(total_answers, 1) * 100,
+        1
+    )
+
+    fail_rate = round(
+        total_fail / max(total_answers, 1) * 100,
+        1
+    )
 
     q_stable         = {qid: len(set(v)) == 1 for qid, v in q_verdicts.items()}
     unstable_qs      = sorted([qid for qid, s in q_stable.items() if not s])
-    instability_rate = round(len(unstable_qs) / total_questions * 100, 1)
+    instability_rate = round(
+        len(unstable_qs) / max(total_questions, 1) * 100,
+        1
+    )
 
     halluc_q_ids = [qid for qid, is_h in q_halluc.items() if is_h]
+
     if halluc_q_ids:
-        halluc_fails = sum(q_verdicts[qid].count("FAIL") for qid in halluc_q_ids)
+
+        halluc_count = sum(
+            sum(q_halluc_detected[qid])
+            for qid in halluc_q_ids
+        )
+
         halluc_total = len(halluc_q_ids) * total_runs
-        halluc_rate  = round(halluc_fails / halluc_total * 100, 1)
+
+        halluc_rate = round(
+            halluc_count / halluc_total * 100,
+            1
+        )
+
     else:
         halluc_rate = 0.0
 
@@ -261,7 +344,10 @@ def compute_stability_report(all_run_records: list,
         pass_count = verdicts.count("PASS")
         part_count = verdicts.count("PARTIAL")
         fail_count = verdicts.count("FAIL")
-        pass_pct   = round(pass_count / len(verdicts) * 100, 1)
+        pass_pct = round(
+            pass_count / max(len(verdicts), 1) * 100,
+            1
+        )
         per_question.append({
             "id":            qid,
             "question":      q_questions[qid],
@@ -271,7 +357,37 @@ def compute_stability_report(all_run_records: list,
             "pass_pct":      pass_pct,
             "stable":        q_stable[qid],
             "halluc_test":   q_halluc.get(qid, False),
-        })
+            # NEW: per-question avg scores
+            "avg_answer_score": round(
+                sum(q_answer_scores[qid]) /
+                max(len(q_answer_scores[qid]), 1),
+                4
+            ),
+
+            "avg_retrieval_recall": round(
+                sum(q_retrieval_scores[qid]) /
+                max(len(q_retrieval_scores[qid]), 1),
+                4
+            ),
+
+            "avg_followup_score": round(
+                sum(q_followup_scores[qid]) /
+                max(len(q_followup_scores[qid]), 1),
+                4
+            ) if q_followup_scores[qid] else None,
+
+            "avg_pass_numeric": round(
+                sum(q_numeric_scores[qid]) /
+                max(len(q_numeric_scores[qid]), 1),
+                4
+            ),
+
+            "rewrite_trigger_rate": round(
+                sum(q_rewrite_triggered[qid]) /
+                max(len(q_rewrite_triggered[qid]), 1) * 100,
+                1
+            ),
+            })
 
     return {
         "total_questions":    total_questions,
@@ -283,6 +399,21 @@ def compute_stability_report(all_run_records: list,
         "unstable_q_ids":     unstable_qs,
         "hallucination_rate": halluc_rate,
         "avg_run_time_sec":   avg_run_time,
+        # NEW: global averages
+        "avg_answer_score": round(
+            sum(
+                sum(v) / max(len(v), 1)
+                for v in q_answer_scores.values()
+            ) / max(total_questions, 1),
+            4
+        ),
+        "avg_retrieval_recall": round(
+            sum(
+                sum(v) / max(len(v), 1)
+                for v in q_retrieval_scores.values()
+           ) / max(total_questions, 1),
+            4
+        ),
         "per_question":       per_question,
     }
 
@@ -321,6 +452,10 @@ def print_stability_report(report: dict, total_runs: int, session_name: str):
     print(f"  ⚠️  Partial rate      : {report['partial_rate']}%  ({total_partial}/{total_answers} PARTIAL)")
     print(f"  ❌ Fail rate         : {report['fail_rate']}%  ({total_fail}/{total_answers} FAIL)")
     print(f"")
+    # NEW: avg score lines
+    print(f"  🧠 Avg Answer Score : {report['avg_answer_score']}")
+    print(f"  📚 Avg Retrieval    : {report['avg_retrieval_recall']}")
+    print(f"")
     print(f"  🔁 Instability rate  : {report['instability_rate']}%  "
           f"({len(unstable_qs)}/{total_questions} unstable questions)")
     if unstable_qs:
@@ -335,7 +470,19 @@ def print_stability_report(report: dict, total_runs: int, session_name: str):
 
 def save_session(session: dict, existing: dict):
     os.makedirs(os.path.dirname(RESULTS_FILE), exist_ok=True)
-    existing["sessions"].append(session)
+    # existing["sessions"].append(session)
+    replaced = False
+
+    for i, s in enumerate(existing["sessions"]):
+
+        if s.get("name") == session["name"]:
+
+            existing["sessions"][i] = session
+            replaced = True
+            break
+
+    if not replaced:
+        existing["sessions"].append(session)
     try:
         with open(RESULTS_FILE, "w") as f:
             json.dump(existing, f, indent=2)
@@ -350,6 +497,21 @@ def main():
     existing     = load_existing_results()
     next_num     = get_next_session_number(existing)
     session_name = get_session_name(next_num)
+    # ============================================================
+    # Reserve session immediately
+    # so interrupted runs don't reuse same Test number
+    # ============================================================
+
+    placeholder_session = {
+        "name": session_name,
+        "reserved": True,
+        "date": time.strftime("%Y-%m-%d %H:%M:%S")
+    }
+
+    existing["sessions"].append(placeholder_session)
+
+    with open(RESULTS_FILE, "w") as f:
+        json.dump(existing, f, indent=2)
 
     for pdf_path in PDF_PATHS:
         print("\n" + "="*80)
@@ -369,8 +531,8 @@ def main():
         print(f"  Runs    : {NUM_RUNS}")
         print(f"{'='*60}")
 
-        skipped = [qid for qid, m in dataset_meta.items() if m.get("skip")]
-        skip_ids = set(skipped)
+        skipped  = [qid for qid, m in dataset_meta.items() if m.get("skip")]
+        # skip_ids = set(skipped)
         if skipped:
             print(f"  ⏭️  Skipping Q IDs  : {skipped} (skip=true in dataset)")
 
@@ -420,29 +582,6 @@ if __name__ == "__main__":
         main()
     finally:
         _log_file.close()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
