@@ -17,7 +17,7 @@ def rerank_docs(question: str, docs: list,
         all_scores = [float(s) for s in scores_arr]
         ranked     = sorted(zip(all_scores, docs), key=lambda x: x[0], reverse=True)
         top_score  = float(ranked[0][0])
-      
+
         if top_score < -5:
             print(f"[Reranker] ⚠️ Very low scores → keeping top chunks instead of rejecting")
 
@@ -25,9 +25,9 @@ def rerank_docs(question: str, docs: list,
             result_docs = [d for _, d in ranked[:safe_k]]
 
             return result_docs, top_score, all_scores
-    
+
         if apply_pruning:
-      
+    
             margin = RERANKER_PRUNE_MARGIN
             pruned = [(s, d) for s, d in ranked if s >= top_score - margin]
       
@@ -35,18 +35,18 @@ def rerank_docs(question: str, docs: list,
             # ============================================================
             # 🔥 FIX: PREVENT COLLAPSING TO TOO FEW CHUNKS
             # ============================================================
-            # MIN_CHUNKS = min(5, top_k)
+
             MIN_CHUNKS = max(3, min(len(ranked), top_k))
 
             if len(pruned) < MIN_CHUNKS:
                 print(f"[Reranker] ⚠️ Too few chunks after pruning ({len(pruned)}) → expanding")
 
-               
+                # fallback to top-N ranked instead of margin pruning
                 result_docs = [d for _, d in ranked[:MIN_CHUNKS]]
             else:
                 result_docs = [d for _, d in pruned]
 
-     
+        
             bottom_score = pruned[-1][0] if pruned else -999
 
             print(f"[Reranker] {len(docs)} → {len(result_docs)} chunks after pruning | "
@@ -83,31 +83,13 @@ def protect_exact_matches(question: str, reranked_docs: list,
         return reranked_docs
 
     print(f"[Protect] Injecting {len(missing)} exact-match chunks dropped by reranker")
- 
+
     protected = reranked_docs + missing
     expanded_k = max(top_k, len(missing) + len(reranked_docs))
-    expanded_k = min(expanded_k, FACTUAL_TOP_K + len(missing)) 
+    expanded_k = min(expanded_k, FACTUAL_TOP_K + len(missing)) # this is very imp just by changinng this from this expanded_k = min(expanded_k, 5) i got crct retreival  nd the chat is in my chrome
 
     print(f"[Protect] Context expanded: {top_k} → {expanded_k} chunks")
     return protected[:expanded_k]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
