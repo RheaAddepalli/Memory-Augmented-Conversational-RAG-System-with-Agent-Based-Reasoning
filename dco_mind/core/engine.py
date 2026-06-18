@@ -5,7 +5,7 @@ import re
 # _nlp = spacy.load("en_core_web_lg")
 
 from dco_mind.config.settings import (
-    MAX_WORKERS, FACTUAL_TOP_K, MULTIPART_TOP_K
+    MAX_WORKERS, FACTUAL_TOP_K, MULTIPART_TOP_K,DIRECT_QA_TOP_K
 )
 
 from dco_mind.reasoning.context_builder import extract_named_entities, expand_answer
@@ -44,9 +44,12 @@ from dco_mind.evaluation.metrics import (
     compute_retrieval_score,
     compute_context_precision,
     compute_recall_at_k,
+    compute_confidence,
+    compute_grounding_score,
     semantic_similarity,
 )
-from dco_mind.cognition.memory import get_memory_context
+# from dco_mind.cognition.memory import get_memory_context,get_retrieval_query, get_best_memory_match,get_previous_retrieved_chunks,save_to_memory
+from dco_mind.cognition.memory import get_memory_context, get_best_memory_match, save_to_memory,get_history
 
 # ============================================================
 # LOCAL HELPERS
@@ -182,6 +185,7 @@ def _navigate_full_chunks(question: str, all_raw_chunks: list) -> str:
     if best_score < 3:
         print("[NAV] ⚠️ Weak match → fallback")
         return ""
+    return best_line
 
 def _positional_extract(question: str, retrieved_texts: list) -> str:
     """Extract Nth item from a list. Generic."""
@@ -275,7 +279,13 @@ def node_chunk(state: DocState) -> DocState:
     text = state["extracted_text"]
     state["query_type"] = "QA"
     question = state.get("question", "").strip().lower()
-    summary_pattern = r'^(summarize|summarise|give|provide|generate|write|create)\b'
+    summary_pattern = (
+    r'^(summarize|summarise|summary|'
+    r'give me a summary|'
+    r'provide a summary|'
+    r'summarise this|'
+    r'generate a summary)\b'
+)
     if re.match(summary_pattern, question) or (len(question.split()) > 12 and "?" not in question):
         state["query_type"] = "FULL_SUMMARY"
 
@@ -353,15 +363,21 @@ def node_summarize(state: DocState) -> DocState:
     return state
 
 def node_qa(state: DocState) -> DocState:
+    print("\n[DEBUG STATE]")
+    print(f"original_question = {repr(state.get('original_question'))}")
+    print(f"session_id = {repr(state.get('session_id'))}")
     qa_start_t = time.time()
     question   = state["question"]
     request_id = state.get("request_id", "")
     all_chunks = state["chunks"]
+    session_id = state.get("session_id", "")
+    if not session_id:
+        session_id = "default_session"
+    original_q = state.get("original_question", question)
 
-    # FIX 4 — normalize question the same way chunks were normalized
     question = normalize_text(question)
-    numeric_intent = "NONE"   # 🔥 DEFAULT FIX (MANDATORY)
-    # Raw strings for navigational scanning — must NOT be cleaned
+    numeric_intent = "NONE"
+
     all_raw = [
         d if isinstance(d, str) else d.page_content
         for d in all_chunks
@@ -376,6 +392,11 @@ def node_qa(state: DocState) -> DocState:
     retrieval_score   = 0.0
     context_precision = 0.0
     grounding         = 0.0
+    grounding_score = 0.0
+    semantic_ground = 0.0
+    grounding_now = 0.0
+    force_not_found = False
+    react_ans = ""
     llm_calls         = 0
     model_used        = "llama"
     confidence        = 0.0
@@ -383,19 +404,52 @@ def node_qa(state: DocState) -> DocState:
     retrieved         = []
     retrieved_texts   = []
     answer            = ""
+    rewrite_triggered = False
+    rewritten_question = ""
+    pre_rewrite_docs = []
+    post_rewrite_docs = []
+    refusal_phrases = [
+    "not present",
+    "not mentioned",
+    "not available",
+    "no information",
+    "cannot find",
+    "context does not mention",
+    "don't have any information",
+    "not in the document",
+    "cannot answer",
+    "no mention",
+    "there is no mention",
+    "does not mention",
+    "cannot determine",
+    "don't see any information",
+    "don't see any mention",
+    "no mention of",
+    "i don't see",
+    "there is no",
+    "i don't have",
+    "does not explicitly mention",
+    "does not specifically",
+    "not explicitly mentioned",
+]
 
-    # ── STEP 1: RETRIEVE ─────────────────────────────────────
+    # ── STEP 1: RETRIEVE — clean question only ────────────────
     retrieved = multi_query_retrieve(
         question, faiss_index,
         k=50,
         all_chunks=all_chunks,
         query_type="FACTUAL_QA"
     )
+    initial_retrieved = retrieved.copy()
+    pre_rewrite_docs = [
+    {
+        "content": d.page_content if hasattr(d, "page_content") else str(d),
+        "metadata": getattr(d, "metadata", {})
+    }
+    for d in initial_retrieved
+]
 
-
-   
     # 🔥 STEP 2 — RERANK + SAFE FALLBACK
-
     retrieved, reranker_top, _ = rerank_docs(
         question, retrieved, top_k=8, apply_pruning=True
     )
@@ -403,13 +457,12 @@ def node_qa(state: DocState) -> DocState:
     retrieved = protect_exact_matches(
         question, retrieved, all_chunks, top_k=8
     )
+    retrieved = retrieved[:6]
 
-    # 🔥 FIX 1 — fallback must replace retrieved (NOT just texts)
     if not retrieved or len(retrieved) < 3:
         print("[QA] ⚠️ Reranker too aggressive → fallback to initial chunks")
-        retrieved = all_chunks[:8]
+        retrieved = initial_retrieved[:8]
 
-    # 🔥 FIX 2 — safe conversion
     retrieved_texts = [
         d.page_content if hasattr(d, "page_content") else str(d)
         for d in retrieved
@@ -424,10 +477,9 @@ def node_qa(state: DocState) -> DocState:
         question, retrieved, all_chunks, k=len(retrieved)
     )
 
-    # ── FIX 6 — k expansion: low recall OR numeric question ───
     is_numeric_question = len(_extract_numbers(question)) > 0
-    if recall_score < 25 or is_numeric_question:
-        print("[QA] ⚠️ Expanding retrieval (low recall or numeric question)")
+    if recall_score < 40:
+        print("[QA] ⚠️ Expanding retrieval (low recall)")
         expanded = multi_query_retrieve(
             question, faiss_index, k=30,
             all_chunks=all_chunks, query_type="FACTUAL_QA"
@@ -438,67 +490,60 @@ def node_qa(state: DocState) -> DocState:
                 d.page_content if hasattr(d, "page_content") else str(d)
                 for d in retrieved
             ]
-        # 🔥 ENSURE numeric_intent ALWAYS DEFINED
         numeric_intent = _detect_numeric_intent(question, retrieved_texts)
-
-        # fallback check (keep this)
         is_numeric_question = len(_extract_numbers(question)) > 0
-
         if numeric_intent == "NONE" and is_numeric_question:
             print("[Navigate] Retrying intent detection on full document...")
             numeric_intent = _detect_numeric_intent(question, all_raw)
-    # ── FIX 1 — Numeric intent: retrieved first, fallback to all_raw ──
+    else:
+        print("[QA] ✅ High recall — trusting retrieved context")
+
     if numeric_intent == "NAVIGATIONAL":
         print("[Routing] Numeric intent → NAVIGATIONAL")
-
         title = _navigate_full_chunks(question, all_raw)
-
         if title:
             print(f"[Navigate] Extracted title: '{title}'")
-
             grounding  = compute_answer_grounding(title, retrieved_texts, question)
-            confidence = round(grounding / 100, 3)
+            try:
+                confidence = compute_confidence(
+                    reranker_top=reranker_top,
+                    recall_score=recall_score,
+                    answer=answer,
+                    context_chunks=retrieved_texts,
+                    question=question
+                )
+            except Exception as e:
+                print("\n[CONFIDENCE CRASH]")
+                print(f"answer={repr(answer)}")
+                print(f"question={repr(question)}")
+                print(f"retrieved_texts type={type(retrieved_texts)}")
+                print(f"retrieved_texts len={len(retrieved_texts) if retrieved_texts else 0}")
+                print(f"ERROR={e}")
+                raise
             qa_time    = time.time() - qa_start_t
-
             state["answer"]     = title
             state["query_type"] = "NAVIGATIONAL"
-
-            _write_metrics(
-                state,
-                "navigational",
-                "navigational",
-                grounding,
-                confidence,
-                retrieval_score,
-                context_precision,
-                recall_score,
-                llm_calls,
-                retrieved,
-                qa_time
-            )
-
+            _write_metrics(state, "navigational", "navigational",
+                           grounding, confidence, retrieval_score,
+                           context_precision, recall_score, llm_calls,
+                           retrieved, qa_time)
             return state
-
         print("[Navigate] Falling back to QA")
+
     # ── Normal routing ────────────────────────────────────────
-    query_type = classify_from_context(question, retrieved_texts)
+    query_type = classify_from_context(original_q, retrieved_texts)
     state["query_type"] = query_type
     print(f"[Routing] Context-based → {query_type}")
 
     # ── STEP 4: ANSWER GENERATION ─────────────────────────────
-
     if query_type == "FULL_SUMMARY":
-        retrieved_texts = clean_context_for_llm(retrieved_texts)
-        ranked  = reorder_by_question(question, retrieved_texts)
+        llm_context_chunks = clean_context_for_llm(retrieved_texts)
+        ranked = retrieved_texts
         context = "\n\n---\n\n".join(clean_chunk_text(c) for c in ranked[:8])
         structured_context = "\n".join(
             f"[CONTEXT CHUNK]\n{c}" for c in context.split("\n\n---\n\n")
         )
         emit_event(request_id, "stream_start", "✍️ Generating answer...")
-        # answer, _ = call_llama_streaming(
-        #     QA_PROMPT.format(context=structured_context[:2500], question=question),
-        #     request_id=request_id, temperature=0.0
-        # )
         answer, _ = call_llama_streaming(
             QA_PROMPT.format(
                 memory_context="",
@@ -507,23 +552,27 @@ def node_qa(state: DocState) -> DocState:
             ),
             request_id=request_id, temperature=0.0
         )
-        answer     = clean_artifacts(answer).strip()
+        if answer is None:                          
+            answer = ""                             
+        answer     = clean_artifacts(str(answer)).strip()  
+   
         model_used = "llama_summary"
         llm_calls  = 1
+        grounding_score = compute_answer_grounding(answer, retrieved_texts, question)
+        semantic_ground = semantic_similarity(answer, retrieved_texts)
 
     elif query_type == "MULTIPART_QA":
-        retrieved_texts = clean_context_for_llm(retrieved_texts)
-        ranked  = reorder_by_question(question, retrieved_texts)
-        # FIX 3 — 4000 chars for MULTIPART to capture all list items
+    
+        llm_context_chunks = clean_context_for_llm(retrieved_texts)
+
+        ranked = reorder_by_question(
+            question,
+            llm_context_chunks
+        )
         context = "\n\n---\n\n".join(clean_chunk_text(c) for c in ranked[:8])
-        emit_event(request_id, "agent_start",
-                   f"🤖 MULTIPART | {len(retrieved)} chunks")
+        emit_event(request_id, "agent_start", f"🤖 MULTIPART | {len(retrieved)} chunks")
         emit_event(request_id, "stream_start", "✍️ Generating answer...")
-        # answer, _ = call_llama_streaming(
-        #     QA_PROMPT.format(context=context[:4000], question=question),
-        #     request_id=request_id, temperature=0.0
-        # )
-        answer, _ = call_llama_streaming(
+        react_ans, _ = call_llama_streaming(
             QA_PROMPT.format(
                 memory_context="",
                 context=context[:4000],
@@ -531,211 +580,479 @@ def node_qa(state: DocState) -> DocState:
             ),
             request_id=request_id, temperature=0.0
         )
-        answer     = clean_artifacts(answer).strip()
+        if react_ans is None:                       
+            react_ans = ""                          
+        react_ans = clean_artifacts(str(react_ans)).strip()  
+      
+        answer = react_ans
+
         model_used = "llama_multipart"
         llm_calls  = 1
+        grounding_score = compute_answer_grounding(answer, retrieved_texts, question)
+        semantic_ground = semantic_similarity(answer, retrieved_texts)
 
     else:
-        
-        # FACTUAL_QA / VERIFICATION_QA
-
         if not retrieved_texts:
             print("[QA] ❌ No context → NOT FOUND")
-            # state["answer"] = "This information is not present in the document."   #changing to match quac keyword 
-            state["answer"] = "CANNOTANSWER"
+            state["answer"] = "This information is not present in the document."
             _write_metrics(state, "not_found", "no_context",
-                        0.0, 0.0, retrieval_score, context_precision,
-                        recall_score, llm_calls, retrieved,
-                        time.time() - qa_start_t)
+                           0.0, 0.0, retrieval_score, context_precision,
+                           recall_score, llm_calls, retrieved,
+                           time.time() - qa_start_t)
             return state
 
-        # 🔥 FIX 5 — SIMPLE QA ROUTING (ADD HERE)
+        ranked = reorder_by_question(
+            question,
+            retrieved_texts
+        )
 
-        context = "\n".join(retrieved_texts)
+        if query_type == "MULTIPART_QA":
+            retrieved_texts = ranked[:6]
+        else:
+            retrieved_texts = ranked[:4]
+
+        context = "\n\n---\n\n".join(retrieved_texts)
+        memory_context = get_memory_context(session_id)
 
         if (
-            query_type == "FACTUAL_QA"
-            and len(question.split()) <= 10
-            and not is_numeric_question
+            query_type in ("FACTUAL_QA", "VERIFICATION_QA")
             and recall_score >= 60
         ):
             print("[QA] ⚡ Direct QA (no ReAct)")
+        
 
-            memory_context = get_memory_context(state.get("session_id", ""))
+            if query_type == "FACTUAL_QA":
+
+
+                prompt = f"""Previous Conversation:
+{memory_context}
+Answer strictly using the provided context.
+For factual fields like names, numbers, dates, marks, or values,
+return the exact answer as it appears.
+For conceptual questions, provide a concise grounded answer
+based only on the context.
+For numeric comparisons, compute the comparison explicitly.
+Do not hallucinate unsupported information.
+Answer using the context.
+
+If the answer appears implicitly, infer it carefully from the retrieved text.
+
+Only say "This information is not present in the document"
+when the retrieved context contains no relevant evidence at all.
+Context:
+{context[:2000]}
+Question:
+{original_q}
+Answer:
+"""
+            else:
+
+                prompt = f"""Previous Conversation:
+{memory_context}
+
+Use the retrieved context as the primary source of truth.
+
+Reason carefully over the evidence before answering.
+
+For yes/no questions:
+- infer the answer from the retrieved evidence
+- answer directly when evidence strongly implies the conclusion
+- briefly explain the reasoning when useful
+
+Do not refuse if the answer can be inferred from the context.
+
+Only say "This information is not present in the document"
+when the retrieved context contains no meaningful evidence at all.
+
+Context:
+{context[:2000]}
+
+Question:
+{original_q}
+
+Answer:
+"""
+                print("\n" + "="*80)
+                print("FINAL CHUNKS SENT TO LLM")
+                print("="*80)
+
+                for i, chunk in enumerate(retrieved_texts):
+                    print(f"\nCHUNK {i+1}\n")
+                    print(chunk[:800])
+
+                print("\nFINAL CONTEXT:\n")
+                print(context[:4000])
+
+                print("\nQUESTION:")
+                print(original_q)
+
+                print("="*80 + "\n")
 
             react_ans, _ = call_llama_streaming(
-                f"""
-            Previous Conversation:
-            {memory_context}
-
-            Interpret the current question in light of prior conversation when relevant.
-            Use retrieved context as the authoritative source of factual information.
-
-            Answer the question using ONLY the given context.
-            Return ONLY the exact answer phrase from the context.
-            Do NOT explain. Do NOT say 'not found' unless absolutely missing.
-
-            Context:
-            {context[:2000]}
-
-            Question: {question}
-
-            Answer:
-            """,
+                prompt,
                 request_id=request_id,
                 temperature=0.0
             )
             llm_calls += 1
             model_used = "llama_direct"
+         
 
+            FOLLOWUP_WORDS = {
+    "it", "this", "that",
+    "he", "she", "they",
+    "them", "his", "her", "their"
+}
+            tokens = re.findall(r"\b\w+\b", question.lower())
+
+            # history = get_history(session_id)
+            history = get_history(session_id)
+
+            previous_question = ""
+
+            if history:
+                previous_question = history[-1].get("question", "")
+
+            has_memory = len(history) > 0
+
+            FOLLOWUP_PRONOUNS = {
+                "it", "this", "that",
+                "he", "she", "they",
+                "them", "his", "her",
+                "their", "its",
+                "these", "those"
+            }
+
+            pronoun_count = sum(
+                1 for t in tokens
+                if t in FOLLOWUP_PRONOUNS
+            )
+
+            meaningful_tokens = [
+                t for t in tokens
+                if (
+                    t not in FOLLOWUP_PRONOUNS
+                    and len(t) > 2
+                )
+            ]
+
+            semantic_density = len(meaningful_tokens)
+
+            is_followup = (
+                has_memory
+                and (
+                    pronoun_count > 0
+                    or semantic_density <= 2
+                )
+            )
+
+            is_refusal = any(
+                p in react_ans.lower()
+                for p in refusal_phrases
+            )
+
+            best_memory = get_best_memory_match(
+                session_id,
+                question
+            )
+
+            grounding_now = (
+    compute_grounding_score(
+        react_ans,
+        retrieved_texts
+    ) * 100
+)
+
+
+
+            ambiguous_followup = (
+                is_followup
+                and confidence > 0.50
+                and grounding_now < 85
+            )
+            memory_trigger = (
+    has_memory
+    and (
+        is_refusal
+        or recall_score < 60
+        or ambiguous_followup
+    )
+)
+
+      
+            print("\n[MEMORY DEBUG]")
+            print("history_len =", len(history))
+            print("has_memory =", has_memory)
+            print("is_followup =", is_followup)
+            print("grounding_now =", grounding_now)
+            print("confidence =", confidence)
+            print("ambiguous_followup =", ambiguous_followup)
+            print("memory_trigger =", memory_trigger)
+            if is_followup and (is_refusal or memory_trigger):
+
+                print("[MemoryRewrite] Triggered")
+                rewrite_triggered = True
+
+                history = get_memory_context(session_id)
+                print("\n[MEMORY HISTORY]")
+                print(history)
+                print("[END MEMORY HISTORY]\n")
+
+
+                rewrite_prompt = f"""
+                Previous Question:
+                {previous_question}
+
+                Current Question:
+                {question}
+
+                Rewrite the current question into a standalone question.
+
+                Rules:
+                - Use ONLY the previous question for resolving references.
+                - Do NOT use hidden assumptions.
+                - Do NOT introduce new entities.
+                - Preserve the exact meaning.
+                - Keep the rewrite concise.
+                - If the current question is already standalone, return it unchanged.
+
+                Only return the rewritten question.
+                """
+
+                rewritten_question, _ = call_llama_streaming(
+                    rewrite_prompt,
+                    request_id=request_id,
+                    temperature=0.0
+                )
+
+                rewritten_question = clean_artifacts(
+                    rewritten_question
+                ).strip()
+
+                print(f"[MemoryRewrite] {rewritten_question}")
+          
+                # ------------------------------------------------
+                # RE-RETRIEVE using rewritten standalone question
+                # ------------------------------------------------
+
+                new_retrieved = multi_query_retrieve(
+                    rewritten_question,
+                    faiss_index,
+                    k=50,
+                    all_chunks=all_chunks,
+                    query_type="FACTUAL_QA"
+                )
+
+                new_retrieved, _, _ = rerank_docs(
+                    rewritten_question,
+                    new_retrieved,
+                    top_k=8,
+                    apply_pruning=True
+                )
+
+                new_retrieved = protect_exact_matches(
+                    rewritten_question,
+                    new_retrieved,
+                    all_chunks,
+                    top_k=8
+                )
+
+                new_retrieved_texts = [
+                    d.page_content if hasattr(d, "page_content") else str(d)
+                    for d in new_retrieved
+                ]
+
+                new_context = "\n".join(new_retrieved_texts)
+
+                retry_prompt = f"""
+                Previous Conversation:
+                {history}
+
+                Use the retrieved context as the primary source of truth.
+                Use conversation history only when relevant to resolve follow-up references.
+
+                Context:
+                {new_context[:2000]}
+
+                Question:
+                {rewritten_question}
+
+                Answer:
+                """
+
+                react_ans, _ = call_llama_streaming(
+                    retry_prompt,
+                    request_id=request_id,
+                    temperature=0.0
+                )
+
+                # IMPORTANT:
+                retrieved = new_retrieved
+                retrieved_texts = new_retrieved_texts
+                post_rewrite_docs = [
+                    {
+                        "content": d.page_content if hasattr(d, "page_content") else str(d),
+                        "metadata": getattr(d, "metadata", {})
+                    }
+                    for d in new_retrieved
+                    ]
+
+                llm_calls += 2
         else:
             react_ans, model_used, _, _, _, _, react_calls, _ = react_agent(
-    question,
-    faiss_index,
-    query_type,
-    all_chunks,
-    request_id,
-    recall_score,
-    memory_context=get_memory_context(state.get("session_id", ""))
-)
- 
-        react_ans = clean_artifacts(react_ans).strip().strip('"').strip("'")
-        # react_ans = clean_reasoning_answer(react_ans, question)
+                original_q,
+                faiss_index,
+                query_type,
+                all_chunks,
+                request_id,
+                recall_score,
+            
+                memory_context=memory_context
+            )
+        print("\n[DEBUG RAW LLM OUTPUT]")
+        print(f"type={type(react_ans)}")
+        print(f"value={repr(react_ans)}")
+
+   
+        if react_ans is None:
+            print("[ERROR] react_ans is None")
+            react_ans = ""
+
+        react_ans = clean_artifacts(
+            str(react_ans)
+        ).strip().strip('"').strip("'")
         print(f"[QA] Answer: '{react_ans[:60]}'")
 
-        # FIX 2 — Short answer bypass: skip for VERIFICATION_QA
         words         = react_ans.split()
         content_words = [w for w in words if len(w) > 2 and not w.isdigit()]
 
-     
         print(f"[DEBUG] react_ans before refusal check: repr={repr(react_ans)}")
 
-        refusal_phrases = [
-            "not present",
-            "not mentioned",
-            "not available",
-            "no information",
-            "cannot find",
-            "not in the document",
-            "cannotanswer"
-        ]
 
+        is_refusal_detected = any(
+            p in react_ans.lower()
+            for p in refusal_phrases
+        )
 
-       
-  
-        # ============================================================
-        # 🔥 UNIFIED DECISION LAYER (FINAL CLEAN VERSION)
-        # ============================================================
+        weak_retrieval = (
+            recall_score < 85
+            and grounding_now < 35
+        )
 
-       
+        if is_refusal_detected and weak_retrieval:
 
-        # Step 1: Early failure check (MUST be before everything)
-        # 🔥 Refusal detection (keep this as-is)
-        if any(p in react_ans.lower() for p in refusal_phrases):
             print("[QA] ⚠️ Refusal detected")
-            qa_time = time.time() - qa_start_t
-            # state["answer"] = "This information is not present in the document."
-            state["answer"] = "CANNOTANSWER"
-            _write_metrics(state, "not_found", "not_found",
-                        75.0, 0.75, retrieval_score, context_precision,
-                        recall_score, llm_calls, retrieved, qa_time)
-            return state
 
+            force_not_found = True
 
-        # 🔥 Compute grounding BEFORE decisions
+            answer = "This information is not present in the document."
+            react_ans = answer
+            state["answer"] = answer
+
+            decision_type = "not_found"
+
+            grounding = 0.0
+            confidence = 0.0
+
         grounding_score = compute_answer_grounding(react_ans, retrieved_texts, question)
+        semantic_ground = semantic_similarity(
+    react_ans,
+    retrieved_texts
+)
+        print(
+    f"[Grounding Fusion] "
+    f"lexical={grounding_score:.3f} "
+    f"semantic={semantic_ground:.3f} "
+    f"recall={recall_score:.1f}"
+)
+      
+        if force_not_found:
 
+            answer = "This information is not present in the document."
+            decision_type = "not_found"
 
-        # ============================================================
-        # 🔥 FINAL UNIFIED DECISION LAYER
-        # ============================================================
-
-        # Step 1: Early failure check
-        if not react_ans or react_ans.strip() == "":
-            # answer = "This information is not present in the document."
-            answer = "CANNOTANSWER"
+        elif not react_ans or react_ans.strip() == "":
+            answer        = "This information is not present in the document."
             decision_type = "empty_answer"
 
         else:
-            # --------------------------------------------------------
-            # 🔹 VERIFICATION_QA
-            # --------------------------------------------------------
             if query_type == "VERIFICATION_QA":
+                normalized = react_ans.strip().lower()
 
-                # normalize to Yes/No
-                if react_ans.lower() not in ["yes", "no"]:
-                    react_ans = "Yes" if recall_score >= 50 else "No"
-
-                ans_words = len(react_ans.strip().split())
-
-                if ans_words <= 3:
-                    if recall_score >= 40:
-                        answer = react_ans
-                        decision_type = "accepted"
-                    else:
-                        # answer = "This information is not present in the document."
-                        answer = "CANNOTANSWER"
-                        decision_type = "weak_short"
-
-                elif grounding_score >= 60 and recall_score >= 40:
-                    answer = react_ans
+                if recall_score >= 40:
+                    answer        = react_ans
                     decision_type = "accepted"
-
                 else:
-                    # answer = "This information is not present in the document."
-                    answer = "CANNOTANSWER"
-                    decision_type = "verification_failed"
-
-            # --------------------------------------------------------
-            # 🔹 FACTUAL_QA
-            # --------------------------------------------------------
-            elif query_type == "FACTUAL_QA":
-
-                if grounding_score < 50:
-                    # answer = "This information is not present in the document."
-                    answer = "CANNOTANSWER"
-                    decision_type = "low_grounding"
-                else:
-                    answer = react_ans
-                    decision_type = "accepted"
-
-            # --------------------------------------------------------
-            # 🔹 GENERAL FALLBACK
-            # --------------------------------------------------------
-            else:
-
-                ans_words = len(react_ans.strip().split())
-
-                if recall_score < 25:
-                    # answer = "This information is not present in the document."
-                    answer = "CANNOTANSWER"
+                    answer        = "This information is not present in the document."
                     decision_type = "low_recall"
 
-                elif ans_words <= 3:
-                    if recall_score >= 40:
-                        answer = react_ans
-                        decision_type = "accepted"
-                    else:
-                        # answer = "This information is not present in the document."
-                        answer = "CANNOTANSWER"
-                        decision_type = "weak_short"
+       
+            elif query_type == "FACTUAL_QA":
 
-                elif grounding_score < 40 and recall_score < 40:
-                    # answer = "This information is not present in the document."
-                    answer = "CANNOTANSWER"
-                    decision_type = "low_grounding"
+                allow_memory_override = (
+                    rewrite_triggered
+                    and recall_score >= 80
+                    and confidence >= 0.45
+                )
 
-                elif grounding_score >= 50 or recall_score >= 50:
+                grounded_enough = (
+                    grounding_score >= 45
+                    or semantic_ground >= 0.45
+                    or (
+                        recall_score >= 80
+                        and semantic_ground >= 0.30
+                    )
+                    or allow_memory_override
+                )
+
+                if grounded_enough:
                     answer = react_ans
                     decision_type = "accepted"
 
+                # FIX 1:
+                # Do NOT overwrite correct answers when recall is strong.
+                elif recall_score >= 85 and len(react_ans.strip()) > 15:
+                    print("[Guard] High recall answer preserved")
+                    answer = react_ans
+                    decision_type = "accepted_high_recall"
+
                 else:
-                    # answer = "This information is not present in the document."
-                    answer = "CANNOTANSWER"
+                    answer = "This information is not present in the document."
+                    decision_type = "low_grounding"
+
+            else:
+                ans_words = len(react_ans.strip().split())
+                if recall_score < 25:
+                    answer        = "This information is not present in the document."
+                    decision_type = "low_recall"
+                elif ans_words <= 3:
+                    if recall_score >= 40:
+                        answer        = react_ans
+                        decision_type = "accepted"
+                    else:
+                        answer        = "This information is not present in the document."
+                        decision_type = "weak_short"
+                elif grounding_score < 40 and recall_score < 40:
+                    answer        = "This information is not present in the document."
+                    decision_type = "low_grounding"
+                elif grounding_score >= 50 or recall_score >= 50:
+                    answer        = react_ans
+                    decision_type = "accepted"
+                else:
+                    answer        = "This information is not present in the document."
                     decision_type = "uncertain"
-    # ── STEP 5: METRICS ───────────────────────────────────────
-    grounding  = compute_answer_grounding(answer, retrieved_texts, question)
-    confidence = round(grounding / 100, 3)
+
+    if query_type == "VERIFICATION_QA":
+        grounding = recall_score
+    else:
+        grounding = max(grounding_score, semantic_ground * 100)
+
+    confidence = compute_confidence(
+    reranker_top=reranker_top,
+    recall_score=recall_score,
+    answer=answer,
+    context_chunks=retrieved_texts,
+    question=question
+)
     qa_time    = time.time() - qa_start_t
 
     print(f"[QA] Done in {qa_time:.1f}s | model={model_used} | "
@@ -747,11 +1064,59 @@ def node_qa(state: DocState) -> DocState:
     else:
         answer = normalize_answer(answer)
 
+
     state["answer"] = answer
+    state["rewrite_triggered"] = rewrite_triggered
+    state["rewritten_query"] = rewritten_question
+    state["pre_rewrite_docs"] = pre_rewrite_docs
+    state["post_rewrite_docs"] = post_rewrite_docs
     _write_metrics(state, model_used, decision_type, grounding,
                    confidence, retrieval_score, context_precision,
                    recall_score, llm_calls, retrieved, qa_time)
+
+    if (
+        not force_not_found
+        and decision_type.startswith("accepted")
+        and (
+            grounding >= 50
+            or recall_score >= 90
+        )
+    ):
+        print(f"[DEBUG] SAVE session_id = {session_id}")
+        save_to_memory(
+            session_id=session_id,
+            question=original_q,
+            answer=answer,
+            query_type=query_type,
+            grounding=grounding,
+            confidence=confidence,
+            retrieved_chunks=retrieved_texts[:8]
+        )
+    else:
+
+        # Save conversational anchor only
+        # Do NOT save hallucinated/refused answers
+
+        save_to_memory(
+        session_id=session_id,
+        question=original_q,
+        answer="",
+        query_type=query_type,
+        grounding=grounding,
+        confidence=confidence,
+        retrieved_chunks=retrieved_texts[:8]
+)
+
+        print("[Memory] Saved question-only context")
+        print("\n[DEBUG] Saving retrieved chunks:\n")
+
+        for i, ch in enumerate(retrieved_texts[:8]):
+            print(f"\n--- SAVED CHUNK {i} ---\n")
+            print(ch[:300])
+
+        print("[Memory] ✅ Saved trusted answer")
     return state
+
 def node_validate(state: DocState) -> DocState:
     answer = state["answer"]
     retry  = state.get("retry_count", 0)
@@ -793,8 +1158,7 @@ def node_validate(state: DocState) -> DocState:
     m["e2e_latency_sec"] = round(total_time, 2)
     m["tps"]             = tps
 
-    # ❌ REMOVED doc_type (no longer used anywhere)
-    # m["doc_type"] = state.get("doc_type", "general")
+   
 
     # ── Context info ─────────────────────────────────────────
     m["query_type"]     = state.get("query_type", "")
@@ -840,14 +1204,41 @@ def _write_metrics(state, model_used, decision_type, grounding,
     m["llm_calls"]         = llm_calls
     m["model_used"]        = model_used
     m["chunks_retrieved"]  = len(retrieved)
-    m["retrieved_docs"] = retrieved
+    m["retrieved_docs"] = [
+        {
+            "content": d.page_content if hasattr(d, "page_content") else str(d),
+            "metadata": getattr(d, "metadata", {})
+        }
+        for d in retrieved
+    ]
     m["type"]              = "qa"
     m["decision_type"]     = decision_type
     m["confidence_raw"]    = round(confidence, 4)
+    m["rewrite_triggered"] = state.get(
+    "rewrite_triggered",
+    False
+)
+
+    m["rewritten_query"] = state.get(
+        "rewritten_query",
+        ""
+    )
+
+    m["pre_rewrite_docs"] = state.get(
+        "pre_rewrite_docs",
+        []
+    )
+
+    m["post_rewrite_docs"] = state.get(
+        "post_rewrite_docs",
+        []
+    )
 
 
 
 def run_pipeline(question: str, pdf_path: str, session_id: str):
+    if not session_id:
+        session_id = "default_session"
     state = {
         "question": question,
         "pdf_path": pdf_path,
@@ -867,26 +1258,6 @@ def run_pipeline(question: str, pdf_path: str, session_id: str):
     state["all_chunks"] = state.get("chunks", [])
 
     return state
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
