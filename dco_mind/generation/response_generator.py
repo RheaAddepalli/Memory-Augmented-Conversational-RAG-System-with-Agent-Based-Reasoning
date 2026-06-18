@@ -17,12 +17,20 @@ MERGE_PROMPT = (
     "Final merged summary:"
 )
 
-
+# ── Universal QA ─────────────────────────────────────────────
+# One prompt handles all answer shapes:
+# - Single fact / name / date
+# - List of multiple items
+# - Yes/No verification with evidence
+# - Explanation or reasoning
+# The LLM determines the answer shape from the context itself.
+# No routing, no query-type branching.
 
 QA_PROMPT = (
     "Previous Conversation:\n{memory_context}\n\n"
     "Context:\n{context}\n\n"
     "Question: {question}\n\n"
+    "Start your response with the answer directly.\n"
     "Instructions:\n"
     "- Interpret the current question in light of the previous conversation when relevant.\n"
     "- Use retrieved context as the authoritative source of factual information.\n"
@@ -34,7 +42,7 @@ QA_PROMPT = (
     "- ONLY answer the user's question.\n"
     "- If the context contains multiple questions, ignore them completely.\n"
 
-    "- Answer using ONLY the context above. Never guess or infer.\n"
+    "- Answer using ONLY the context above. If the answer is implied by the context, infer it carefully from the evidence.Do not add unsupported assumptions.\n"
     "- Read the context carefully and determine what shape the answer should be:\n"
     "  * If the answer is a single name, term, date, or short phrase — return it exactly as written in the context.\n"
     "  * If the answer requires multiple items — number each one clearly.\n"
@@ -46,6 +54,8 @@ QA_PROMPT = (
     "- For attribution questions (who said/proposed/found X) — find the exact sentence where that action is attributed. Return only the name from that sentence.\n"
     "- When extracting names or titles, prefer the most informative phrase that describes the entity, not numbering labels or identifiers.\n"
     "- If multiple parts appear together (e.g., label + description), choose the descriptive part.\n"
+    "- For comparison questions (above, below, higher, lower, greater, less), identify the comparison target mentioned in the question and compare it carefully with the relevant value from the context before answering.\n"
+    "- Use the actual values found in the context to perform the comparison logically and ensure the final answer is mathematically consistent.\n"
 
     "- If the information is not present in the context — say exactly: NOT PRESENT\n\n"
     "Answer:"
@@ -97,10 +107,6 @@ If more context needed:
 Thought: <why you need more>
 Action: search_more
 Input: <specific search query>"""
-
-
-
-
 
 
 
