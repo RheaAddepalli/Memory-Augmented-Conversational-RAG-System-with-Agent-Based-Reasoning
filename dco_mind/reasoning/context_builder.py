@@ -6,8 +6,6 @@ from dco_mind.utils.helpers import _get_dynamic_stopwords
 from numpy import dot
 from numpy.linalg import norm
 
-
-
 _UNICODE_MAP = {
     '\u2265': '>=',   # ≥
     '\u2264': '<=',   # ≤
@@ -232,8 +230,8 @@ def classify_from_context(question: str, chunks: list) -> str:
     if list_chunk_count >= 2:
         return "MULTIPART_QA"
 
-    if chunks_with_hits >= 3 and not has_short_span:
-        return "MULTIPART_QA"
+    # if chunks_with_hits >= 3 and not has_short_span:
+    #     return "MULTIPART_QA"
 
     if chunks_with_hits <= 2 and has_short_span:
         return "FACTUAL_QA"
@@ -280,6 +278,24 @@ def normalize_answer(answer: str) -> str:
     answer = answer.strip()
     answer = re.sub(r'\s{2,}', ' ', answer)
     return answer
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
