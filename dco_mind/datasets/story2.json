@@ -1,0 +1,395 @@
+[
+{
+  "id": "1",
+  "document": "doctor_dolittle.pdf",
+  "question": "What town did Doctor Dolittle live in?",
+  "gold_answer": "Doctor Dolittle lived in a little town called Puddleby-on-the-Marsh, where everyone in the town knew him well by sight and admired him.",
+  "gold_chunks": [
+    "He lived in a little town called, Puddleby-on-the-Marsh. All the folks, young and old, knew him well by sight. And whenever he walked down the street in his high hat everyone would say, 'There goes the Doctor!—He's a clever man.'"
+  ],
+  "followup_question": false,
+  "hallucination_test": false,
+  "query_type": "FACTUAL_QA"
+},
+{
+  "id": "1_1",
+  "document": "doctor_dolittle.pdf",
+  "depends_on": "1",
+  "question": "What kind of place was it?",
+  "gold_answer": "Puddleby-on-the-Marsh was described as a little town where all the people knew Doctor Dolittle well by sight.",
+  "gold_chunks": [
+    "He lived in a little town called, Puddleby-on-the-Marsh. All the folks, young and old, knew him well by sight."
+  ],
+  "query_rewrite": "What kind of place was Puddleby-on-the-Marsh?",
+  "followup_question": true,
+  "hallucination_test": false,
+  "query_type": "FACTUAL_QA"
+},
+{
+  "id": "2",
+  "document": "doctor_dolittle.pdf",
+  "question": "What were Doctor Dolittle's five favorite pets?",
+  "gold_answer": "Doctor Dolittle's favorite pets were Dab-Dab the duck, Jip the dog, Gub-Gub the baby pig, Polynesia the parrot, and the owl Too-Too.",
+  "gold_chunks": [
+    "He was very fond of animals and kept many kinds of pets. Besides the gold-fish in the pond at the bottom of his garden, he had rabbits in the pantry, white mice in his piano, a squirrel in the linen closet and a hedgehog in the cellar. He had a cow with a calf too, and an old lame horse-twenty-five years of age—and chickens, and pigeons, and two lambs, and many other animals. But his favorite pets were Dab-Dab the duck, Jip the dog, Gub-Gub the baby pig, Polynesia the parrot, and the owl Too-Too."
+  ],
+  "followup_question": false,
+  "hallucination_test": false,
+  "query_type": "MULTIPART_QA"
+},
+{
+    "id": "3",
+    "document": "doctor_dolittle.pdf",
+    "question": "Who first suggested that Doctor Dolittle should become an animal doctor?",
+    "gold_answer": "The Cat's-meat-Man",
+    "gold_chunks": [
+      "Why don't you give up being a people's doctor, and be an animal-doctor? asked the Cat's-meat-Man who had come to see him with a stomach-ache."
+    ],
+    "followup_question": false,
+    "hallucination_test": false,
+    "query_type": "FACTUAL_QA"
+  },
+  {
+  "id": "3_1",
+  "document": "doctor_dolittle.pdf",
+  "depends_on": "3",
+  "question": "Why did he visit the Doctor?",
+  "gold_answer": "The Cat's-meat-Man visited Doctor Dolittle because he had a stomach-ache.",
+  "gold_chunks": [
+    "Why don't you give up being a people's doctor, and be an animal-doctor? asked the Cat's-meat-Man who had come to see him with a stomach-ache."
+  ],
+  "query_rewrite": "Why did the Cat's-meat-Man visit Doctor Dolittle?",
+  "followup_question": true,
+  "hallucination_test": false,
+  "query_type": "FACTUAL_QA"
+},
+{
+  "id": "4",
+  "document": "doctor_dolittle.pdf",
+  "question": "What did the plow-horse actually need instead of the treatment the vet was giving him?",
+  "gold_answer": "The plow-horse needed spectacles because he was going blind in one eye, but the vet never examined his eyes and kept giving him large pills instead.",
+  "gold_chunks": [
+    "What I need is SPECTACLES. I am going blind in one eye. There's no reason why horses shouldn't wear glasses, the same as people. But that stupid man over the hill never even looked at my eyes. He kept on giving me big pills."
+  ],
+  "followup_question": false,
+  "hallucination_test": false,
+  "query_type": "FACTUAL_QA"
+},
+{
+  "id": "4_1",
+  "document": "doctor_dolittle.pdf",
+  "depends_on": "4",
+  "question": "What color did he want them to be and why?",
+  "gold_answer": "The horse wanted the spectacles to be green so they would keep the sun out of his eyes while he was plowing the Fifty-Acre Field.",
+  "gold_chunks": [
+    "I would like a pair like yours, said the horse—only green. They'll keep the sun out of my eyes while I'm plowing the Fifty-Acre Field."
+  ],
+  "query_rewrite": "What color spectacles did the plow-horse want and why?",
+  "followup_question": true,
+  "hallucination_test": false,
+  "query_type": "FACTUAL_QA"
+},
+  {
+    "id": "5",
+    "document": "doctor_dolittle.pdf",
+    "question": "Why did Sarah Dolittle leave the Doctor's house?",
+    "gold_answer": "She left because the Doctor refused to send the crocodile away",
+    "gold_chunks": [
+      "I tell you I WILL NOT have him around. He eats the linoleum. If you don't send him away this minute I'll go and get married. All right, said the Doctor, go and get married. So Sarah Dolittle packed up her things and went off."
+    ],
+    "followup_question": false,
+    "hallucination_test": false,
+    "query_type": "FACTUAL_QA"
+  },
+  {
+  "id": "5_1",
+  "document": "doctor_dolittle.pdf",
+  "depends_on": "5",
+  "question": "What did it eat that made Sarah so angry?",
+  "gold_answer": "The crocodile ate the linoleum in the Doctor's house, which made Sarah Dolittle furious and caused her to leave.",
+  "gold_chunks": [
+    "I tell you I WILL NOT have him around, said Sarah. He eats the linoleum. If you don't send him away this minute I'll—I'll go and get married!",
+    "So Sarah Dolittle packed up her things and went off; and the Doctor was left all alone with his animal family."
+  ],
+  "query_rewrite": "What did the crocodile eat that made Sarah Dolittle angry?",
+  "followup_question": true,
+  "hallucination_test": false,
+  "query_type": "FACTUAL_QA"
+},
+  {
+    "id": "6",
+    "document": "doctor_dolittle.pdf",
+    "question": "What jobs were assigned to each animal to manage the household?",
+    "gold_answer": "Chee-Chee cooked and mended, Jip swept floors, Dab-Dab dusted and made beds, Too-Too kept accounts, the pig did gardening, and Polynesia was housekeeper and laundress",
+    "gold_chunks": [
+      "the monkey, Chee-Chee, was to do the cooking and mending; the dog was to sweep the floors; the duck was to dust and make the beds; the owl, Too-Too, was to keep the accounts, and the pig was to do the gardening. They made Polynesia, the parrot, housekeeper and laundress, because she was the oldest."
+    ],
+    "followup_question": false,
+    "hallucination_test": false,
+    "query_type": "MULTIPART_QA"
+  },
+  {
+  "id": "6_1",
+  "document": "doctor_dolittle.pdf",
+  "depends_on": "6",
+  "question": "Who among them was the oldest?",
+  "gold_answer": "Among all the animals assigned household duties, Polynesia the parrot was the oldest, which is why she was chosen as housekeeper and laundress.",
+  "gold_chunks": [
+    "So it was agreed that the monkey, Chee-Chee, was to do the cooking and mending; the dog was to sweep the floors; the duck was to dust and make the beds; the owl, Too-Too, was to keep the accounts, and the pig was to do the gardening.",
+    "They made Polynesia, the parrot, housekeeper and laundress, because she was the oldest."
+  ],
+  "query_rewrite": "Which animal assigned household duties was the oldest?",
+  "followup_question": true,
+  "hallucination_test": false,
+  "query_type": "FACTUAL_QA"
+},
+{
+  "id": "7",
+  "document": "doctor_dolittle.pdf",
+  "question": "What was the message Chee-Chee received from Africa?",
+  "gold_answer": "Chee-Chee received a message from his cousin in Africa saying that a terrible sickness was spreading among the monkeys, many were dying in hundreds, and they were begging Doctor Dolittle to come to Africa and stop the disease.",
+  "gold_chunks": [
+    "Doctor! cried Chee-Chee, I've just had a message from a cousin of mine in Africa. There is a terrible sickness among the monkeys out there. They are all catching it—and they are dying in hundreds. They have heard of you, and beg you to come to Africa to stop the sickness.",
+    "Who brought the message? asked the Doctor, taking off his spectacles and laying down his book. A swallow, said Chee-Chee."
+  ],
+  "followup_question": false,
+  "hallucination_test": false,
+  "query_type": "FACTUAL_QA"
+},
+{
+  "id": "7_1",
+  "document": "doctor_dolittle.pdf",
+  "depends_on": "7",
+  "question": "Who brought it?",
+  "gold_answer": "A swallow brought the message from Africa to Chee-Chee and Doctor Dolittle.",
+  "gold_chunks": [
+    "Who brought the message? asked the Doctor, taking off his spectacles and laying down his book.",
+    "A swallow, said Chee-Chee. She is outside on the rain-butt."
+  ],
+  "query_rewrite": "Who brought the message from Africa?",
+  "followup_question": true,
+  "hallucination_test": false,
+  "query_type": "FACTUAL_QA"
+},
+{
+  "id": "8",
+  "document": "doctor_dolittle.pdf",
+  "question": "Did the Doctor have enough money to buy tickets to Africa?",
+  "gold_answer": "No, Doctor Dolittle did not have enough money to buy tickets to Africa because the money-box was completely empty and did not contain even a single penny.",
+  "gold_chunks": [
+    "I would gladly go to Africa—especially in this bitter weather. But I'm afraid we haven't money enough to buy the tickets. Get me the money-box, Chee-Chee.",
+    "So the monkey climbed up and got it off the top shelf of the dresser. There was nothing in it—not one single penny!"
+  ],
+  "followup_question": false,
+  "hallucination_test": false,
+  "query_type": "VERIFICATION_QA"
+},
+{
+  "id": "9",
+  "document": "doctor_dolittle.pdf",
+  "question": "Did the white mouse have permission to be on the ship?",
+  "gold_answer": "No, the white mouse did not have permission to be on the ship because it had been told to stay behind in Puddleby, but it secretly hid in the baggage so it could travel to Africa.",
+  "gold_chunks": [
+    "You were told to stay behind in Puddleby.",
+    "I didn't want to be left behind, said the mouse. I wanted to see what Africa was like. So I hid in the baggage and was brought on to the ship with the hard-tack."
+  ],
+  "followup_question": false,
+  "hallucination_test": false,
+  "query_type": "VERIFICATION_QA"
+},
+{
+  "id": "9_1",
+  "document": "doctor_dolittle.pdf",
+  "depends_on": "9",
+  "question": "How did it survive when that happened?",
+  "gold_answer": "The white mouse survived the ship sinking by climbing into Doctor Dolittle's floating hat after becoming exhausted while swimming in the water.",
+  "gold_chunks": [
+    "I swam as long as I could, but I soon got all exhausted and thought I was going to sink.",
+    "And then, just at that moment, the old man's hat came floating by; and I got into it because I did not want to be drowned."
+  ],
+  "query_rewrite": "How did the white mouse survive when the ship sank?",
+  "followup_question": true,
+  "hallucination_test": false,
+  "query_type": "FACTUAL_QA"
+},
+{
+  "id": "10",
+  "document": "doctor_dolittle.pdf",
+  "question": "What happened to the Doctor's ship during the storm?",
+  "gold_answer": "During the storm, the Doctor's ship struck a rock, developed a large hole in the bottom, began filling with water, and eventually sank and broke apart on the rocks.",
+  "gold_chunks": [
+    "Then a great storm came up, with thunder and lightning. The wind howled; the rain came down in torrents; and the waves got so high they splashed right over the boat.",
+    "So Dab-Dab dived right down under the waves. And when she came up she said they had struck a rock; there was a big hole in the bottom of the ship; the water was coming in; and they were sinking fast.",
+    "But the ship was no good any more—with the big hole in the bottom; and presently the rough sea beat it to pieces on the rocks and the timbers floated away."
+  ],
+  "followup_question": false,
+  "hallucination_test": false,
+  "query_type": "MULTIPART_QA"
+},
+{
+  "id": "10_1",
+  "document": "doctor_dolittle.pdf",
+  "depends_on": "10",
+  "question": "How did they survive after that happened?",
+  "gold_answer": "The animals survived by swimming, flying, and using a rope tied to a palm tree as a life-line so those who could not swim could safely reach the shore.",
+  "gold_chunks": [
+    "Get the rope! said Polynesia. I told you it would come in handy.",
+    "Take this end of the rope, fly to the shore and tie it on to a palm-tree; and we'll hold the other end on the ship here. Then those that can't swim must climb along the rope till they reach the land. That's what you call a 'life-line.'",
+    "So they all got safely to the shore—some swimming, some flying."
+  ],
+  "query_rewrite": "How did the animals survive after the ship sank during the storm?",
+  "followup_question": true,
+  "hallucination_test": false,
+  "query_type": "MULTIPART_QA"
+},
+{
+  "id": "11",
+  "document": "doctor_dolittle.pdf",
+  "question": "How did the monkeys help the Doctor and his animals cross the river to escape the King's men?",
+  "gold_answer": "The monkeys helped Doctor Dolittle and his animals escape by forming a living bridge across the river, holding each other's hands and feet so the group could safely cross.",
+  "gold_chunks": [
+    "when he looked back at the cliff, there, hanging across the river, was a bridge all ready for him—made of living monkeys!",
+    "For while his back was turned, the monkeys—quick as a flash—had made themselves into a bridge, just by holding hands and feet."
+  ],
+  "followup_question": false,
+  "hallucination_test": false,
+  "query_type": "FACTUAL_QA"
+},
+{
+  "id": "12",
+  "document": "doctor_dolittle.pdf",
+  "question": "Why did the porpoises bring onions to the Doctor's ship?",
+  "gold_answer": "The porpoises brought onions because Polynesia told them the Doctor and his animals had run short of onions during their journey to Africa.",
+  "gold_chunks": [
+    "And when they heard that it was, they asked the parrot if the Doctor wanted anything for his journey.",
+    "And Polynesia said, 'Yes. We have run short of onions.'",
+    "'There is an island not far from here,' said the porpoises, 'where the wild onions grow tall and strong.'",
+    "So the porpoises dashed away through the sea. And very soon the parrot saw them again, coming up behind, dragging the onions through the waves in big nets made of seaweed."
+  ],
+  "followup_question": false,
+  "hallucination_test": false,
+  "query_type": "FACTUAL_QA"
+},
+{
+  "id": "12_1",
+  "document": "doctor_dolittle.pdf",
+  "depends_on": "12",
+  "question": "How did they carry them?",
+  "gold_answer": "The porpoises carried the onions through the waves in large nets made of seaweed.",
+  "gold_chunks": [
+    "So the porpoises dashed away through the sea. And very soon the parrot saw them again, coming up behind, dragging the onions through the waves in big nets made of seaweed."
+  ],
+  "query_rewrite": "How did the porpoises carry the onions to the Doctor's ship?",
+  "followup_question": true,
+  "hallucination_test": false,
+  "query_type": "FACTUAL_QA"
+},
+{
+  "id": "13",
+  "document": "doctor_dolittle.pdf",
+  "question": "Why did Polynesia become emotional after reaching Africa?",
+  "gold_answer": "Polynesia became emotional because Africa was her homeland and she was happy to return after one hundred and sixty-nine years away.",
+  "gold_chunks": [
+    "'Dear old Africa!' sighed Polynesia. 'It's good to get back. Just think—it'll be a hundred and sixty-nine years to-morrow since I was here!'",
+    "And the others noticed she had tears in her eyes—she was so pleased to see her country once again."
+  ],
+  "followup_question": false,
+  "hallucination_test": false,
+  "query_type": "FACTUAL_QA"
+},
+{
+  "id": "13_1",
+  "document": "doctor_dolittle.pdf",
+  "depends_on": "13",
+  "question": "How long had she been away?",
+  "gold_answer": "Polynesia had been away from Africa for one hundred and sixty-nine years.",
+  "gold_chunks": [
+    "'Just think—it'll be a hundred and sixty-nine years to-morrow since I was here!'"
+  ],
+  "query_rewrite": "How long had Polynesia been away from Africa?",
+  "followup_question": true,
+  "hallucination_test": false,
+  "query_type": "FACTUAL_QA"
+},
+{
+  "id": "14",
+  "document": "doctor_dolittle.pdf",
+  "question": "What weapon did the Doctor use to fight the King's soldiers?",
+  "gold_answer": "NOT_PRESENT",
+  "gold_chunks": [],
+  "followup_question": false,
+  "hallucination_test": true,
+  "query_type": "FACTUAL_QA"
+},
+{
+  "id": "15",
+  "document": "doctor_dolittle.pdf",
+  "question": "What was the name of Chapter Forty in the story?",
+  "gold_answer": "NOT_PRESENT",
+  "gold_chunks": [],
+  "followup_question": false,
+  "hallucination_test": true,
+  "query_type": "FACTUAL_QA"
+},
+{
+  "id": "16",
+  "document": "doctor_dolittle.pdf",
+  "question": "Which animal taught the Doctor how to build ships and navigate the sea?",
+  "gold_answer": "NOT_PRESENT",
+  "gold_chunks": [],
+  "followup_question": false,
+  "hallucination_test": true,
+  "query_type": "FACTUAL_QA"
+},
+{
+  "id": "17",
+  "document": "doctor_dolittle.pdf",
+  "question": "What food and medicine did the Doctor give the sick monkeys in Africa?",
+  "gold_answer": "NOT_PRESENT",
+  "gold_chunks": [],
+  "followup_question": false,
+  "hallucination_test": true,
+  "query_type": "MULTIPART_QA"
+},
+{
+  "id": "18",
+  "document": "doctor_dolittle.pdf",
+  "question": "What two treasures did the Doctor discover in the African jungle?",
+  "gold_answer": "NOT_PRESENT",
+  "gold_chunks": [],
+  "followup_question": false,
+  "hallucination_test": true,
+  "query_type": "MULTIPART_QA"
+},
+{
+  "id": "19",
+  "document": "doctor_dolittle.pdf",
+  "question": "Did the Doctor use a machine to translate animal languages?",
+  "gold_answer": "NOT_PRESENT",
+  "gold_chunks": [],
+  "followup_question": false,
+  "hallucination_test": true,
+  "query_type": "VERIFICATION_QA"
+},
+{
+  "id": "20",
+  "document": "doctor_dolittle.pdf",
+  "question": "Was Sarah Dolittle the Doctor's wife?",
+  "gold_answer": "NOT_PRESENT",
+  "gold_chunks": [],
+  "followup_question": false,
+  "hallucination_test": true,
+  "query_type": "VERIFICATION_QA"
+}
+
+
+]
+
+
+
+
+
+ 
+ 
+ 
+ 

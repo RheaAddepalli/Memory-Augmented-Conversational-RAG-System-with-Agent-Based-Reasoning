@@ -1,0 +1,392 @@
+
+
+
+[
+  {
+    "id": "1",
+    "document": "resume.pdf",
+    "question": "What is her name?",
+    "gold_answer": "RHEA ADDEPALLI",
+    "gold_chunks": ["RHEA ADDEPALLI"],
+    "followup_question": false,
+    "hallucination_test": false,
+    "query_type": "FACTUAL_QA"
+  },
+  {
+  "id": "1_1",
+  "document": "resume.pdf",
+  "depends_on": "1",
+  "question": "What letter does it start with?",
+  "gold_answer": "R",
+  "gold_chunks": [
+    "RHEA ADDEPALLI"
+  ],
+  "query_rewrite": "What letter does the candidate's name start with?",
+  "followup_question": true,
+  "hallucination_test": false,
+  "query_type": "FACTUAL_QA"
+},
+  {
+    "id": "2",
+    "document": "resume.pdf",
+    "question": "What is her CGPA?",
+    "gold_answer": "9.1",
+    "gold_chunks": [
+    "Bachelor of Technology (B.Tech) in Computer Science and Engineering in AIML",       
+    "Alliance University, Bengaluru | Year of Graduation: 2026 | CGPA: 9.1 | Backlogs : None"
+    ],
+    "followup_question": false,
+    "hallucination_test": false,
+    "query_type": "FACTUAL_QA"
+  },
+  {
+    "id": "2_1",
+    "document": "resume.pdf",
+    "depends_on": "2",
+    "question": "Is it above 9?",
+    "gold_answer": "Yes",
+    "gold_chunks": [
+      "Alliance University, Bengaluru | Year of Graduation: 2026 | CGPA: 9.1 | Backlogs : None"
+    ],
+    "query_rewrite": "Is the candidate's CGPA above 9?",
+    "followup_question": true,
+    "hallucination_test": false,
+    "query_type": "VERIFICATION_QA"
+  },
+  {
+    "id": "3",
+    "document": "resume.pdf",
+    "question": "Did she use agents?",
+    "gold_answer": "Yes",
+    "gold_chunks": [
+      "GenAI DocBot - [Python, FAISS, LLMs, NLP, Agents, RAPTOR, RAG]",
+      "Implemented ReAct-based agent reasoning for multi-step answer generation and hallucination reduction."
+    ],
+    "followup_question": false,
+    "hallucination_test": false,
+    "query_type": "VERIFICATION_QA"
+  },
+  {
+    "id": "3_1",
+    "document": "resume.pdf",
+    "depends_on": "3",
+    "question": "In which project did she use them?",
+    "gold_answer": "GenAI DocBot",
+    "gold_chunks": [
+    "GenAI DocBot - [Python, FAISS, LLMs, NLP, Agents, RAPTOR, RAG]",
+    "Implemented ReAct-based agent reasoning for multi-step answer generation and hallucination reduction."
+    ],
+    "query_rewrite": "In which project did she use agents?",
+    "followup_question": true,
+    "hallucination_test": false,
+    "query_type": "FACTUAL_QA"
+  },
+  {
+  "id": "4",
+  "document": "resume.pdf",
+  "question": "Where did she complete Data Structures certification?",
+  "gold_answer": "UC San Deigo (Coursera)",
+  "gold_chunks": [
+    "5. Data Structures - UC San Deigo(Coursera) | 2024 - Link"
+  ],
+  "followup_question": false,
+  "hallucination_test": false,
+  "query_type": "FACTUAL_QA"
+},
+{
+  "id": "4_1",
+  "document": "resume.pdf",
+  "depends_on": "4",
+  "question": "In which year did she get it?",
+  "gold_answer": "2024",
+  "gold_chunks": [
+    "5. Data Structures - UC San Deigo(Coursera) | 2024 - Link"
+  ],
+  "query_rewrite": "In which year did she complete the Data Structures certification?",
+  "followup_question": true,
+  "hallucination_test": false,
+  "query_type": "FACTUAL_QA"
+},
+  {
+    "id": "5",
+    "document": "resume.pdf",
+    "question": "List all the certifications done by the candidate.",
+    "gold_answer": "Cloud Infrastructure Certified Generative AI Professional, Ai Foundations Associative, Introduction to Agile Development and Scrum, Fundamentals of Reinforcement Learning, Data Structures, Relational Database Design",
+    "gold_chunks": [
+      "1. Cloud Infrastructure Certified Generative AI Professional - Oracle | 2025 - Link",
+      "2. Ai Foundations Associative - Oracle | 2025 - Link",
+      "3. Introduction to Agile Development and Scrum - IBM(Coursera) | 2025 - Link",
+      "4. Fundamentals of Reinforcement Learning - University Of Alberta(Coursera) | 2025 - Link",
+      "5. Data Structures - UC San Deigo(Coursera) | 2024 - Link",
+      "6. Relational Database Design - Coursera | 2023 - Link"
+    ],
+    "followup_question": false,
+    "hallucination_test": false,
+    "query_type": "MULTIPART_QA"
+  },
+  {
+  "id": "5_1",
+  "document": "resume.pdf",
+  "depends_on": "5",
+  "question": "Which one did she list first?",
+  "gold_answer": "Cloud Infrastructure Certified Generative AI Professional",
+  "gold_chunks": [
+      "1. Cloud Infrastructure Certified Generative AI Professional - Oracle | 2025 - Link",
+      "2. Ai Foundations Associative - Oracle | 2025 - Link",
+      "3. Introduction to Agile Development and Scrum - IBM(Coursera) | 2025 - Link",
+      "4. Fundamentals of Reinforcement Learning - University Of Alberta(Coursera) | 2025 - Link",
+      "5. Data Structures - UC San Deigo(Coursera) | 2024 - Link",
+      "6. Relational Database Design - Coursera | 2023 - Link"
+  ],
+  "query_rewrite": "Which certification did she list first?",
+  "followup_question": true,
+  "hallucination_test": false,
+  "query_type": "FACTUAL_QA"
+},
+  {
+    "id": "6",
+    "document": "resume.pdf",
+    "question": "What is her tech stack?",
+    "gold_answer": "Java, Python, HTML, PyTorch, TensorFlow, Scikit-learn, NumPy, Pandas, OpenCV, YOLO, OCR, Hugging Face, SQL, RDBMS, Git, GitHub, Vs Code, Google Collab, CI/CD Pipelines, Machine Learning, Deep Learning, Reinforcement Learning, Neural Networks, XAI, GenAI",
+    "gold_chunks": [
+      "Languages: Java, Python, HTML",
+      "AIML Tools: PyTorch, TensorFlow, Scikit-learn, NumPy, Pandas, OpenCV, YOLO, OCR, Hugging Face.",
+      "Development & Collaboration Tools: SQL, RDBMS, Git, GitHub, Vs Code, Google Collab, CI/CD Pipelines.",
+      "AI Concepts: Machine Learning, Deep Learning, Reinforcement Learning, Neural Networks, XAI, GenAI."
+    ],
+    "followup_question": false,
+    "hallucination_test": false,
+    "query_type": "MULTIPART_QA"
+  },
+  {
+    "id": "7",
+    "document": "resume.pdf",
+    "question": "Did she do GenAI DocBot project?",
+    "gold_answer": "Yes",
+    "gold_chunks": [
+      "GenAI DocBot - [Python, FAISS, LLMs, NLP, Agents, RAPTOR, RAG]"
+    ],
+    "followup_question": false,
+    "hallucination_test": false,
+    "query_type": "VERIFICATION_QA"
+  },
+  {
+    "id": "7_1",
+    "document": "resume.pdf",
+    "depends_on": "7",
+    "question": "Explain about it.",
+    "gold_answer":  "Built a Multi-Input RAG system using FAISS and LLMs for document question answering, implemented ReAct-based agent reasoning for multi-step answer generation and hallucination reduction, used RAPTOR-based hierarchical summarization for improved context understanding, applied multi-query retrieval and reranking to enhance relevance, and developed evaluation metrics for benchmarking.",
+    "gold_chunks": [
+        "GenAI DocBot – [Python, FAISS, LLMs, NLP, Agents, RAPTOR, RAG]",
+        "Built a Multi-Input RAG system using FAISS and LLMs for document question answering.",
+        "Implemented ReAct-based agent reasoning for multi-step answer generation and hallucination reduction.",
+        "Used RAPTOR-based hierarchical summarization for improved context understanding.",
+        "Applied multi-query retrieval and reranking to enhance relevance.",
+        "Developed evaluation metrics (grounding, recall@k, precision) for benchmarking.",
+        "Achieved 85% answer accuracy on custom evaluation dataset."
+  ],
+    "query_rewrite": "Explain about the GenAI DocBot project.",  
+    "followup_question": true,
+    "hallucination_test": false,
+    "query_type": "MULTIPART_QA"
+  },
+  {
+    "id": "8",
+    "document": "resume.pdf",
+    "question": "What skills did she use in XAI project?",
+    "gold_answer": "LIME, CNN, NumPy, TensorFlow, FastAPI, Angular, CI/CD, Fine-Tuning",
+    "gold_chunks": [
+      "XAI Bird Classification - [LIME, CNN, NumPy, TensorFlow, FastAPI, Angular, CI/CD, Fine-Tuning]"
+    ],
+    "followup_question": false,
+    "hallucination_test": false,
+    "query_type": "FACTUAL_QA"
+  },
+  {
+    "id": "8_1",
+    "document": "resume.pdf",
+    "depends_on": "8",
+    "question": "Did she use agents in that project?",
+    "gold_answer": "No",
+    "gold_chunks": [
+      "XAI Bird Classification - [LIME, CNN, NumPy, TensorFlow, FastAPI, Angular, CI/CD, Fine-Tuning]"
+    ],
+    "query_rewrite": "Did she use agents in the XAI Bird Classification project?",
+    "followup_question": true,
+    "hallucination_test": false,
+    "query_type": "VERIFICATION_QA"
+  },
+  {
+    "id": "9",
+    "document": "resume.pdf",
+    "question": "What is Ritu's CGPA?",
+    "gold_answer": "NOT_PRESENT",
+    "gold_chunks": [],
+    "followup_question": false,
+    "hallucination_test": true,
+    "query_type": "FACTUAL_QA"
+  },
+  {
+    "id": "10",
+    "document": "resume.pdf",
+    "question": "Which DQN project did she do?",
+    "gold_answer": "NOT_PRESENT",
+    "gold_chunks": [],
+    "followup_question": false,
+    "hallucination_test": true,
+    "query_type": "FACTUAL_QA"
+  },
+  {
+  "id": "10_1",
+  "document": "resume.pdf",
+  "depends_on": "10",
+  "question": "What techniques did she use in it?",
+  "gold_answer": "NOT_PRESENT",
+  "gold_chunks": [],
+  "query_rewrite": "What techniques did she use in the DQN project?",
+  "followup_question": true,
+  "hallucination_test": true,
+  "query_type": "FACTUAL_QA"
+},
+  {
+    "id": "11",
+    "document": "resume.pdf",
+    "question": "What company did she intern at?",
+    "gold_answer": "NOT_PRESENT",
+    "gold_chunks": [],
+    "followup_question": false,
+    "hallucination_test": true,
+    "query_type": "FACTUAL_QA"
+  },
+  {
+    "id": "12",
+    "document": "resume.pdf",
+    "question": "What is her salary expectation?",
+    "gold_answer": "NOT_PRESENT",
+    "gold_chunks": [],
+    "followup_question": false,
+    "hallucination_test": true,
+    "query_type": "FACTUAL_QA"
+  },
+  {
+    "id": "13",
+    "document": "resume.pdf",
+    "question": "Did she work at Google?",
+    "gold_answer": "NOT_PRESENT",
+    "gold_chunks": [],
+    "followup_question": false,
+    "hallucination_test": true,
+    "query_type": "VERIFICATION_QA"
+  },
+  {
+    "id": "14",
+    "document": "resume.pdf",
+    "question": "What is her LinkedIn profile URL?",
+    "gold_answer": "NOT_PRESENT",
+    "gold_chunks": [],
+    "followup_question": false,
+    "hallucination_test": true,
+    "query_type": "FACTUAL_QA"
+  },
+  {
+    "id": "15",
+    "document": "resume.pdf",
+    "question": "Which blockchain project did she build?",
+    "gold_answer": "NOT_PRESENT",
+    "gold_chunks": [],
+    "followup_question": false,
+    "hallucination_test": true,
+    "query_type": "FACTUAL_QA"
+  },
+  {
+    "id": "16",
+    "document": "resume.pdf",
+    "question": "Which project used RAPTOR?",
+    "gold_answer": "GenAI DocBot",
+    "gold_chunks": [
+      "GenAI DocBot - [Python, FAISS, LLMs, NLP, Agents, RAPTOR, RAG]",
+      "Used RAPTOR-based hierarchical summarization for improved context understanding."
+    ],
+    "followup_question": false,
+    "hallucination_test": false,
+    "query_type": "FACTUAL_QA"
+  },
+  {
+    "id": "17",
+    "document": "resume.pdf",
+    "question": "Which project used FastAPI?",
+    "gold_answer": "XAI Bird Classification and Translator App",
+    "gold_chunks": [
+      "XAI Bird Classification - [LIME, CNN, NumPy, TensorFlow, FastAPI, Angular, CI/CD, Fine-Tuning]",
+      "Translator App - [FastAPI, Angular, Hugging Face Transformers, Marian MT, PyTorch]"
+    ],
+    "followup_question": false,
+    "hallucination_test": false,
+    "query_type": "MULTIPART_QA"
+  },
+  {
+    "id": "18",
+    "document": "resume.pdf",
+    "question": "Which project used MarianMT?",
+    "gold_answer": "Translator App",
+    "gold_chunks": [
+      "Translator App - [FastAPI, Angular, Hugging Face Transformers, Marian MT, PyTorch]",
+      "Integrated MarianMT (HuggingFace Transformers) for dynamic language translation."
+    ],
+    "followup_question": false,
+    "hallucination_test": false,
+    "query_type": "FACTUAL_QA"
+  },
+  {
+    "id": "18_1",
+    "document": "resume.pdf",
+    "depends_on": "18",
+    "question": "What was it used for?",
+    "gold_answer": "Dynamic language translation",
+    "gold_chunks": [
+      "Integrated MarianMT (HuggingFace Transformers) for dynamic language translation."
+    ],
+    "query_rewrite": "What was MarianMT used for?",
+    "followup_question": true,
+    "hallucination_test": false,
+    "query_type": "FACTUAL_QA"
+  },
+  {
+  "id": "19",
+  "document": "resume.pdf",
+  "question": "Which project is deployed?",
+  "gold_answer": "XAI Bird Classification",
+  "gold_chunks": [
+    "XAI Bird Classification - [LIME, CNN, NumPy, TensorFlow, FastAPI, Angular, CI/CD, Fine-Tuning]",
+    "Deployed model on Render - https://xai-bird-classification-using-cnn.onrender.com"
+  ],
+  "followup_question": false,
+  "hallucination_test": false,
+  "query_type": "FACTUAL_QA"
+},
+{
+  "id": "19_1",
+  "document": "resume.pdf",
+  "depends_on": "19",
+  "question": "What does it classify?",
+  "gold_answer": "Birds",
+  "gold_chunks": [
+    "XAI Bird Classification - [LIME, CNN, NumPy, TensorFlow, FastAPI, Angular, CI/CD, Fine-Tuning]",
+    "Fine-tuned pretrained MobileNetV2 for bird classification and used LIME for interpretable predictions."
+  ],
+  "query_rewrite": "What does the XAI Bird Classification project classify?",
+  "followup_question": true,
+  "hallucination_test": false,
+  "query_type": "FACTUAL_QA"
+},
+  {
+  "id": "20",
+  "document": "resume.pdf",
+  "question": "Why did she use Kubernetes?",
+  "gold_answer": "NOT_PRESENT",
+  "gold_chunks": [],
+  "followup_question": false,
+  "hallucination_test": true,
+  "query_type": "FACTUAL_QA"
+}
+]

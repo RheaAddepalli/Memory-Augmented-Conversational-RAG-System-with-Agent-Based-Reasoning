@@ -1,0 +1,377 @@
+[
+  {
+    "id": "1",
+    "document": "ml.pdf",
+    "question": "What are the main types of machine learning?",
+    "gold_answer": "Supervised Learning, Unsupervised Learning, Reinforcement Learning, Deep Learning, and Deep Reinforcement Learning",
+    "gold_chunks": [
+      "Machine Learning is broadly categorized under the following headings: Supervised Learning, Unsupervised Learning, Reinforcement Learning, Deep Learning, Deep Reinforcement Learning. Machine learning evolved from left to right as shown in the above diagram."
+    ],
+    "hallucination_test": false,
+    "followup_question": false,
+    "query_type": "MULTIPART_QA"
+  },
+  {
+    "id": "2",
+    "document": "ml.pdf",
+    "question": "How does reinforcement learning work?",
+    "gold_answer": "The machine is given moves to analyse, rewarded for correct moves and penalized for wrong ones, and gradually learns to make better decisions over many iterations",
+    "gold_chunks": [
+      "The machine is given an algorithm to analyse all possible moves at each stage of the game. If the move is right, the machine is rewarded, otherwise it may be penalized. Slowly, the machine will start differentiating between right and wrong moves and after several iterations would learn to solve the game puzzle with a better accuracy."
+    ],
+    "hallucination_test": false,
+    "followup_question": false,
+    "query_type": "FACTUAL_QA"
+  },
+  {
+    "id": "2_1",
+    "document": "ml.pdf",
+    "depends_on": "2",
+    "question": "What was it initially developed for?",
+    "gold_answer": "It was initially developed for machines to play games",
+    "gold_chunks": [
+      "The technique was initially developed for machines to play games. The machine is given an algorithm to analyse all possible moves at each stage of the game."
+    ],
+    "query_rewrite": "What was reinforcement learning initially developed for",
+    "hallucination_test": false,
+    "followup_question": true,
+    "query_type": "FACTUAL_QA"
+  },
+  {
+    "id": "3",
+    "document": "ml.pdf",
+    "question": "What are the three elements that define a well-posed learning problem?",
+    "gold_answer": "Task, Performance Measure, and Experience",
+    "gold_chunks": [
+      "Any problem can be segregated as well-posed learning problem if it has three traits - Task, Performance Measure, Experience. A computer program is said to learn from experience E in context to some task T and some performance measure P, if its performance on T, as measured by P, upgrades with experience E."
+    ],
+    "hallucination_test": false,
+    "followup_question": false,
+    "query_type": "MULTIPART_QA"
+  },
+  {
+    "id": "3_1",
+    "document": "ml.pdf",
+    "depends_on": "3",
+    "question": "What are those three elements for the checkers learning problem?",
+    "gold_answer": "Task is playing checkers, performance measure is percentage of games won in the tournament, and experience is a set of games played against itself",
+    "gold_chunks": [
+      "Task T: To play checkers. Performance measure P: Total percent of the game won in the tournament. Training experience E: A set of games played against itself."
+    ],
+    "query_rewrite": "What are the Task, Performance Measure and Experience for the checkers learning problem?",
+    "hallucination_test": false,
+    "followup_question": true,
+    "query_type": "FACTUAL_QA"
+  },
+  {
+    "id": "4",
+    "document": "ml.pdf",
+    "question": "What are the four components of the final design of the checkers learning system?",
+    "gold_answer": "The Performance System, The Critic, The Generalizer, and The Experiment Generator",
+    "gold_chunks": [
+      "The final design of our checkers learning system can be naturally described by four distinct program modules. 1. The performance System: Takes a new board as input and outputs a trace of the game it played against itself. 2. The Critic: Takes the trace of a game as an input and outputs a set of training examples of the target function. 3. The Generalizer: Takes training examples as input and outputs a hypothesis that estimates the target function. 4. The Experiment Generator: Takes the current hypothesis as input and outputs a new problem for the performance system to explore."
+    ],
+    "hallucination_test": false,
+    "followup_question": false,
+    "query_type": "MULTIPART_QA"
+  },
+  {
+    "id": "4_1",
+    "document": "ml.pdf",
+    "depends_on": "4",
+    "question": "What does the Generalizer do in it?",
+    "gold_answer": "It takes training examples as input and outputs a hypothesis that estimates the target function",
+    "gold_chunks": [
+      "The Generalizer: Takes training examples as input and outputs a hypothesis that estimates the target function. Good generalization to new cases is crucial."
+    ],
+    "query_rewrite": "What does the Generalizer component do in the checkers learning system?",
+    "hallucination_test": false,
+    "followup_question": true,
+    "query_type": "FACTUAL_QA"
+  },
+  {
+    "id": "5",
+    "document": "ml.pdf",
+    "question": "What is the FIND-S algorithm?",
+    "gold_answer": "FIND-S starts from the most specific hypothesis and generalizes it using only positive examples, ignoring negative ones, and finds the most specific hypothesis consistent with positive training examples",
+    "gold_chunks": [
+      "FIND-S Algorithm starts from the most specific hypothesis and generalize it by considering only positive examples. FIND-S algorithm ignores negative examples. FIND-S algorithm finds the most specific hypothesis within H that is consistent with the positive training examples."
+    ],
+    "hallucination_test": false,
+    "followup_question": false,
+    "query_type": "FACTUAL_QA"
+  },
+  {
+    "id": "5_1",
+    "document": "ml.pdf",
+    "depends_on": "5",
+    "question": "What kind of hypothesis does it finally output?",
+    "gold_answer": "The most specific hypothesis within H that is consistent with the positive training examples",
+    "gold_chunks": [
+      "FIND-S algorithm finds the most specific hypothesis within H that is consistent with the positive training examples. The final hypothesis will also be consistent with negative examples if the correct target concept is in H, and the training examples are correct."
+    ],
+    "query_rewrite": "What kind of hypothesis does FIND-S finally output?",
+    "hallucination_test": false,
+    "followup_question": true,
+    "query_type": "FACTUAL_QA"
+},
+  {
+    "id": "6",
+    "document": "ml.pdf",
+    "question": "What is concept learning?",
+    "gold_answer": "Acquiring the definition of a general category from given sample positive and negative training examples of the category, by searching through a predefined space of hypotheses",
+    "gold_chunks": [
+      "Concept Learning: Acquiring the definition of a general category from given sample positive and negative training examples of the category. Concept Learning can be seen as a problem of searching through a predefined space of potential hypotheses for the hypothesis that best fits the training examples."
+    ],
+    "hallucination_test": false,
+    "followup_question": false,
+    "query_type": "FACTUAL_QA"
+  },
+  
+  {
+    "id": "7",
+    "document": "ml.pdf",
+    "question": "What is the difference between direct and indirect training experience in the checkers learning system?",
+    "gold_answer": "In direct experience individual board states and correct moves are given, while in indirect experience only move sequences and final results like win lose or draw are given",
+    "gold_chunks": [
+      "In the case of direct training experience, an individual board states and correct move for each board state are given. In case of indirect training experience, the move sequences for a game and the final result (win, lose or draw) are given for a number of games. How to assign credit or blame to individual moves is the credit assignment problem."
+    ],
+    "followup_question": false,
+    "hallucination_test": false,
+    "query_type": "FACTUAL_QA"
+  },
+  {
+    "id": "8",
+    "document": "ml.pdf",
+    "question": "What fields has Deep Reinforcement Learning been successfully applied to?",
+    "gold_answer": "Robotics, video games, finance and healthcare",
+    "gold_chunks": [
+      "The Deep Reinforcement Learning (DRL) combines the techniques of both deep and reinforcement learning. The technique has been with a great success in the fields of robotics, video games, finance and healthcare. Many previously unsolvable problems are now solved by creating DRL models."
+    ],
+    "followup_question": false,
+    "hallucination_test": false,
+    "query_type": "FACTUAL_QA"
+  },
+  {
+    "id": "8_1",
+    "document": "ml.pdf",
+    "depends_on": "8",
+    "question": "What two techniques does Deep Reinforcement Learning combine?",
+    "gold_answer": "Deep learning and reinforcement learning",
+    "gold_chunks": [
+      "The Deep Reinforcement Learning (DRL) combines the techniques of both deep and reinforcement learning. The reinforcement learning algorithms like Q learning are now combined with deep learning to create a powerful DRL model."
+    ],
+    "query_rewrite": "What two techniques does Deep Reinforcement Learning combine?",
+    "followup_question": true,
+    "hallucination_test": false,
+    "query_type": "FACTUAL_QA"
+  },
+  {
+    "id": "9",
+    "document": "ml.pdf",
+    "question": "How many data points does unsupervised learning typically require compared to supervised learning?",
+    "gold_answer": "Supervised learning can work with a few thousands of data points while unsupervised learning needs at least a few millions",
+    "gold_chunks": [
+      "In case of supervised learning, the machine can be trained with even about few thousands of data points. However, in case of unsupervised learning, the number of data points that is reasonably accepted for learning starts in a few millions."
+    ],
+    "followup_question": false,
+    "hallucination_test": false,
+    "query_type": "FACTUAL_QA"
+  },
+  {
+    "id": "10",
+    "document": "ml.pdf",
+    "question": "What are the two parts of the backpropagation algorithm?",
+    "gold_answer": "The feed forward pass where activation values are computed, and the back propagation pass where weights are updated using the Delta Rule",
+    "gold_chunks": [
+      "Part I, the feed forward pass: the activation values of the hidden and then output units are computed. Part II, the back propagation pass: the weights of the network are updated starting with the hidden to output weights and followed by the input to hidden weights with respect to the sum of squares error and through a series of weight update rules called the Delta Rule."
+    ],
+    "followup_question": false,
+    "hallucination_test": false,
+    "query_type": "FACTUAL_QA"
+  },
+  {
+    "id": "11",
+    "document": "ml.pdf",
+    "question": "Does the document mention Raptor?",
+    "gold_answer": "NOT_PRESENT",
+    "gold_chunks": [],
+    "followup_question": false,
+    "hallucination_test": true,
+    "query_type": "VERIFICATION_QA"
+  },
+  {
+    "id": "12",
+    "document": "ml.pdf",
+    "question": "What is the accuracy of the checkers learning system mentioned in the document?",
+    "gold_answer": "NOT_PRESENT",
+    "gold_chunks": [],
+    "followup_question": false,
+    "hallucination_test": true,
+    "query_type": "FACTUAL_QA"
+  },
+  {
+    "id": "13",
+    "document": "ml.pdf",
+    "question": "What programming language does the document recommend for implementing machine learning?",
+    "gold_answer": "NOT_PRESENT",
+    "gold_chunks": [],
+    "followup_question": false,
+    "hallucination_test": true,
+    "query_type": "FACTUAL_QA"
+  },
+   {
+    "id": "14",
+    "document": "ml.pdf",
+    "question": "How does the KNN algorithm classify a new data point?",
+    "gold_answer": "It calculates the distance between the new point and all training data points, sorts them in ascending order, picks the top K rows and assigns the class based on the most frequent class among them",
+    "gold_chunks": [
+      "Calculate the distance between test data and each row of training data with the help of any of the method namely: Euclidean, Manhattan or Hamming distance. Now, based on the distance value, sort them in ascending order. Next, it will choose the top K rows from the sorted array. Now, it will assign a class to the test point based on most frequent class of these rows."
+    ],
+    "followup_question": false,
+    "hallucination_test": false,
+    "query_type": "FACTUAL_QA"
+  },
+  {
+    "id": "14_1",
+    "document": "ml.pdf",
+    "depends_on": "14",
+    "question": "What happens in step 1 of it?",
+    "gold_answer": "The training as well as test data must be loaded",
+    "gold_chunks": [
+      "Step 1 - For implementing any algorithm, we need dataset. So during the first step of KNN, we must load the training as well as test data."
+    ],
+    "query_rewrite": "What happens in step 1 of the KNN classification process?",
+    "followup_question": true,
+    "hallucination_test": false,
+    "query_type": "FACTUAL_QA"
+},
+
+  {
+    "id": "15",
+    "document": "ml.pdf",
+    "question": "What dataset was used to demonstrate concept learning in the document?",
+    "gold_answer": "NOT_PRESENT",
+    "gold_chunks": [],
+    "followup_question": false,
+    "hallucination_test": true,
+    "query_type": "FACTUAL_QA"
+  },
+  {
+    "id": "16",
+    "document": "ml.pdf",
+    "question": "What is instance-based learning?",
+    "gold_answer": "A machine learning approach where the system learns training examples by heart and generalizes to new instances based on similarity, also known as memory-based or lazy learning",
+    "gold_chunks": [
+      "The Machine Learning systems which are categorized as instance-based learning are the systems that learn the training examples by heart and then generalizes to new instances based on some similarity measure. It is also known as memory-based learning or lazy-learning."
+    ],
+    "followup_question": false,
+    "hallucination_test": false,
+    "query_type": "FACTUAL_QA"
+  },
+  {
+    "id": "16_1",
+    "document": "ml.pdf",
+    "depends_on": "16",
+    "question": "What are some algorithms that fall under it?",
+    "gold_answer": "K Nearest Neighbor, Self-Organizing Map, Learning Vector Quantization, and Locally Weighted Learning",
+    "gold_chunks": [
+      "Some of the instance-based learning algorithms are: K Nearest Neighbor (KNN), Self-Organizing Map (SOM), Learning Vector Quantization (LVQ), Locally Weighted Learning (LWL)."
+    ],
+    "query_rewrite": "What are some algorithms that fall under instance-based learning?",
+    "followup_question": true,
+    "hallucination_test": false,
+    "query_type": "FACTUAL_QA"
+  },
+  {
+    "id": "17",
+    "document": "ml.pdf",
+    "question": "Does the document discuss transfer learning?",
+    "gold_answer": "NOT_PRESENT",
+    "gold_chunks": [],
+    "followup_question": false,
+    "hallucination_test": true,
+    "query_type": "VERIFICATION_QA"
+  },
+  {
+    "id": "18",
+    "document": "ml.pdf",
+    "question": "What is Bayesian thinking?",
+    "gold_answer": "A thinking model that combines most recent observations together with prior beliefs or past experiences to make better decisions",
+    "gold_chunks": [
+      "It is this thinking model which uses our most recent observations together with our beliefs or inclination for critical thinking that is known as Bayesian thinking. Therefore, we can make better decisions by combining our recent observations and beliefs that we have gained through our past experiences."
+    ],
+    "followup_question": false,
+    "hallucination_test": false,
+    "query_type": "FACTUAL_QA"
+  },
+  {
+    "id": "18_1",
+    "document": "ml.pdf",
+    "depends_on": "18",
+    "question": "How is Bayesian thinking different from the frequentist method?",
+    "gold_answer": "The frequentist method omits prior beliefs and relies only on recent observations, while Bayesian thinking combines both recent observations and prior beliefs",
+    "gold_chunks": [
+      "The first method suggests that we use the frequentist method, where we omit our beliefs when making decisions. However, the second method seems to be more convenient because 10 coins are insufficient to determine the fairness of a coin. Therefore, we can make better decisions by combining our recent observations and beliefs that we have gained through our past experiences."
+    ],
+    "query_rewrite": "How is Bayesian thinking different from the frequentist method?",
+    "followup_question": true,
+    "hallucination_test": false,
+    "query_type": "FACTUAL_QA"
+  },
+  {
+    "id": "19",
+    "document": "ml.pdf",
+    "question": "What is incremental learning?",
+    "gold_answer": "Incrementally updating your knowledge or beliefs with new evidence as more data is gained, increasing the certainty of conclusions over time",
+    "gold_chunks": [
+      "As we gain more data, we can incrementally update our beliefs increasing the certainty of our conclusions. This is known as incremental learning, where you update your knowledge incrementally with new evidence."
+    ],
+    "followup_question": false,
+    "hallucination_test": false,
+    "query_type": "FACTUAL_QA"
+  },
+  {
+    "id": "19_1",
+    "document": "ml.pdf",
+    "depends_on": "19",
+    "question": "Which learning approach supports this kind of updating?",
+    "gold_answer": "Bayesian learning, which supports incremental updates of the posterior when testing a hypothesis",
+    "gold_chunks": [
+      "Bayesian learning comes into play on such occasions. We can use Bayesian learning to address all these drawbacks and even with additional capabilities such as incremental updates of the posterior when testing a hypothesis to estimate unknown parameters of a machine learning model."
+    ],
+    "query_rewrite": "Which learning approach supports incremental updating of beliefs with new evidence?",
+    "followup_question": true,
+    "hallucination_test": false,
+    "query_type": "FACTUAL_QA"
+  },
+  {
+    "id": "20",
+    "document": "ml.pdf",
+    "question": "What is Bayes theorem used for in machine learning?",
+    "gold_answer": "To determine the conditional probability of a hypothesis given some evidence or observations, using prior knowledge",
+    "gold_chunks": [
+      "Bayesian learning uses Bayes' theorem to determine the conditional probability of a hypotheses given some evidence or observations.",
+      "Bayes' theorem describes how the conditional probability of an event or a hypothesis can be computed using evidence and prior knowledge."
+    ],
+    "followup_question": false,
+    "hallucination_test": false,
+    "query_type": "FACTUAL_QA"
+  },
+  {
+    "id": "20_1",
+    "document": "ml.pdf",
+    "depends_on": "20",
+    "question": "Give an example of it from the document?",
+    "gold_answer": "Concluding that code has no bugs given that it passed all test cases, combined with the prior belief that bugs are rarely observed in the code",
+    "gold_chunks": [
+      "It is similar to concluding that our code has no bugs given the evidence that it has passed all the test cases, including our prior belief that we have rarely observed any bugs in our code."
+    ],
+    "query_rewrite": "Give an example of Bayes theorem from the document?",
+    "followup_question": true,
+    "hallucination_test": false,
+    "query_type": "FACTUAL_QA"
+  }
+
+]
+  
